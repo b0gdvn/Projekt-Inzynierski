@@ -3,11 +3,12 @@
 
 
 Technologie:
-*   Python 3.10
-*   Pandas
-*   DJango
-*   SQLite
-*   HTML / CSS
+-   Python 3.10
+-   Pandas / Numpy
+-   Flask
+-   SQLite
+-   HTML
+-   CSS / Bootstrap
 
 Pomysły:
 -   użyć planu UML
