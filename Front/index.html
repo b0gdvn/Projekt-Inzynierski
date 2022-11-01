@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Capythal</title>
+    <link href="style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <!-- <script src="script.js" defer></script> --> <!-- dropdown menu js -->
+  </head>
+  <body class="bg-gray-100">
+    <aside id="navbar" class="navbar">
+      <a class="logo fs-1" href="/">Capythal</a>
+      <ul class="navbar-list-top">
+        <li class="menu-button active">
+          <a href="" class="menu-button-link">
+            <span class="fa fa-fw fa-home my-auto"></span>
+            <span class="ml-1 fs-4">Glówna Strona</span>
+          </a>
+        </li>
+        <li class="menu-button">
+          <a href="" class="menu-button-link">
+            <span class="fa fa-fw fa-credit-card my-auto"></span>
+            <span class="ml-1 fs-4">Konta</span>
+          </a>
+        </li>
+        <li class="menu-button">
+          <a href="" class="menu-button-link">
+            <span class="fa fa-fw fa-check-square-o my-auto"></span>
+            <span class="ml-1 fs-4">Cele</span>
+          </a>
+        </li>
+        <li class="menu-button">
+          <a href="" class="menu-button-link">
+            <span class="fa fa-fw fa-bar-chart my-auto"></span>
+            <span class="ml-1 fs-4">Statystyki</span>
+          </a>
+        </li>
+        <li class="menu-button">
+          <a href="" class="menu-button-link">
+            <span class="fa fa-fw fa-list-ul my-auto"></span>
+            <span class="ml-1 fs-4">Historia Transakcji</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-list-bottom">
+        <li class="nav-item">
+          <span class="ml-1 fs-4">MENU UŻYTKOWNIKA</span>
+        </li>
+        <li class="menu-button">
+          <a href="" class="menu-button-link">
+            <span class="fa fa-fw fa-user-circle my-auto"></span>
+            <span class="ml-1 fs-4">Profil</span>
+          </a>
+        </li>
+        <li class="menu-button">
+          <a href="" class="menu-button-link">
+            <span class="fa fa-fw fa-cog my-auto"></span>
+            <span class="ml-1 fs-4">Ustawienia</span>
+          </a>
+        </li>
+        <li class="menu-button">
+          <a href="" class="menu-button-link">
+            <span class="fa fa-fw fa-sign-out my-auto"></span>
+            <span class="ml-1 fs-4">Wyloguj się</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <button id="exit-nav"></button>
+    <main class="main-content">
+      <div class="row-1">
+        <a class="fs-1" href="">Capythal</a>
+        <button id="nav-toggler" class="nav-toggler fa fa-bars" href=""></button>
+      </div>
+
+      <div class="row-2">
+        <a class="item-add-tr-sm fs-3 fc-main-btn bg-main-btn" href="">
+          <span class="item-add-tr-text fw-semibold">Dodaj transakcję</span>
+          <div class="item-add-tr-plus bg-success-secondary">
+            <span class="tr-plus fa fa-fw fa-lg fa-plus"></span>
+          </div>
+        </a>
+      </div>
+
+      <div class="row-3">
+        <div class="item-stat bg-white">
+          <div class="item-stat-info">
+            <div class="fs-4">Dostępne Środki</div>
+            <div class="fs-3 fw-semibold">13,410.18 PLN</div>
+          </div>
+          <div class="item-stat-percentage bg-success fc-success">
+            <span class="my-auto fa fa-lg fa-caret-up"></span>
+            <span class="ml-2 fs-3 fw-semibold">3%</span>
+          </div>
+        </div>
+        <div class="item-stat bg-white">
+          <div class="item-stat-info">
+            <div class="fs-4">Przychody</div>
+            <div class="fs-3 fw-semibold">5,428.29 PLN</div>
+          </div>
+          <div class="item-stat-percentage bg-success fc-success">
+            <span class="my-auto fa fa-lg fa-caret-up"></span>
+            <span class="ml-2 fs-3 fw-semibold">4%</span>
+          </div>
+        </div>
+        <div class="item-stat bg-white">
+          <div class="item-stat-info">
+            <div class="fs-4">Wydatki</div>
+            <div class="fs-3 fw-semibold">13,410.18 PLN</div>
+          </div>
+          <div class="item-stat-percentage bg-danger fc-danger">
+            <span class="my-auto fa fa-lg fa-caret-up"></span>
+            <span class="ml-2 fs-3 fw-semibold">8%</span>
+          </div>
+        </div>
+        <div class="item-stat bg-white">
+          <div class="item-stat-info">
+            <div class="fs-4">Oszczędności</div>
+            <div class="fs-3 fw-semibold">3,230.00 PLN</div>
+          </div>
+          <div class="item-stat-percentage bg-success fc-success">
+            <span class="my-auto fa fa-lg fa-caret-up"></span>
+            <span class="ml-2 fs-3 fw-semibold">>99%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row-4">
+        <div class="item-account grid-el-1 bg-white">
+          <div class="item-account-card bg-acc-card-green fs-3">
+            <div class="card-line">
+              <div class="item-account-type">Karta Kredytowa</div>
+              <div class="item-account-bank fw-light">Santander</div>
+            </div>
+            <div class="card-line fw-semibold">
+              <div class="item-account-amount">5,877.92 PLN</div>
+            </div>
+            <div class="card-line">
+              <div class="item-account-num fw-light">**** 7312</div>
+              <img class="item-account-logo" src="ms-logo.png" alt="mastercard">
+            </div>
+          </div>
+          <div class="item-account-select">
+            <select class="account-select fs-4">
+              <optgroup label="Karty Kredytowe">
+                <option value="1">Santander</option>
+                <option value="2">PeKaO</option>
+              </optgroup>
+              <optgroup label="Konta Bieżące">
+                <option value="3">GetIn</option>
+                <option value="4">Santander</option>
+              </optgroup>
+              <optgroup label="Inne">
+                <option value="5">XTB</option>
+                <option value="6">Binance</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="account-stats">
+            <div class="item-account-stat bg-success">
+            <div class="account-stat-info">
+              <div class="fs-4">Limit Karty</div>
+              <div class="fs-3 fw-semibold">10,000 PLN</div>
+            </div>
+            <div class="account-stat-percentage-1">
+              <canvas id="chart-doughnut" class="chart-doughnut"></canvas>
+            </div>
+          </div>
+          <div class="item-account-stat bg-success">
+            <div class="account-stat-info">
+              <div class="fs-4">Wydatki tygodniowe</div>
+              <div class="fs-3 fw-semibold">570,93 PLN</div>
+            </div>
+            <div class="account-stat-percentage-2 bg-main-btn fc-main-btn">
+              <span class="my-auto fa fa-lg fa-caret-down"></span>
+              <span class="my-auto ml-2 fs-2 fw-semibold">12%</span>
+            </div>
+          </div>
+          </div>
+          
+          <a class="item-add-tr-lg fs-3 fc-main-btn bg-main-btn" href="">
+            <span class="item-add-tr-text fw-semibold">Dodaj transakcję</span>
+            <div class="item-add-tr-plus bg-success-secondary">
+              <span class="tr-plus fa fa-fw fa-lg fa-plus"></span>
+            </div>
+          </a>
+        </div>
+        <div class="item-statdisplay grid-el-2 bg-white">
+          <div class="statdisplay-info">
+            <span class="statdisplay-info-name fw-semibold fs-3">Zestawienie Środków</span>
+            <select class="money-select fs-4">
+              <option value="1">Wydatki</option>
+              <option value="2">Zarobki</option>
+              <option value="3">Oszczędności</option>
+            </select>
+            <select class="money-select fs-4">
+              <option value="1">Tydzień</option>
+              <option value="2">Miesiąc</option>
+              <option value="3">Rok</option>
+            </select>
+          </div>
+          <canvas id="chart-line" class="statdisplay-chart"></canvas>
+        </div>
+        <div class="item-transactions grid-el-3 bg-white">
+          <div class="item-transactions-info">
+            <span class="fw-semibold fs-3">Historia Transakcji</span>
+            <a class="fw-light fs-4" href="">Więcej ></a>
+          </div>
+          <div class="item-transactions-list">
+            <div class="tr-list-item">
+              <div class="tr-list-item-l">
+                <div class="category-square cat-green my-auto">
+                  <span class="fa fa-lg fa-utensils"></span>
+                </div>
+                <div class="tr-list-item-l-info ml-1">
+                  <span class="text-truncate fs-4">McDonalds</span>
+                  <span class="fw-light fs-5">14.10.22 / Gotówka</span>
+                </div>
+              </div>
+              <span class="tr-list-item-r fc-danger fs-3">-27.10 PLN</span>
+            </div>
+          </div>
+          <div class="item-transactions-list">
+            <div class="tr-list-item">
+              <div class="tr-list-item-l">
+                <div class="category-square cat-orange my-auto">
+                  <span class="fa fa-lg fa-briefcase"></span>
+                </div>
+                <div class="tr-list-item-l-info ml-1">
+                  <span class="text-truncate fs-4">Praca - Wynagrodzenie Miesięczne</span>
+                  <span class="fw-light fs-5">12.10.22 / PeKaO</span>
+                </div>
+              </div>
+              <span class="tr-list-item-r fc-success fs-3">+4610.00 PLN</span>
+            </div>
+          </div>
+          <div class="item-transactions-list">
+            <div class="tr-list-item">
+              <div class="tr-list-item-l">
+                <div class="category-square cat-blue my-auto">
+                  <span class="fa fa-lg fa-bus-alt"></span>
+                </div>
+                <div class="tr-list-item-l-info ml-1">
+                  <span class="text-truncate fs-4">Bilet ZTM Gdańsk</span>
+                  <span class="fw-light fs-5">10.10.2022 / Santander</span>
+                </div>
+              </div>
+              <span class="tr-list-item-r fc-danger fs-3">-4.60 PLN</span>
+            </div>
+          </div>
+          <div class="item-transactions-list">
+            <div class="tr-list-item">
+              <div class="tr-list-item-l">
+                <div class="category-square cat-yellow my-auto">
+                  <span class="fa fa-lg fa-briefcase-medical"></span>
+                </div>
+                <div class="tr-list-item-l-info ml-1">
+                  <span class="text-truncate fs-4">Dentysta</span>
+                  <span class="fw-light fs-5">10.10.22 / PKO BP</span>
+                </div>
+              </div>
+              <span class="tr-list-item-r fc-danger fs-3">-410.00 PLN</span>
+            </div>
+          </div>
+          <div class="item-transactions-list">
+            <div class="tr-list-item">
+              <div class="tr-list-item-l">
+                <div class="category-square cat-cyan my-auto">
+                  <span class="fa fa-lg fa-book"></span>
+                </div>
+                <div class="tr-list-item-l-info ml-1">
+                  <span class="text-truncate fs-4">Kurs Francuskiego</span>
+                  <span class="fw-light fs-5">09.10.22 / PKO BP</span>
+                </div>
+              </div>
+              <span class="tr-list-item-r fc-danger fs-3">-90.00 PLN</span>
+            </div>
+          </div>
+          <div class="item-transactions-list">
+            <div class="tr-list-item">
+              <div class="tr-list-item-l">
+                <div class="category-square cat-grey my-auto">
+                  <span class="fa fa-lg fa-ellipsis-h"></span>
+                </div>
+                <div class="tr-list-item-l-info ml-1">
+                  <span class="text-truncate fs-4">Test</span>
+                  <span class="fw-light fs-5">01.01.22 / Test</span>
+                </div>
+              </div>
+              <span class="tr-list-item-r fc-success fs-3">+0.00 PLN</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-goals grid-el-4 bg-white">
+          <div class="item-goals-info">
+            <span class="fw-semibold fs-3">Cele</span>
+            <a class="fw-light fs-4" href="">Więcej ></a>
+          </div>
+          <div class="goal-list">
+            <div class="goal bg-success">
+              <div class="goal-text fs-3">
+                <span class="">Wycieczka do Paryżu</span>
+                <span class="fc-secondary ml-1">77%</span>
+              </div>
+              <progress class="goal-progress" value="77" max="100"></progress>
+            </div>
+            <div class="goal bg-success">
+              <div class="goal-text fs-3">
+                <span class="">Remont Mieszkania</span>
+                <span class="fc-secondary ml-1">26%</span>
+              </div>
+              <progress class="goal-progress" value="26" max="100"></progress>
+            </div>
+            <div class="goal bg-success">
+              <div class="goal-text fs-3">
+                <span class="">Zakup Samochodu</span>
+                <span class="fc-secondary ml-1">54%</span>
+              </div>
+              <progress class="goal-progress" value="54" max="100"></progress>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </main>
+    <footer class="fc-secondary fw-light">
+      2022 © Capythal
+    </footer>
+
+    <script>
+      document.getElementById("nav-toggler").addEventListener("click", open_close);
+      document.getElementById("exit-nav").addEventListener("click", open_close);
+
+      var menuState = 0 // close
+      function open_close() {
+        if(menuState === 0){
+           menuState = 1;
+           document.getElementById("exit-nav").style.width = "100%";
+           document.getElementById("exit-nav").style.opacity = "0.3";
+           document.getElementById("navbar").style.width = "28rem";
+           document.getElementById("navbar").style.opacity = "1";
+        }
+        else {
+           menuState = 0;
+           document.getElementById("exit-nav").style.width = "0";
+           document.getElementById("exit-nav").style.opacity = "0";
+           document.getElementById("navbar").style.width = "0";
+           document.getElementById("navbar").style.opacity = "0";
+        }
+      } 
+    </script>
+    <script src="dist/js/chartjs.min.js"></script>
+    <script>
+      // Chart Doughnut
+      var ctxDoughnut = document.getElementById('chart-doughnut').getContext("2d");
+
+      var pctg = {
+        id: "pctg",
+        beforeDraw(chart, args, options) {
+          const { ctx, chartArea: {top, right, bottom, left, width, height} } = chart;
+          ctx.save();
+
+          ctx.font = "1.5rem sans-serif";
+          ctx.fillStyle = "#1F2E23";
+          ctx.textAlign = "center";
+          ctx.fillText("58%", width / 2, top + (height/2) + 8);
+        }
+      };
+
+      var donutConfig = {
+        type: 'doughnut',
+        data: {
+          labels: ["Dostępne", "Użyte"],
+          datasets: [
+            {
+              data: [58, 42],
+              borderColor: "transparent",
+              backgroundColor: [
+                "#46644F",
+                "#D3DCD6"
+              ],
+              hoverBackgroundColor: [
+                "#46644F",
+                "#D3DCD6"
+              ]
+            }]
+        },
+        options: {
+          elements: {
+            center: {
+              text: '58%',
+              color: '#FF6384', // Default is #000000
+              fontStyle: 'Arial', // Default is Arial
+              sidePadding: 20, // Default is 20 (as a percentage)
+              minFontSize: 25, // Default is 20 (in px), set to false and text will not wrap.
+              lineHeight: 25 // Default is 25 (in px), used for when text wraps
+            }
+          },
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+          cutout: "60%"
+        },
+        plugins: [pctg]
+      };
+
+      var chartDoughnut = new Chart(ctxDoughnut, donutConfig);
+
+
+      // Chart Line
+
+      var ctxLine = document.getElementById("chart-line").getContext("2d");
+
+      var gradientStroke = ctxLine.createLinearGradient(0, 230, 0, 50);
+      gradientStroke.addColorStop(1, 'rgba(70,100,79,0.2)');
+      gradientStroke.addColorStop(0, 'rgba(70,100,79,0.0)');
+
+      var dataChartMain = {
+        labels: ["Pn", "Wt", "Śr", "Cz", "Pt", "Sb", "Nd"],
+        datasets: [
+          {
+            label: "Wydatki",
+            tension: 0.4,
+            borderWidth: 0,
+            pointRadius: 0,
+            borderColor: "#46644F",
+            borderWidth: 4,
+            backgroundColor: gradientStroke,
+            fill: true,
+            data: [150, 430, 300, 520, 350],
+            maxBarThickness: 6
+          }
+        ],
+      };
+
+      var chartLine = new Chart(ctxLine, {
+        type: "line",
+        data: dataChartMain,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            }
+          },
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
+          scales: {
+            y: {
+              grid: {
+                drawBorder: false,
+                display: true,
+                drawOnChartArea: true,
+                drawTicks: false,
+                borderDash: [2, 25]
+              },
+              ticks: {
+                display: true,
+                maxTicksLimit: 5,
+                color: '#b2b9bf',
+                font: {
+                  size: 10,
+                  family: "Inter",
+                  style: 'normal',
+                  lineHeight: 2
+                },
+              },
+
+            },
+            x: {
+              grid: {
+                drawBorder: false,
+                display: false,
+                drawOnChartArea: false,
+                drawTicks: false,
+              },
+              ticks: {
+                display: true,
+                color: '#b2b9bf',
+                font: {
+                  size: 10,
+                  family: "Inter",
+                  style: 'normal',
+                  lineHeight: 2
+                },
+              }
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
