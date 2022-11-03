@@ -1,18 +1,25 @@
 /*MAIN PARAMETERS*/
-
-* {
-	box-sizing: border-box;
+html, body{
+  padding: 0;
+  margin: 0;
 }
 
 html {
+	height: 100%;
 	font-family: 'Inter', sans-serif;
 	width: 100%;
 }
 
 body {
-	margin: 0;
 	background-color: #F8F8F8;
 	color: #1F2E23;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+	box-sizing: border-box;
 }
 
 aside {
@@ -54,10 +61,6 @@ progress::-webkit-progress-value {
 
 .bg-white {
 	background-color: #FFFFFF;
-}
-
-.bg-main {
-	background-color: #F8F8F8;
 }
 
 .bg-main-btn {
@@ -140,10 +143,6 @@ progress::-webkit-progress-value {
 	color: #FA5656;
 }
 
-.fc-primary {
-	color: #1F2E23;
-}
-
 .fc-secondary {
 	color: #8E9690;
 }
@@ -207,12 +206,12 @@ progress::-webkit-progress-value {
 	height: 100%;
 	max-width: 75%;
 	overflow-y: auto;
-	z-index: 10001;
+	z-index: 101;
 }
 
 #exit-nav {
 	position: fixed;
-	z-index: 10000;
+	z-index: 100;
   padding: 0;
   margin: 0;
   top: 0;
@@ -278,11 +277,8 @@ progress::-webkit-progress-value {
 	transition: 0.1s;
 }
 
-.logo, .add-tr {
-	display: none;
-}
-
 .logo {
+	display: none;
 	margin: 1rem auto 0;
 }
 
@@ -379,6 +375,41 @@ progress::-webkit-progress-value {
 .tr-plus {
 	color: #46644F;
 	margin: auto;
+}
+
+.tr-modal {
+  display: none;
+  position: fixed;
+  z-index: 110;
+  padding-top: 2rem;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4);
+}
+
+.tr-modal-content {
+	border-radius: 1rem;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 1rem;
+  width: calc(100% - 4rem);
+}
+
+.tr-close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.tr-close:hover,
+.tr-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .item-stat-info {
@@ -492,7 +523,7 @@ progress::-webkit-progress-value {
 	margin: auto 0 auto 1rem;
 }
 
-.item-statdisplay, .statdisplay, .statdisplay-info {
+.item-statdisplay, .statdisplay-info {
 	display: flex;
 	flex-direction: column;
 }
@@ -598,6 +629,7 @@ progress::-webkit-progress-value {
 }
 
 footer {
+	margin-top: auto;
 	display: flex;
 	margin-bottom: 1rem;
 	justify-content: center;
@@ -701,6 +733,10 @@ footer {
 		margin-right: 0;
 	}
 
+	.tr-modal-content {
+	  max-width: 40rem ;
+	}
+
 	.item-stat-percentage {
 		min-width: 6rem;
 		padding: 1rem 0;
@@ -796,7 +832,7 @@ footer {
 		grid-template-columns: 1fr 1fr;
 	}
 
-	.grid-el-1, .grid-el-2 {
+	.item-account, .item-statdisplay {
 		grid-column: span 2;
 	}
 
@@ -827,7 +863,7 @@ footer {
 		grid-template-columns: 2fr 2fr 3fr;
 	}
 
-	.grid-el-1 {
+	.item-account {
 		grid-column-start: 3;
 		grid-row-start: 1;
 		grid-row-end: span 2;

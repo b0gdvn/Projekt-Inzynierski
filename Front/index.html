@@ -13,7 +13,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <!-- <script src="script.js" defer></script> --> <!-- dropdown menu js -->
   </head>
-  <body class="bg-gray-100">
+  <body>
+    <div id="add-tr-btn-modal" class="tr-modal">
+      <div class="tr-modal-content">
+        <a class="tr-close">Zamknij</a>
+        <span class="fs-3 fw-semibold">Nowa Transakcja</span>
+      </div>
+    </div>
+
     <aside id="navbar" class="navbar">
       <a class="logo fs-1" href="/">Capythal</a>
       <ul class="navbar-list-top">
@@ -80,7 +87,7 @@
       </div>
 
       <div class="row-2">
-        <a class="item-add-tr-sm fs-3 fc-main-btn bg-main-btn" href="">
+        <a onclick="AddTrBtnClick()" class="item-add-tr-sm fs-3 fc-main-btn bg-main-btn">
           <span class="item-add-tr-text fw-semibold">Dodaj transakcję</span>
           <div class="item-add-tr-plus bg-success-secondary">
             <span class="tr-plus fa fa-fw fa-lg fa-plus"></span>
@@ -132,7 +139,7 @@
       </div>
 
       <div class="row-4">
-        <div class="item-account grid-el-1 bg-white">
+        <div class="item-account bg-white">
           <div class="item-account-card bg-acc-card-green fs-3">
             <div class="card-line">
               <div class="item-account-type">Karta Kredytowa</div>
@@ -184,14 +191,14 @@
           </div>
           </div>
           
-          <a class="item-add-tr-lg fs-3 fc-main-btn bg-main-btn" href="">
+          <a onclick="AddTrBtnClick()" class="item-add-tr-lg fs-3 fc-main-btn bg-main-btn">
             <span class="item-add-tr-text fw-semibold">Dodaj transakcję</span>
             <div class="item-add-tr-plus bg-success-secondary">
               <span class="tr-plus fa fa-fw fa-lg fa-plus"></span>
             </div>
           </a>
         </div>
-        <div class="item-statdisplay grid-el-2 bg-white">
+        <div class="item-statdisplay bg-white">
           <div class="statdisplay-info">
             <span class="statdisplay-info-name fw-semibold fs-3">Zestawienie Środków</span>
             <select class="money-select fs-4">
@@ -207,97 +214,85 @@
           </div>
           <canvas id="chart-line" class="statdisplay-chart"></canvas>
         </div>
-        <div class="item-transactions grid-el-3 bg-white">
+        <div class="item-transactions bg-white">
           <div class="item-transactions-info">
             <span class="fw-semibold fs-3">Historia Transakcji</span>
             <a class="fw-light fs-4" href="">Więcej ></a>
           </div>
-          <div class="item-transactions-list">
-            <div class="tr-list-item">
-              <div class="tr-list-item-l">
-                <div class="category-square cat-green my-auto">
-                  <span class="fa fa-lg fa-utensils"></span>
-                </div>
-                <div class="tr-list-item-l-info ml-1">
-                  <span class="text-truncate fs-4">McDonalds</span>
-                  <span class="fw-light fs-5">14.10.22 / Gotówka</span>
-                </div>
+          <div class="tr-list-item">
+            <div class="tr-list-item-l">
+              <div class="category-square cat-green my-auto">
+                <span class="fa fa-lg fa-utensils"></span>
               </div>
-              <span class="tr-list-item-r fc-danger fs-3">-27.10 PLN</span>
+              <div class="tr-list-item-l-info ml-1">
+                <span class="text-truncate fs-4">McDonalds</span>
+                <span class="fw-light fs-5">14.10.22 / Gotówka</span>
+              </div>
             </div>
+            <span class="tr-list-item-r fc-danger fs-3">-27.10 PLN</span>
           </div>
-          <div class="item-transactions-list">
-            <div class="tr-list-item">
-              <div class="tr-list-item-l">
-                <div class="category-square cat-orange my-auto">
-                  <span class="fa fa-lg fa-briefcase"></span>
-                </div>
-                <div class="tr-list-item-l-info ml-1">
-                  <span class="text-truncate fs-4">Praca - Wynagrodzenie Miesięczne</span>
-                  <span class="fw-light fs-5">12.10.22 / PeKaO</span>
-                </div>
+          <div class="tr-list-item">
+            <div class="tr-list-item-l">
+              <div class="category-square cat-orange my-auto">
+                <span class="fa fa-lg fa-briefcase"></span>
               </div>
-              <span class="tr-list-item-r fc-success fs-3">+4610.00 PLN</span>
+              <div class="tr-list-item-l-info ml-1">
+                <span class="text-truncate fs-4">Praca - Wynagrodzenie Miesięczne</span>
+                <span class="fw-light fs-5">12.10.22 / PeKaO</span>
+              </div>
             </div>
+            <span class="tr-list-item-r fc-success fs-3">+4610.00 PLN</span>
           </div>
-          <div class="item-transactions-list">
-            <div class="tr-list-item">
-              <div class="tr-list-item-l">
-                <div class="category-square cat-blue my-auto">
-                  <span class="fa fa-lg fa-bus-alt"></span>
-                </div>
-                <div class="tr-list-item-l-info ml-1">
-                  <span class="text-truncate fs-4">Bilet ZTM Gdańsk</span>
-                  <span class="fw-light fs-5">10.10.2022 / Santander</span>
-                </div>
+          <div class="tr-list-item">
+            <div class="tr-list-item-l">
+              <div class="category-square cat-blue my-auto">
+                <span class="fa fa-lg fa-bus-alt"></span>
               </div>
-              <span class="tr-list-item-r fc-danger fs-3">-4.60 PLN</span>
+              <div class="tr-list-item-l-info ml-1">
+                <span class="text-truncate fs-4">Bilet ZTM Gdańsk</span>
+                <span class="fw-light fs-5">10.10.2022 / Santander</span>
+              </div>
             </div>
+            <span class="tr-list-item-r fc-danger fs-3">-4.60 PLN</span>
           </div>
-          <div class="item-transactions-list">
-            <div class="tr-list-item">
-              <div class="tr-list-item-l">
-                <div class="category-square cat-yellow my-auto">
-                  <span class="fa fa-lg fa-briefcase-medical"></span>
-                </div>
-                <div class="tr-list-item-l-info ml-1">
-                  <span class="text-truncate fs-4">Dentysta</span>
-                  <span class="fw-light fs-5">10.10.22 / PKO BP</span>
-                </div>
+          <div class="tr-list-item">
+            <div class="tr-list-item-l">
+              <div class="category-square cat-yellow my-auto">
+                <span class="fa fa-lg fa-briefcase-medical"></span>
               </div>
-              <span class="tr-list-item-r fc-danger fs-3">-410.00 PLN</span>
+              <div class="tr-list-item-l-info ml-1">
+                <span class="text-truncate fs-4">Dentysta</span>
+                <span class="fw-light fs-5">10.10.22 / PKO BP</span>
+              </div>
             </div>
+            <span class="tr-list-item-r fc-danger fs-3">-410.00 PLN</span>
           </div>
-          <div class="item-transactions-list">
-            <div class="tr-list-item">
-              <div class="tr-list-item-l">
-                <div class="category-square cat-cyan my-auto">
-                  <span class="fa fa-lg fa-book"></span>
-                </div>
-                <div class="tr-list-item-l-info ml-1">
-                  <span class="text-truncate fs-4">Kurs Francuskiego</span>
-                  <span class="fw-light fs-5">09.10.22 / PKO BP</span>
-                </div>
+          <div class="tr-list-item">
+            <div class="tr-list-item-l">
+              <div class="category-square cat-cyan my-auto">
+                <span class="fa fa-lg fa-book"></span>
               </div>
-              <span class="tr-list-item-r fc-danger fs-3">-90.00 PLN</span>
+              <div class="tr-list-item-l-info ml-1">
+                <span class="text-truncate fs-4">Kurs Francuskiego</span>
+                <span class="fw-light fs-5">09.10.22 / PKO BP</span>
+              </div>
             </div>
+            <span class="tr-list-item-r fc-danger fs-3">-90.00 PLN</span>
           </div>
-          <div class="item-transactions-list">
-            <div class="tr-list-item">
-              <div class="tr-list-item-l">
-                <div class="category-square cat-grey my-auto">
-                  <span class="fa fa-lg fa-ellipsis-h"></span>
-                </div>
-                <div class="tr-list-item-l-info ml-1">
-                  <span class="text-truncate fs-4">Test</span>
-                  <span class="fw-light fs-5">01.01.22 / Test</span>
-                </div>
+          <div class="tr-list-item">
+            <div class="tr-list-item-l">
+              <div class="category-square cat-grey my-auto">
+                <span class="fa fa-lg fa-ellipsis-h"></span>
               </div>
-              <span class="tr-list-item-r fc-success fs-3">+0.00 PLN</span>
+              <div class="tr-list-item-l-info ml-1">
+                <span class="text-truncate fs-4">Test</span>
+                <span class="fw-light fs-5">01.01.22 / Test</span>
+              </div>
             </div>
+            <span class="tr-list-item-r fc-success fs-3">+0.00 PLN</span>
           </div>
         </div>
-        <div class="item-goals grid-el-4 bg-white">
+        <div class="item-goals bg-white">
           <div class="item-goals-info">
             <span class="fw-semibold fs-3">Cele</span>
             <a class="fw-light fs-4" href="">Więcej ></a>
@@ -305,7 +300,7 @@
           <div class="goal-list">
             <div class="goal bg-success">
               <div class="goal-text fs-3">
-                <span class="">Wycieczka do Paryżu</span>
+                <span class="">Wycieczka do Paryża</span>
                 <span class="fc-secondary ml-1">77%</span>
               </div>
               <progress class="goal-progress" value="77" max="100"></progress>
@@ -332,7 +327,8 @@
       2022 © Capythal
     </footer>
 
-    <script>
+    <!-- Navbar Script -->
+    <script>  
       document.getElementById("nav-toggler").addEventListener("click", open_close);
       document.getElementById("exit-nav").addEventListener("click", open_close);
 
@@ -354,7 +350,33 @@
         }
       } 
     </script>
+    <!-- Modal Script -->
+    <script>
+      // Get the modal
+      var Modal = document.getElementById('add-tr-btn-modal');
+
+      // Get the <span> element that closes the modal
+      var Span = document.getElementsByClassName("tr-close")[0];
+
+      // When the user clicks the button, open the modal 
+      function AddTrBtnClick() {
+          Modal.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      Span.onclick = function() {
+          Modal.style.display = "none";
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+          if (event.target == Modal) {
+              Modal.style.display = "none";
+          }
+      }
+    </script>
     <script src="dist/js/chartjs.min.js"></script>
+    <!-- Charts Settings -->
     <script>
       // Chart Doughnut
       var ctxDoughnut = document.getElementById('chart-doughnut').getContext("2d");
