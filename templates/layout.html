@@ -1,17 +1,18 @@
 <!doctype html>
 <html lang="pl">
   <head>
+    {% block head %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Capythal</title>
-    <link href="{{url_for('static', filename='css/style.css')}}" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    <!-- <script src="script.js" defer></script> --> <!-- dropdown menu js -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Capythal - {% block title %}{% endblock %}</title>
+    {% endblock %}
   </head>
   <body>
     <div id="add-tr-btn-modal" class="tr-modal">

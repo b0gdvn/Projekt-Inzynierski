@@ -1,5 +1,7 @@
-{%extends "layout.html"%}
-{%block content%}
+{% extends "layout.html" %}
+{% block title %}Główna Strona{% endblock %}
+{% set active_page = "home" %}
+{% block content %}
 <div class="row-3">
   <div class="item-stat bg-white">
     <div class="item-stat-info">
@@ -227,4 +229,4 @@
     </div>
   </div>  
 </div>
-{%endblock%}
+{% endblock %}
