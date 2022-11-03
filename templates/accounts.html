@@ -1,0 +1,231 @@
+{% extends "layout.html" %}
+{% set active_page = "accounts" %}
+{% block content %}
+<div class="row-3">
+  <div class="item-stat bg-white">
+    <div class="item-stat-info">
+      <div class="fs-4">Dostępne Środki</div>
+      <div class="fs-3 fw-semibold">13,410.18 PLN</div>
+    </div>
+    <div class="item-stat-percentage bg-success fc-success">
+      <span class="my-auto fa fa-lg fa-caret-up"></span>
+      <span class="ml-2 fs-3 fw-semibold">3%</span>
+    </div>
+  </div>
+  <div class="item-stat bg-white">
+    <div class="item-stat-info">
+      <div class="fs-4">Przychody</div>
+      <div class="fs-3 fw-semibold">5,428.29 PLN</div>
+    </div>
+    <div class="item-stat-percentage bg-success fc-success">
+      <span class="my-auto fa fa-lg fa-caret-up"></span>
+      <span class="ml-2 fs-3 fw-semibold">4%</span>
+    </div>
+  </div>
+  <div class="item-stat bg-white">
+    <div class="item-stat-info">
+      <div class="fs-4">Wydatki</div>
+      <div class="fs-3 fw-semibold">13,410.18 PLN</div>
+    </div>
+    <div class="item-stat-percentage bg-danger fc-danger">
+      <span class="my-auto fa fa-lg fa-caret-up"></span>
+      <span class="ml-2 fs-3 fw-semibold">8%</span>
+    </div>
+  </div>
+  <div class="item-stat bg-white">
+    <div class="item-stat-info">
+      <div class="fs-4">Oszczędności</div>
+      <div class="fs-3 fw-semibold">3,230.00 PLN</div>
+    </div>
+    <div class="item-stat-percentage bg-success fc-success">
+      <span class="my-auto fa fa-lg fa-caret-up"></span>
+      <span class="ml-2 fs-3 fw-semibold">>99%</span>
+    </div>
+  </div>
+</div>
+
+<div class="row-4">
+  <div class="item-account bg-white">
+    <div class="item-account-card bg-acc-card-green fs-3">
+      <div class="card-line">
+        <div class="item-account-type">Karta Kredytowa</div>
+        <div class="item-account-bank fw-light">Santander</div>
+      </div>
+      <div class="card-line fw-semibold">
+        <div class="item-account-amount">5,877.92 PLN</div>
+      </div>
+      <div class="card-line">
+        <div class="item-account-num fw-light">**** 7312</div>
+        <img class="item-account-logo" src="{{url_for('static', filename='img/visa-logo.png')}}" alt="mastercard">
+      </div>
+    </div>
+    <div class="item-account-select">
+      <select class="account-select fs-4">
+        <optgroup label="Karty Kredytowe">
+          <option value="1">Santander</option>
+          <option value="2">PeKaO</option>
+        </optgroup>
+        <optgroup label="Konta Bieżące">
+          <option value="3">GetIn</option>
+          <option value="4">Santander</option>
+        </optgroup>
+        <optgroup label="Inne">
+          <option value="5">XTB</option>
+          <option value="6">Binance</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="account-stats">
+      <div class="item-account-stat bg-success">
+      <div class="account-stat-info">
+        <div class="fs-4">Limit Karty</div>
+        <div class="fs-3 fw-semibold">10,000 PLN</div>
+      </div>
+      <div class="account-stat-percentage-1">
+        <canvas id="chart-doughnut" class="chart-doughnut"></canvas>
+      </div>
+    </div>
+    <div class="item-account-stat bg-success">
+      <div class="account-stat-info">
+        <div class="fs-4">Wydatki tygodniowe</div>
+        <div class="fs-3 fw-semibold">570,93 PLN</div>
+      </div>
+      <div class="account-stat-percentage-2 bg-main-btn fc-main-btn">
+        <span class="my-auto fa fa-lg fa-caret-down"></span>
+        <span class="my-auto ml-2 fs-2 fw-semibold">12%</span>
+      </div>
+    </div>
+    </div>
+    
+    <a onclick="AddTrBtnClick()" class="item-add-tr-lg fs-3 fc-main-btn bg-main-btn">
+      <span class="item-add-tr-text fw-semibold">Dodaj transakcję</span>
+      <div class="item-add-tr-plus bg-success-secondary">
+        <span class="tr-plus fa fa-fw fa-lg fa-plus"></span>
+      </div>
+    </a>
+  </div>
+  <div class="item-statdisplay bg-white">
+    <div class="statdisplay-info">
+      <span class="statdisplay-info-name fw-semibold fs-3">Zestawienie Środków</span>
+      <select class="money-select fs-4">
+        <option value="1">Wydatki</option>
+        <option value="2">Zarobki</option>
+        <option value="3">Oszczędności</option>
+      </select>
+      <select class="money-select fs-4">
+        <option value="1">Tydzień</option>
+        <option value="2">Miesiąc</option>
+        <option value="3">Rok</option>
+      </select>
+    </div>
+    <canvas id="chart-line" class="statdisplay-chart"></canvas>
+  </div>
+  <div class="item-transactions bg-white">
+    <div class="item-transactions-info">
+      <span class="fw-semibold fs-3">Historia Transakcji</span>
+      <a class="fw-light fs-4" href="">Więcej ></a>
+    </div>
+    <div class="tr-list-item">
+      <div class="tr-list-item-l">
+        <div class="category-square cat-green my-auto">
+          <span class="fa fa-lg fa-utensils"></span>
+        </div>
+        <div class="tr-list-item-l-info ml-1">
+          <span class="text-truncate fs-4">McDonalds</span>
+          <span class="fw-light fs-5">14.10.22 / Gotówka</span>
+        </div>
+      </div>
+      <span class="tr-list-item-r fc-danger fs-3">-27.10 PLN</span>
+    </div>
+    <div class="tr-list-item">
+      <div class="tr-list-item-l">
+        <div class="category-square cat-orange my-auto">
+          <span class="fa fa-lg fa-briefcase"></span>
+        </div>
+        <div class="tr-list-item-l-info ml-1">
+          <span class="text-truncate fs-4">Praca - Wynagrodzenie Miesięczne</span>
+          <span class="fw-light fs-5">12.10.22 / PeKaO</span>
+        </div>
+      </div>
+      <span class="tr-list-item-r fc-success fs-3">+4610.00 PLN</span>
+    </div>
+    <div class="tr-list-item">
+      <div class="tr-list-item-l">
+        <div class="category-square cat-blue my-auto">
+          <span class="fa fa-lg fa-bus-alt"></span>
+        </div>
+        <div class="tr-list-item-l-info ml-1">
+          <span class="text-truncate fs-4">Bilet ZTM Gdańsk</span>
+          <span class="fw-light fs-5">10.10.2022 / Santander</span>
+        </div>
+      </div>
+      <span class="tr-list-item-r fc-danger fs-3">-4.60 PLN</span>
+    </div>
+    <div class="tr-list-item">
+      <div class="tr-list-item-l">
+        <div class="category-square cat-yellow my-auto">
+          <span class="fa fa-lg fa-briefcase-medical"></span>
+        </div>
+        <div class="tr-list-item-l-info ml-1">
+          <span class="text-truncate fs-4">Dentysta</span>
+          <span class="fw-light fs-5">10.10.22 / PKO BP</span>
+        </div>
+      </div>
+      <span class="tr-list-item-r fc-danger fs-3">-410.00 PLN</span>
+    </div>
+    <div class="tr-list-item">
+      <div class="tr-list-item-l">
+        <div class="category-square cat-cyan my-auto">
+          <span class="fa fa-lg fa-book"></span>
+        </div>
+        <div class="tr-list-item-l-info ml-1">
+          <span class="text-truncate fs-4">Kurs Francuskiego</span>
+          <span class="fw-light fs-5">09.10.22 / PKO BP</span>
+        </div>
+      </div>
+      <span class="tr-list-item-r fc-danger fs-3">-90.00 PLN</span>
+    </div>
+    <div class="tr-list-item">
+      <div class="tr-list-item-l">
+        <div class="category-square cat-grey my-auto">
+          <span class="fa fa-lg fa-ellipsis-h"></span>
+        </div>
+        <div class="tr-list-item-l-info ml-1">
+          <span class="text-truncate fs-4">Test</span>
+          <span class="fw-light fs-5">01.01.22 / Test</span>
+        </div>
+      </div>
+      <span class="tr-list-item-r fc-success fs-3">+0.00 PLN</span>
+    </div>
+  </div>
+  <div class="item-goals bg-white">
+    <div class="item-goals-info">
+      <span class="fw-semibold fs-3">Cele</span>
+      <a class="fw-light fs-4" href="">Więcej ></a>
+    </div>
+    <div class="goal-list">
+      <div class="goal bg-success">
+        <div class="goal-text fs-3">
+          <span class="">Wycieczka do Paryża</span>
+          <span class="fc-secondary ml-1">77%</span>
+        </div>
+        <progress class="goal-progress" value="77" max="100"></progress>
+      </div>
+      <div class="goal bg-success">
+        <div class="goal-text fs-3">
+          <span class="">Remont Mieszkania</span>
+          <span class="fc-secondary ml-1">26%</span>
+        </div>
+        <progress class="goal-progress" value="26" max="100"></progress>
+      </div>
+      <div class="goal bg-success">
+        <div class="goal-text fs-3">
+          <span class="">Zakup Samochodu</span>
+          <span class="fc-secondary ml-1">54%</span>
+        </div>
+        <progress class="goal-progress" value="54" max="100"></progress>
+      </div>
+    </div>
+  </div>  
+</div>
+{% endblock %}
