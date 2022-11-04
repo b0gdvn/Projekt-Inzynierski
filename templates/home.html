@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block title %}Główna Strona{% endblock %}
 {% set active_page = "home" %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
 {% block content %}
 <div class="row-2">
   <a onclick="AddTrBtnClick()" class="item-add-tr-sm fs-3 fc-main-btn bg-main-btn">
@@ -136,7 +140,7 @@
     </div>
     <div class="tr-list-item">
       <div class="tr-list-item-l">
-        <div class="category-square cat-green my-auto">
+        <div class="category-square style-green my-auto">
           <span class="fa fa-lg fa-utensils"></span>
         </div>
         <div class="tr-list-item-l-info ml-1">
@@ -148,7 +152,7 @@
     </div>
     <div class="tr-list-item">
       <div class="tr-list-item-l">
-        <div class="category-square cat-orange my-auto">
+        <div class="category-square style-orange my-auto">
           <span class="fa fa-lg fa-briefcase"></span>
         </div>
         <div class="tr-list-item-l-info ml-1">
@@ -160,7 +164,7 @@
     </div>
     <div class="tr-list-item">
       <div class="tr-list-item-l">
-        <div class="category-square cat-blue my-auto">
+        <div class="category-square style-blue my-auto">
           <span class="fa fa-lg fa-bus-alt"></span>
         </div>
         <div class="tr-list-item-l-info ml-1">
@@ -172,7 +176,7 @@
     </div>
     <div class="tr-list-item">
       <div class="tr-list-item-l">
-        <div class="category-square cat-yellow my-auto">
+        <div class="category-square style-yellow my-auto">
           <span class="fa fa-lg fa-briefcase-medical"></span>
         </div>
         <div class="tr-list-item-l-info ml-1">
@@ -184,7 +188,7 @@
     </div>
     <div class="tr-list-item">
       <div class="tr-list-item-l">
-        <div class="category-square cat-cyan my-auto">
+        <div class="category-square style-cyan my-auto">
           <span class="fa fa-lg fa-book"></span>
         </div>
         <div class="tr-list-item-l-info ml-1">
@@ -196,7 +200,7 @@
     </div>
     <div class="tr-list-item">
       <div class="tr-list-item-l">
-        <div class="category-square cat-grey my-auto">
+        <div class="category-square style-grey my-auto">
           <span class="fa fa-lg fa-ellipsis-h"></span>
         </div>
         <div class="tr-list-item-l-info ml-1">
@@ -213,24 +217,24 @@
       <a class="fw-light fs-4" href="{{ url_for('goals') }}">Więcej ></a>
     </div>
     <div class="goal-list">
-      <div class="goal bg-success">
+      <div class="goal style-cyan">
         <div class="goal-text fs-3">
-          <span class="">Wycieczka do Paryża</span>
-          <span class="fc-secondary ml-1">77%</span>
+          <span>Wycieczka do Paryża</span>
+          <span class="ml-1">77%</span>
         </div>
         <progress class="goal-progress" value="77" max="100"></progress>
       </div>
-      <div class="goal bg-success">
+      <div class="goal style-orange">
         <div class="goal-text fs-3">
-          <span class="">Remont Mieszkania</span>
-          <span class="fc-secondary ml-1">26%</span>
+          <span>Remont Mieszkania</span>
+          <span class="ml-1">26%</span>
         </div>
         <progress class="goal-progress" value="26" max="100"></progress>
       </div>
-      <div class="goal bg-success">
+      <div class="goal style-red">
         <div class="goal-text fs-3">
-          <span class="">Zakup Samochodu</span>
-          <span class="fc-secondary ml-1">54%</span>
+          <span>Zakup Samochodu</span>
+          <span class="ml-1">54%</span>
         </div>
         <progress class="goal-progress" value="54" max="100"></progress>
       </div>

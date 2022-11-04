@@ -83,59 +83,8 @@ progress::-webkit-progress-value {
 	background-color: #D6F2DF;
 }
 
-/* category colors*/
 
-.cat-red {
-	color: hsl(0, 18%, 33%);
-	background-color: hsl(0, 29%, 97%);
-}
-
-.cat-orange {
-	color: hsl(30, 18%, 33%);
-	background-color: hsl(30, 29%, 97%);
-}
-
-.cat-yellow {
-	color: hsl(58, 18%, 33%);
-	background-color: hsl(58, 29%, 97%);
-}
-
-.cat-lime {
-	color: hsl(90, 18%, 33%);
-	background-color: hsl(90, 29%, 97%);
-}
-
-.cat-green {
-	color: hsl(135, 18%, 33%);
-	background-color: hsl(135, 29%, 97%);
-}
-
-.cat-cyan {
-	color: hsl(180, 18%, 33%);
-	background-color: hsl(180, 29%, 97%);
-}
-
-.cat-blue {
-	color: hsl(223, 18%, 33%);
-	background-color: hsl(223, 29%, 97%);
-}
-
-.cat-violet {
-	color: hsl(260, 18%, 33%);
-	background-color: hsl(260, 29%, 97%);
-}
-
-.cat-pink {
-	color: hsl(320, 18%, 33%);
-	background-color: hsl(320, 29%, 97%);
-}
-
-.cat-grey {
-	color: hsl(0, 0%, 33%);
-	background-color: hsl(0, 0%, 97%);
-}
-
-/* goal colors */
+/* color styles */
 
 .style-red {
 	color: hsl(0, 18%, 33%);
@@ -289,27 +238,6 @@ progress::-webkit-progress-value {
 	margin: auto 0;
 }
 
-.row-2 {
-	padding: 1rem 1rem 0;
-	display: flex;
-	max-width: 100%;
-}
-
-.row-3 {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	gap: 1rem;
-	padding: 1rem;
-}
-
-.row-4 {
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
-	padding: 0 1rem 1rem;
-}
-
 .nav-toggler {
 	color: #D0DAD4;
 	border: none;
@@ -382,54 +310,7 @@ progress::-webkit-progress-value {
 	padding: 1rem;
 }
 
-.item-add-tr-text {
-	margin: 1rem 0;
-}
-
-.item-add-tr-text, .item-stat, .item-account, .item-statdisplay, .item-transactions, .item-goals {
-	display: flex;
-	justify-content: space-between;
-	flex-basis: 100%;
-	border-radius: 1rem;
-	padding: 1rem;
-}
-
-.item-add-tr-sm {
-	padding: 1rem;
-	border-radius: 1rem;
-	width: 100%;
-	display: flex;
-}
-
-.item-add-tr-lg {
-	padding: 1rem;
-	border-radius: 1rem;
-	width: 100%;
-	display: flex;
-	display: none;
-	margin-top: 1rem;
-}
-
-.item-add-tr-sm:hover,.item-add-tr-lg:hover {
-	opacity: 0.9;
-}
-
-.item-add-tr-text {
-	padding: 0;
-}
-
-.item-add-tr-plus {
-	display: flex;
-	min-width: 5rem;
-	border-radius: 1rem;
-}
-
-
-.tr-plus {
-	color: #46644F;
-	margin: auto;
-}
-
+/* zastanowić się nad konstrukcją modali */
 .tr-modal {
   display: none;
   position: fixed;
@@ -465,166 +346,6 @@ progress::-webkit-progress-value {
   cursor: pointer;
 }
 
-.item-stat-info {
-	display: flex;
-	flex-direction: column;
-	margin: auto 0;
-}
-
-.item-stat-percentage {
-	border-radius: 1rem;
-	display: flex;
-	flex: 0 0 auto;
-	min-width: 5rem;
-	justify-content: center;
-	margin: auto 0;
-	padding: 1.5rem 0.5rem;
-}
-
-.item-account {
-	flex-direction: column;
-	position: relative;
-	margin-top: 6rem;
-}
-
-.item-account-card {
-	border-radius: 1rem;
-	position: relative;
-	padding: 1rem;
-	width: 80vw;
-	margin: 0 auto;
-	aspect-ratio: 1.586/1;
-	top: -7rem;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.card-line {
-	display: flex;
-	justify-content: space-between;
-}
-
-.card-line > * {
-	margin: auto 0;
-}
-
-.item-account-amount {
-	font-size: 8vw;
-}
-
-.item-account-logo {
-	height: 2rem;
-	width: auto;
-}
-
-.item-account-select {
-	display: flex;
-	margin-top: -6rem;
-	position: relative;
-	width: 100%
-}
-
-.account-select {
-	width: 100%;
-	border-radius: 1rem;
-	padding: 1rem;
-	appearance: none !important;
-	border: 0.3rem solid #46644F;
-	cursor: pointer;
-}
-
-.account-stats {
-	margin-top: 1rem;
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
-}
-
-.item-account-stat {
-	border-radius: 1rem;
-	padding: 1rem;
-	display: flex;
-	justify-content: space-between;
-	align-content: center;
-}
-
-.account-stat-info {
-	display: flex;
-	flex-direction: column;
-	margin: auto 0;
-}
-
-.account-stat-percentage-1 {
-	display: flex;
-	margin: auto 0;
-}
-
-.chart-doughnut {
-	height: 6rem;
-	width: 6rem;
-	margin: auto 0 auto 1rem;
-}
-
-.account-stat-percentage-2 {
-	justify-content: center;
-	height: 6rem;
-	width: 6rem;
-	padding: 1.5rem;
-	border-radius: 1rem;
-	display: flex;
-	margin: auto 0 auto 1rem;
-}
-
-.item-statdisplay, .statdisplay-info {
-	display: flex;
-	flex-direction: column;
-}
-
-.money-select {
-	margin-top: 1rem;
-	border-radius: 1rem;
-	padding: 1rem;
-	appearance: none !important;
-	border: 0.3rem solid #46644F;
-	cursor: pointer;
-}
-
-.statdisplay-chart {
-	max-height: 10rem;
-	/*padding: 0 1rem;*/
-	margin-top: 2rem;
-}
-
-.item-transactions, .item-goals {
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.item-transactions-info, .item-goals-info {
-	display: flex;
-	width: 100%;
-	justify-content: space-between;
-}
-
-.item-transactions-info > *, .item-goals-info > * {
-	margin: auto 0;
-}
-
-
-.tr-list-item {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-top: 1rem;
-}
-
-.tr-list-item-l {
-	display: flex;
-	flex-basis: 60%;
-	min-width: 60%; /* możliwe że lepiej użyć 60% a nie 0 jak było poprzednio */
-}
-
 .category-square {
 	font-size: 1rem;
 	height: 3rem;
@@ -637,47 +358,10 @@ progress::-webkit-progress-value {
 	margin: auto;
 }
 
-.tr-list-item-l-info {
-	display: flex;
-	white-space: nowrap;
-	flex-direction: column;
-	justify-content: center;
-	min-width: 0;
-	flex-basis: 100%;
-}
-
-.tr-list-item-r {
-	flex-basis: 40%;
-	text-align: end;
-	white-space: nowrap;
-}
-
-.goal-list {
-	height: 100%;
-	justify-content: space-between;
-	display: flex;
-	flex-direction: column;
-}
-
-.goal{
-	flex: 1 1 auto;
-	margin-top: 1rem;
-	padding: 1rem;
-	border-radius: 1rem;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.goal-text {
-	display: flex;
-	justify-content: space-between;
-}
-
 .goal-progress {
 	-webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+	-moz-appearance: none;
+	appearance: none;
 	width: 100%;
 }
 
@@ -714,36 +398,6 @@ footer {
 		margin: 1rem 1rem 0;
 	}
 
-	.item-add-tr-sm {
-		padding: 1rem 2rem;
-	}
-
-	.item-add-tr-plus {
-		min-width: 8rem;
-	}
-
-	.item-stat-info {
-		padding-left: 1rem;
-	}
-
-	.item-stat-percentage {
-		min-width: 8rem;
-		margin-right: 1rem;
-	}
-
-	.item-account-card{
-		margin: 0 auto;
-	}
-
-	.item-account-logo {
-		height: 4rem;
-	}
-
-	.chart-doughnut, .account-stat-percentage-2 {
-		height: 8rem;
-		width: 8rem;
-	}
-
 	.category-square {
 		font-size: 1.6rem;
 		height: 4rem;
@@ -777,71 +431,6 @@ footer {
 		max-width: 17rem;
 	}
 
-	.item-add-tr-lg {
-		display: flex;
-	}
-
-	.item-add-tr-plus {
-		min-width: 6rem;
-		margin-right: 0;
-	}
-
-	.tr-modal-content {
-	  max-width: 40rem ;
-	}
-
-	.item-stat-percentage {
-		min-width: 6rem;
-		padding: 1rem 0;
-	}
-
-	.item-account {
-		margin-top: 6rem;
-	}
-
-	.item-account-card {
-		width: calc(80vw - 17rem);
-	}
-
-	.item-account-amount {
-		font-size: 6vw;
-	}
-
-	.account-select {
-		padding: 0.5rem;
-		border: 0.2rem solid #46644F;
-	}
-
-	.chart-doughnut, .account-stat-percentage-2 {
-		height: 6rem;
-		width: 6rem;
-	}
-
-	.statdisplay-info {
-		flex-direction: row;
-		align-items: center;
-	}
-
-	.statdisplay-info-name {
-		margin-right: auto;
-	}
-
-	.money-select {
-		margin-top: 0;
-		margin-left: 0.5rem;
-		border: 0.2rem solid #46644F;
-		padding: 0.3rem 0.8rem;
-	}
-
-	.account-stat-percentage-2 {
-		height: 6rem;
-		width: 6rem;
-	}
-
-	.statdisplay-chart {
-		max-height: 16rem;
-	}
-
 	footer {
 		margin-left: 17rem;
 	}
@@ -872,57 +461,5 @@ footer {
 
 	.fs-4 {
 	  font-size: 1rem;
-	}
-}
-
-@media (min-width: 1100px) {
-	.row-3 > * {
-		flex: 0 1 calc(50% - 0.5rem);
-	}
-
-	.row-4 {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-	}
-
-	.item-account, .item-statdisplay {
-		grid-column: span 2;
-	}
-
-	.item-account-card {
-		width: 100%;
-		max-width: 30rem;
-	}
-
-	.item-account-amount {
-		font-size: 3rem;
-	}
-
-	.account-stats {
-		flex-direction: row;
-	}
-
-	.account-stats > * {
-		flex: 1 1 auto;
-	}
-}
-
-@media (min-width: 1700px) {
-	.row-3 > * {
-		flex: 0 1 calc(25% - 1rem);
-	}
-
-	.row-4 {
-		grid-template-columns: 2fr 2fr 3fr;
-	}
-
-	.item-account {
-		grid-column-start: 3;
-		grid-row-start: 1;
-		grid-row-end: span 2;
-	}
-
-	.account-stats {
-		flex-direction: column;
 	}
 }
