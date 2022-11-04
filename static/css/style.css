@@ -1,7 +1,7 @@
 /*MAIN PARAMETERS*/
 html, body{
-  padding: 0;
-  margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 html {
@@ -13,9 +13,9 @@ html {
 body {
 	background-color: #F8F8F8;
 	color: #1F2E23;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 * {
@@ -44,16 +44,16 @@ progress {
 progress::-webkit-progress-bar {
 	height: 1rem;
 	width: 100%;
-  padding-left: 0;
+	padding-left: 0;
 	margin: 0 0 1rem 0;
-	background-color: #D0DAD4;
+	background-color: rgba(0,0,0,0.2);
 	border-radius: 1rem;
 }
 progress::-webkit-progress-value {
 	height: 1rem;
 	margin: 0 0 1rem 0;
-  padding-left: 1rem; /* Rounded corners requires a padding */
-	background: #46644F;
+	padding-left: 1rem; /* Rounded corners requires a padding */
+	background: rgba(0,0,0,0.3);
 	border-radius: 1rem;
 }
 
@@ -82,6 +82,8 @@ progress::-webkit-progress-value {
 .bg-acc-card-green {
 	background-color: #D6F2DF;
 }
+
+/* category colors*/
 
 .cat-red {
 	color: hsl(0, 18%, 33%);
@@ -131,6 +133,58 @@ progress::-webkit-progress-value {
 .cat-grey {
 	color: hsl(0, 0%, 33%);
 	background-color: hsl(0, 0%, 97%);
+}
+
+/* goal colors */
+
+.style-red {
+	color: hsl(0, 18%, 33%);
+	background-color: hsl(0, 75%, 85%);
+}
+
+.style-orange {
+	color: hsl(30, 18%, 33%);
+	background-color: hsl(30, 75%, 85%);
+}
+
+.style-yellow {
+	color: hsl(58, 18%, 33%);
+	background-color: hsl(58, 75%, 85%);
+}
+
+.style-lime {
+	color: hsl(90, 18%, 33%);
+	background-color: hsl(90, 75%, 85%);
+}
+
+.style-green {
+	color: hsl(135, 18%, 33%);
+	background-color: hsl(135, 75%, 85%);
+}
+
+.style-cyan {
+	color: hsl(180, 18%, 33%);
+	background-color: hsl(180, 75%, 85%);
+}
+
+.style-blue {
+	color: hsl(223, 18%, 33%);
+	background-color: hsl(223, 75%, 85%);
+}
+
+.style-violet {
+	color: hsl(260, 18%, 33%);
+	background-color: hsl(260, 75%, 85%);
+}
+
+.style-pink {
+	color: hsl(320, 18%, 33%);
+	background-color: hsl(320, 75%, 85%);
+}
+
+.style-grey {
+	color: hsl(0, 0%, 33%);
+	background-color: hsl(40, 5%, 89%)
 }
 
 /*text-color*/
@@ -212,15 +266,15 @@ progress::-webkit-progress-value {
 #exit-nav {
 	position: fixed;
 	z-index: 100;
-  padding: 0;
-  margin: 0;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  border: none;
-  opacity: 0;
-  background: black;
+	padding: 0;
+	margin: 0;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 100%;
+	border: none;
+	opacity: 0;
+	background: black;
 }
 
 .row-1 {
@@ -236,7 +290,7 @@ progress::-webkit-progress-value {
 }
 
 .row-2 {
-	padding: 0 1rem;
+	padding: 1rem 1rem 0;
 	display: flex;
 	max-width: 100%;
 }
@@ -357,9 +411,8 @@ progress::-webkit-progress-value {
 }
 
 .item-add-tr-sm:hover,.item-add-tr-lg:hover {
-	opacity: 0.8;
+	opacity: 0.9;
 }
-
 
 .item-add-tr-text {
 	padding: 0;
@@ -658,7 +711,7 @@ footer {
 
 @media (min-width: 500px) {
 	.row-1 {
-		margin: 1rem;
+		margin: 1rem 1rem 0;
 	}
 
 	.item-add-tr-sm {

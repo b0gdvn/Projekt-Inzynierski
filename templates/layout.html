@@ -30,6 +30,12 @@
             <span class="ml-1 fs-4">Glówna Strona</span>
           </a>
         </li>
+        <li class="menu-button {{ 'active' if active_page == 'stats' else '' }}">
+          <a href="{{ url_for('stats') }}" class="menu-button-link">
+            <span class="fa fa-fw fa-bar-chart my-auto"></span>
+            <span class="ml-1 fs-4">Statystyki</span>
+          </a>
+        </li>
         <li class="menu-button {{ 'active' if active_page == 'accounts' else '' }}">
           <a href="{{ url_for('accounts') }}" class="menu-button-link">
             <span class="fa fa-fw fa-credit-card my-auto"></span>
@@ -40,12 +46,6 @@
           <a href="{{ url_for('goals') }}" class="menu-button-link">
             <span class="fa fa-fw fa-check-square-o my-auto"></span>
             <span class="ml-1 fs-4">Cele</span>
-          </a>
-        </li>
-        <li class="menu-button {{ 'active' if active_page == 'stats' else '' }}">
-          <a href="{{ url_for('stats') }}" class="menu-button-link">
-            <span class="fa fa-fw fa-bar-chart my-auto"></span>
-            <span class="ml-1 fs-4">Statystyki</span>
           </a>
         </li>
         <li class="menu-button {{ 'active' if active_page == 'history' else '' }}">
@@ -84,14 +84,6 @@
       <div class="row-1">
         <a class="fs-1" href="{{ url_for('home') }}">Capythal</a>
         <button id="nav-toggler" class="nav-toggler fa fa-bars" href=""></button>
-      </div>
-      <div class="row-2">
-        <a onclick="AddTrBtnClick()" class="item-add-tr-sm fs-3 fc-main-btn bg-main-btn">
-          <span class="item-add-tr-text fw-semibold">Dodaj transakcję</span>
-          <div class="item-add-tr-plus bg-success-secondary">
-            <span class="tr-plus fa fa-fw fa-lg fa-plus"></span>
-          </div>
-        </a>
       </div>
       {%block content%}
       {%endblock%}

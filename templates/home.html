@@ -2,6 +2,14 @@
 {% block title %}Główna Strona{% endblock %}
 {% set active_page = "home" %}
 {% block content %}
+<div class="row-2">
+  <a onclick="AddTrBtnClick()" class="item-add-tr-sm fs-3 fc-main-btn bg-main-btn">
+    <span class="item-add-tr-text fw-semibold">Dodaj transakcję</span>
+    <div class="item-add-tr-plus bg-success-secondary">
+      <span class="tr-plus fa fa-fw fa-lg fa-plus"></span>
+    </div>
+  </a>
+</div>
 <div class="row-3">
   <div class="item-stat bg-white">
     <div class="item-stat-info">
@@ -47,7 +55,7 @@
 
 <div class="row-4">
   <div class="item-account bg-white">
-    <div class="item-account-card bg-acc-card-green fs-3">
+    <div class="item-account-card style-green fs-3">
       <div class="card-line">
         <div class="item-account-type">Karta Kredytowa</div>
         <div class="item-account-bank fw-light">Santander</div>
@@ -55,9 +63,9 @@
       <div class="card-line fw-semibold">
         <div class="item-account-amount">5,877.92 PLN</div>
       </div>
-      <div class="card-line">
+      <div class="card-line"> <!-- this div should be disabled in case of non-card account -->
         <div class="item-account-num fw-light">**** 7312</div>
-        <img class="item-account-logo" src="{{url_for('static', filename='img/visa-logo.png')}}" alt="mastercard">
+        <img class="item-account-logo" src="{{url_for('static', filename='img/ms-logo.png')}}" alt="mastercard">
       </div>
     </div>
     <div class="item-account-select">

@@ -7,6 +7,10 @@ app=Flask(__name__)
 def home():
     return render_template("home.html")
 
+@app.route('/stats')
+def stats():
+    return render_template("stats.html")
+    
 @app.route('/accounts')
 def accounts():
     return render_template("accounts.html")
@@ -14,10 +18,6 @@ def accounts():
 @app.route('/goals')
 def goals():
     return render_template("goals.html")
-
-@app.route('/stats')
-def stats():
-    return render_template("stats.html")
 
 @app.route('/history')
 def history():
