@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block title %}Cele{% endblock %}
+{% set active_page = "goals" %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/accounts.css') }}">
+{% endblock %}
+{% block content %}
+<div class="accounts-flexbox">
+  <a href="" class="account-add">
+    <span class="account-plus-sign fa fa-plus"></span>
+    <span class="fs-1">Dodaj Konto</span>
+  </a>
+  <div class="account-info">
+    <span class="fs-1 fw-light">5,877.92 PLN</span>
+    <span class="fs-1 fw-semibold">Karta Kredytowa</span>
+    <span class="fs-2 fw-light">Santander Mastercard</span>
+    <span class="fs-4">**** 7312</span>
+    <a href="" class="account-edit">
+      <span class="fs-2">Edytuj Konto</span>
+    </a>
+  </div>
+  <div class="account-info">
+    <span class="fs-1 fw-light">2,900.32 PLN</span>
+    <span class="fs-1 fw-semibold">Karta Debetowa</span>
+    <span class="fs-2 fw-light">PKO Visa</span>
+    <span class="fs-4">**** 3121</span>
+    <a href="" class="account-edit">
+      <span class="fs-2">Edytuj Konto</span>
+    </a>
+  </div>
+  <div class="account-info">
+    <span class="fs-1 fw-light">3,560.70 PLN</span>
+    <span class="fs-1 fw-semibold">Konto Maklerskie</span>
+    <span class="fs-2 fw-light">XTB</span>
+    <a href="" class="account-edit">
+      <span class="fs-2">Edytuj Konto</span>
+    </a>
+  </div>
+</div>
+{% endblock %}
