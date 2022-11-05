@@ -287,6 +287,7 @@
 .goal{
 	flex: 1 1 auto;
 	margin-top: 1rem;
+	gap: 2rem;
 	padding: 1rem;
 	border-radius: 1rem;
 	display: flex;
@@ -430,6 +431,26 @@
 
 	.row-4 {
 		grid-template-columns: 2fr 2fr 3fr;
+	}
+
+	.item-add-tr-lg {
+		flex: 1 1 100%;
+		font-size: 3rem;
+		padding: 1rem 3rem;
+	}
+
+	.item-add-tr-plus {
+		margin-left: 2rem;
+		background-color: #46644F;
+	}
+	
+	.item-add-tr-plus > span {
+		font-size: 5rem;
+		color: #F3F8F5;
+	}
+
+	.item-add-tr-text {
+		margin: auto;
 	}
 
 	.item-account {
