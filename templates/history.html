@@ -7,6 +7,15 @@
 {% endblock %}
 {% block content %}
 <div class="history-flexbox bg-white">
+  <div class="buttons">
+    <a href="" class="filter-btn fs-3 fw-semibold">
+      <span>Filtry</span>
+    </a>
+    <a onclick="AddTrBtnClick()" class="add-tr-btn fs-3">
+      <span class="fw-semibold">Dodaj transakcję</span>
+      <span class="tr-plus fa fa-fw fa-plus bg-success-secondary"></span>
+    </a>
+  </div>
   <div class="table-container" role="table" aria-label="Destinations">
     <div class="flex-table header" role="rowgroup">
       <div class="flex-row first-header" role="columnheader">Data</div>

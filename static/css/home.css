@@ -19,11 +19,7 @@
 	padding: 0 1rem 1rem;
 }
 
-.item-add-tr-text {
-	margin: 1rem 0;
-}
-
-.item-add-tr-text, .item-stat, .item-account, .item-statdisplay, .item-transactions, .item-goals {
+.item-stat, .item-account, .item-statdisplay, .item-transactions, .item-goals {
 	display: flex;
 	justify-content: space-between;
 	flex-basis: 100%;
@@ -31,75 +27,18 @@
 	padding: 1rem;
 }
 
-.item-add-tr-sm {
-	padding: 1rem;
-	border-radius: 1rem;
-	width: 100%;
-	display: flex;
-}
-
-.item-add-tr-lg {
-	padding: 1rem;
-	border-radius: 1rem;
-	width: 100%;
-	display: flex;
-	display: none;
-	margin-top: 1rem;
-}
-
-.item-add-tr-sm:hover,.item-add-tr-lg:hover {
-	opacity: 0.9;
-}
-
-.item-add-tr-text {
-	padding: 0;
-}
-
-.item-add-tr-plus {
-	display: flex;
-	min-width: 5rem;
-	border-radius: 1rem;
-}
-
-
-.tr-plus {
-	color: #46644F;
-	margin: auto;
-}
-
-.tr-modal {
-  display: none;
-  position: fixed;
-  z-index: 110;
-  padding-top: 2rem;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0,0,0,0.4);
-}
-
-.tr-modal-content {
-	border-radius: 1rem;
-  background-color: #fefefe;
-  margin: auto;
-  padding: 1rem;
-  width: calc(100% - 4rem);
-}
-
 .tr-close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 1.5rem;
-  font-weight: bold;
+	color: #aaaaaa;
+	float: right;
+	font-size: 1.5rem;
+	font-weight: bold;
 }
 
 .tr-close:hover,
 .tr-close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 .item-stat-info {
@@ -159,16 +98,11 @@
 	display: flex;
 	margin-top: -6rem;
 	position: relative;
-	width: 100%
+	width: 100%;
 }
 
 .account-select {
 	width: 100%;
-	border-radius: 1rem;
-	padding: 1rem;
-	appearance: none !important;
-	border: 0.3rem solid #46644F;
-	cursor: pointer;
 }
 
 .account-stats {
@@ -220,11 +154,6 @@
 
 .money-select {
 	margin-top: 1rem;
-	border-radius: 1rem;
-	padding: 1rem;
-	appearance: none !important;
-	border: 0.3rem solid #46644F;
-	cursor: pointer;
 }
 
 .statdisplay-chart {
@@ -335,10 +264,6 @@
 	.item-add-tr-plus {
 		min-width: 6rem;
 		margin-right: 0;
-	}
-
-	.tr-modal-content {
-		max-width: 40rem ;
 	}
 
 	.item-stat-percentage {
