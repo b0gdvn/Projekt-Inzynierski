@@ -28,6 +28,7 @@ aside {
 
 a {
 	color: #1F2E23;
+	cursor: pointer;
 	text-decoration: none;
 }
 
@@ -241,28 +242,6 @@ progress::-webkit-progress-value {
 	background: black;
 }
 
-
-.tr-modal {
-	display: none;
-	position: fixed;
-	z-index: 110;
-	padding-top: 2rem;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgba(0,0,0,0.4);
-}
-
-.tr-modal-content {
-	border-radius: 1rem;
-	background-color: #fefefe;
-	margin: auto;
-	padding: 1rem;
-	width: calc(100% - 4rem);
-}
-
 .row-1 {
 	display: flex;
 	max-width: 100%;
@@ -388,38 +367,38 @@ progress::-webkit-progress-value {
 
 /* zastanowić się nad konstrukcją modali */
 .tr-modal {
-  display: none;
-  position: fixed;
-  z-index: 110;
-  padding-top: 2rem;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0,0,0,0.4);
+	display: none;
+	position: fixed;
+	z-index: 110;
+	padding-top: 2rem;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgba(0,0,0,0.4);
 }
 
 .tr-modal-content {
 	border-radius: 1rem;
-  background-color: #fefefe;
-  margin: auto;
-  padding: 1rem;
-  width: calc(100% - 4rem);
+	background-color: #fefefe;
+	margin: auto;
+	padding: 1rem;
+	width: calc(100% - 4rem);
 }
 
 .tr-close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 1.5rem;
-  font-weight: bold;
+	color: #aaaaaa;
+	float: right;
+	font-size: 1.5rem;
+	font-weight: bold;
 }
 
 .tr-close:hover,
 .tr-close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 .category-square {

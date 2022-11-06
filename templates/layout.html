@@ -16,10 +16,7 @@
   </head>
   <body>
     <div id="add-tr-btn-modal" class="tr-modal">
-      <div class="tr-modal-content">
-        <a class="tr-close">Zamknij</a>
-        <span class="fs-3 fw-semibold">Nowa Transakcja</span>
-      </div>
+      {% include 'modals/tr-add-modal.html' %}
     </div>
     <aside id="navbar" class="navbar">
       <a class="logo fs-1" href="{{ url_for('home') }}">Capythal</a>
