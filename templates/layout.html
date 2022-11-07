@@ -15,8 +15,8 @@
     {% endblock %}
   </head>
   <body>
-    <div id="add-tr-btn-modal" class="tr-modal">
-      {% include 'modals/tr-add-modal.html' %}
+    <div id="add-tr-btn-modal" class="modal">
+      {% include 'modals/tr-modal.html' %}
     </div>
     <aside id="navbar" class="navbar">
       <a class="logo fs-1" href="{{ url_for('home') }}">Capythal</a>
@@ -89,7 +89,7 @@
       2022 © Capythal
     </footer>
     <script src="{{url_for('static', filename='js/navbar.js')}}"></script>
-    <script src="{{url_for('static', filename='js/modal.js')}}"></script>
+    <script src="{{url_for('static', filename='js/tr-modal.js')}}"></script>
     <script src="{{url_for('static', filename='js/chartjs-custom.js')}}"></script>
   </body>
 </html>

@@ -22,6 +22,20 @@ body {
 	box-sizing: border-box;
 }
 
+*:focus {
+    outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 aside {
 	background-color: #FFFFFF;
 }
@@ -366,7 +380,7 @@ progress::-webkit-progress-value {
 }
 
 /* zastanowić się nad konstrukcją modali */
-.tr-modal {
+.modal {
 	display: none;
 	position: fixed;
 	z-index: 110;
@@ -390,7 +404,6 @@ progress::-webkit-progress-value {
 .tr-close {
 	color: #aaaaaa;
 	float: right;
-	font-size: 1.5rem;
 	font-weight: bold;
 }
 

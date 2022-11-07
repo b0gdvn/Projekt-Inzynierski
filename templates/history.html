@@ -4,11 +4,15 @@
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">
-{% endblock %}
+  <script src="{{url_for('static', filename='js/f-modal.js')}}"></script>
+  {% endblock %}
 {% block content %}
+<div id="filter-btn-modal" class="modal">
+  {% include 'modals/f-modal.html' %}
+</div>
 <div class="history-flexbox bg-white">
   <div class="buttons">
-    <a href="" class="filter-btn fs-3 fw-semibold">
+    <a onclick="FilterBtnClick()" class="filter-btn fs-3 fw-semibold">
       <span>Filtry</span>
     </a>
     <a onclick="AddTrBtnClick()" class="add-tr-btn fs-3">

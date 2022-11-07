@@ -27,20 +27,6 @@
 	padding: 1rem;
 }
 
-.tr-close {
-	color: #aaaaaa;
-	float: right;
-	font-size: 1.5rem;
-	font-weight: bold;
-}
-
-.tr-close:hover,
-.tr-close:focus {
-	color: #000;
-	text-decoration: none;
-	cursor: pointer;
-}
-
 .item-stat-info {
 	display: flex;
 	flex-direction: column;
