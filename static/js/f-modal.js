@@ -2,7 +2,7 @@
 var fModal = document.getElementById('filter-btn-modal');
 
 // Get the <span> element that closes the modal
-var Span = document.getElementsByClassName("tr-close")[0];
+var fSpan = document.getElementsByClassName("f-close")[0];
 
 // When the user clicks the button, open the modal 
 function filterBtnClick() {
@@ -10,7 +10,7 @@ function filterBtnClick() {
 }
 
 // When the user clicks on <span> (x), close the modal
-Span.onclick = function() {
+fSpan.onclick = function() {
     fModal.style.display = "none";
 }
 
@@ -20,27 +20,3 @@ window.onclick = function(event) {
         fModal.style.display = "none";
     }
 }
-
-document.getElementById("radio-income").addEventListener('change', (event) => {
-    if (event.currentTarget.checked) {
-        document.getElementById("tr-income").style.display = "block";
-        document.getElementById("tr-expense").style.display = "none";
-        document.getElementById("tr-transfer").style.display = "none";
-    }
-})
-
-document.getElementById("radio-expense").addEventListener('change', (event) => {
-    if (event.currentTarget.checked) {
-        document.getElementById("tr-income").style.display = "none";
-        document.getElementById("tr-expense").style.display = "block";
-        document.getElementById("tr-transfer").style.display = "none";
-    }
-})
-
-document.getElementById("radio-transfer").addEventListener('change', (event) => {
-    if (event.currentTarget.checked) {
-        document.getElementById("tr-income").style.display = "none";
-        document.getElementById("tr-expense").style.display = "none";
-        document.getElementById("tr-transfer").style.display = "block";
-    }
-})
