@@ -7,9 +7,13 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/tr-modal.css') }}">
 {% endblock %}
 {% block content %}
+<div id="add-tr-btn-modal" class="modal">
+  {% include 'modals/tr-modal.html' %}
+</div>
 <div id="filter-btn-modal" class="modal">
   {% include 'modals/f-modal.html' %}
 </div>
+
 <div class="history-flexbox bg-white">
   <div class="buttons">
     <a onclick="filterBtnClick()" class="filter-btn fs-3 fw-semibold">

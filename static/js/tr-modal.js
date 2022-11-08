@@ -15,11 +15,11 @@ Span.onclick = function() {
 }
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.addEventListener("click", function(event) {
     if (event.target == Modal) {
         Modal.style.display = "none";
     }
-}
+});
 
 document.getElementById("radio-income").addEventListener('change', (event) => {
     if (event.currentTarget.checked) {

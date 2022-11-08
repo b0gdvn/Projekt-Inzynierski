@@ -393,7 +393,7 @@ progress::-webkit-progress-value {
 	background-color: rgba(0,0,0,0.4);
 }
 
-.tr-modal-content {
+.tr-modal-content, .f-modal-content {
 	border-radius: 1rem;
 	background-color: #fefefe;
 	margin: auto;
@@ -511,7 +511,7 @@ footer {
 		display: block;
 	}
 
-	.tr-modal-content {
+	.tr-modal-content, .f-modal-content {
 		max-width: 40rem ;
 	}
 

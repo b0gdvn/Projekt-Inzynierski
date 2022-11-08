@@ -2,7 +2,7 @@
 var fModal = document.getElementById('filter-btn-modal');
 
 // Get the <span> element that closes the modal
-var fSpan = document.getElementsByClassName("f-close")[0];
+var fSpan = document.getElementsByClassName("tr-close")[1];
 
 // When the user clicks the button, open the modal 
 function filterBtnClick() {
@@ -15,8 +15,8 @@ fSpan.onclick = function() {
 }
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.addEventListener("click", function(event) {
     if (event.target == fModal) {
         fModal.style.display = "none";
     }
-}
+});
