@@ -1,7 +1,3 @@
-input {
-    -webkit-appearance: none;
-}
-
 .modal-top {
 	display: flex;
 	justify-content: space-between;
@@ -87,7 +83,6 @@ input {
 	padding: 1rem;
 	margin: 0.5rem auto;
 	border: none;
-	border-radius: 1rem;
 	border-bottom: 1px solid #ccc;
 }
 
@@ -97,12 +92,6 @@ input {
 
 #tr_amount::placeholder {
 	text-align: center; 
-}
-
-#tr_amount:invalid {
-	border-radius: 1rem;
-	background-color: #fff3f3;
-	border: 1px solid red;
 }
 
 #tr_name {
@@ -122,10 +111,6 @@ input {
 	justify-content: space-between;
 }
 
-select {
-	border-radius: 0.8rem;
-}
-
 #tr_category, #tr_account, #tr_account_from, #tr_account_to {
 	text-align-last: center;
 	width: calc(50% - 0.25rem);
@@ -134,13 +119,10 @@ select {
 
 #tr_date, #tr_time {
 	padding: 1rem;
+	margin: 0.5rem 0;
 	border-radius: 0.8rem;
 	width: calc(50% - 0.25rem);
 	border: 1px solid #ccc;
-}
-
-.date-label, .time-label {
-	display: none;
 }
 
 #tr_reset, #tr_submit {
@@ -176,19 +158,4 @@ select {
 #tr_submit:active {
 	color: #46644F;
 	background-color: #F3F8F5;
-}
-
-@media (max-width: 800px) {
-	.input-line {
-		flex-direction: column;
-	}
-
-	.input-line > * {
-		width: 100% !important;
-	}
-
-	.date-label, .time-label {
-		display: block;
-		padding: 0 1rem;
-	}
 }

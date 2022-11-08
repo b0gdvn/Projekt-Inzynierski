@@ -13,22 +13,22 @@
 	</div>
   <div id="tr-income">
     <form class="fs-4 income-form" action="">
-      <input id="tr_amount" class="fs-1" type="number" step="0.01" min="0.00" placeholder="0.00">
+      <input id="tr_amount" class="fs-1" type="number" step="0.01" min="0.00" placeholder="0.00" oninput="validity.valid||(value='');">
       <input id="tr_name" type="text" placeholder="Nazwa Transakcji">
       <div class="input-line">
         <select id="tr_category" name="Kategoria">
           <option value="" disabled selected>Kategoria</option>
-          {% include 'additional/income-categories-list.html' %}
+          <option value="">Jedzenie</option>
+          <option value="">Transport</option>
         </select>
         <select id="tr_account" name="Konto">
           <option value="" disabled selected>Konto</option>
-          {% include 'additional/account-list.html' %}
+          <option value="">Jedzenie</option>
+          <option value="">Transport</option>
         </select>
       </div>
       <div class="input-line">
-        <span class="date-label fs-4">Data</span>
         <input id="tr_date" type=date>
-        <span class="time-label fs-4">Czas</span>
         <input id="tr_time" type=time>
       </div>
       <div class="input-line">
@@ -39,22 +39,22 @@
   </div>
   <div id="tr-expense">
     <form class="fs-4 income-form" action="">
-      <input id="tr_amount" class="fs-1" type="number" step="0.01" min="0.00" placeholder="0.00">
+      <input id="tr_amount" class="fs-1" type="number" step="0.01" min="0.00" placeholder="0.00" oninput="validity.valid||(value='');">
       <input id="tr_name" type="text" placeholder="Nazwa Transakcji">
       <div class="input-line">
         <select id="tr_category" name="Kategoria">
           <option value="" disabled selected>Kategoria</option>
-          {% include 'additional/expense-categories-list.html' %}
+          <option value="">Jedzenie</option>
+          <option value="">Transport</option>
         </select>
         <select id="tr_account" name="Konto">
           <option value="" disabled selected>Konto</option>
-          {% include 'additional/account-list.html' %}
+          <option value="">Jedzenie</option>
+          <option value="">Transport</option>
         </select>
       </div>
       <div class="input-line">
-        <span class="date-label fs-4">Data</span>
         <input id="tr_date" type=date>
-        <span class="time-label fs-4">Czas</span>
         <input id="tr_time" type=time>
       </div>
       <div class="input-line">
@@ -65,22 +65,22 @@
   </div>
   <div id="tr-transfer">
     <form class="fs-4 income-form" action="">
-      <input id="tr_amount" class="fs-1" type="number" step="0.01" min="0.00" placeholder="0.00">
+      <input id="tr_amount" class="fs-1" type="number" step="0.01" min="0.00" placeholder="0.00" oninput="validity.valid||(value='');">
       <input id="tr_name" type="text" placeholder="Nazwa Transakcji">
       <div class="input-line">
         <select id="tr_account_from" name="Konto">
           <option value="" disabled selected>Konto z</option>
-          {% include 'additional/account-list.html' %}
+          <option value="">Jedzenie</option>
+          <option value="">Transport</option>
         </select>
         <select id="tr_account_to" name="Konto">
           <option value="" disabled selected>Konto do</option>
-          {% include 'additional/account-list.html' %}
+          <option value="">Jedzenie</option>
+          <option value="">Transport</option>
         </select>
       </div>
       <div class="input-line">
-        <span class="date-label fs-4">Data</span>
         <input id="tr_date" type=date>
-        <span class="time-label fs-4">Czas</span>
         <input id="tr_time" type=time>
       </div>
       <div class="input-line">
