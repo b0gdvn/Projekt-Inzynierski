@@ -77,6 +77,12 @@ input {
 	display: block;
 }
 
+#tr_amount:focus:invalid {
+	border-radius: 1rem;
+	background-color: #fff3f3;
+	border: 1px solid red;
+}
+
 #tr_amount {
 	text-align: center;
 	width: 70%;
@@ -96,11 +102,7 @@ input {
 	text-align: center; 
 }
 
-#tr_amount:invalid {
-	border-radius: 1rem;
-	background-color: #fff3f3;
-	border: 1px solid red;
-}
+
 
 #tr_name {
 	width: 100%;
@@ -159,6 +161,11 @@ select {
 #tr_reset:active {
 	color: #F3F8F5;
 	background-color: #46644F;
+}
+
+form:invalid #tr_submit {
+	opacity: 0.3;
+	pointer-events: none;
 }
 
 #tr_submit {

@@ -67,9 +67,9 @@ input {
 	color: inherit;
 }
 
-#tr_amount {
+#tr_amount_min, #tr_amount_max {
 	text-align: center;
-	width: 70%;
+	width: calc(50% - 0.5rem);
 	display: flex;
 	padding: 1rem;
 	margin: 0.5rem auto;
@@ -77,11 +77,11 @@ input {
 	border-bottom: 1px solid #ccc;
 }
 
-#tr_amount:focus {
+#tr_amount_min:focus, #tr_amount_max:focus {
 	border-bottom: 1px solid #46644F;
 }
 
-#tr_amount::placeholder {
+#tr_amount_min::placeholder, #tr_amount_max::placeholder {
 	text-align: center; 
 }
 
@@ -108,7 +108,7 @@ input {
 	border: 1px solid #ccc;
 }
 
-#tr_date, #tr_time {
+#tr_date_min, #tr_date_max {
 	padding: 1rem;
 	margin: 0.5rem 0;
 	border-radius: 0.8rem;

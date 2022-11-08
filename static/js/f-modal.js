@@ -20,3 +20,13 @@ window.addEventListener("click", function(event) {
         fModal.style.display = "none";
     }
 });
+
+function validateFilterForm() {
+    var minAmount = parseFloat(document.forms["filter"]["tr_amount_min"].value);
+    var maxAmount = parseFloat(document.forms["filter"]["tr_amount_max"].value);
+
+    if (minAmount >= maxAmount && minAmount!=0 && maxAmount!=0) {
+        alert("Minimalna wartość transakcji powinna być mniejsza niż maksymalna");
+        return false;
+    }
+  }
