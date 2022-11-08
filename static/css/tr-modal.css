@@ -1,7 +1,3 @@
-input {
-    -webkit-appearance: none;
-}
-
 .modal-top {
 	display: flex;
 	justify-content: space-between;
@@ -69,6 +65,7 @@ input {
 
 input {
 	color: inherit;
+	-webkit-appearance: none;
 }
 
 #tr-income,

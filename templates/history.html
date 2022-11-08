@@ -4,7 +4,9 @@
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/f-modal.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/tr-modal.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/etr-modal.css') }}">
 {% endblock %}
 {% block content %}
 <div id="add-tr-btn-modal" class="modal">
