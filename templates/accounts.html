@@ -4,16 +4,22 @@
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/accounts.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/modals/add-acc-modal.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/modals/edit-acc-modal.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modals/account-modal.css') }}">
 
   <script src="{{url_for('static', filename='js/modals/add-acc-modal.js')}}" async></script>
   <script src="{{url_for('static', filename='js/modals/edit-acc-modal.js')}}" async></script>
 
 {% endblock %}
 {% block content %}
+<div id="add-acc-btn-modal" class="modal">
+  {% include 'modals/add-acc-modal.html' %}
+</div>
+<div id="edit-acc-btn-modal" class="modal">
+  {% include 'modals/edit-acc-modal.html' %}
+</div>
+
 <div class="accounts-flexbox">
-  <a href="" class="account-add bg-main-btn fc-main-btn">
+  <a onclick="addAccBtnClick()" class="account-add bg-main-btn fc-main-btn">
     <span class="account-plus-sign fa fa-plus"></span>
     <span class="fs-1">Dodaj Konto</span>
   </a>
@@ -22,7 +28,7 @@
     <span class="fs-1 fw-semibold">Karta Kredytowa</span>
     <span class="fs-2 fw-light">Santander Mastercard</span>
     <span class="fs-4">**** 7312</span>
-    <a href="" class="account-edit">
+    <a onclick="editAccBtnClick()" class="account-edit">
       <span class="fs-2">Edytuj Konto</span>
     </a>
   </div>

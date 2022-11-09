@@ -1,92 +1,29 @@
 <div class="modal-content">
   <div class="modal-top fs-3">
-    <span class="fw-semibold">Nowa Transakcja</span>
+    <span class="fw-semibold">Nowe Konto</span>
     <a class="tr-close">Zamknij</a>
   </div>
-  <div class="switch-field">
-		<input type="radio" id="radio-income" name="switch-two" value="yes" />
-		<label class="radio-el" for="radio-income">Przychód</label>
-    <input type="radio" id="radio-expense" name="switch-two" value="maybe" checked/>
-		<label class="radio-el" for="radio-expense">Wydatek</label>
-		<input type="radio" id="radio-transfer" name="switch-two" value="no" />
-		<label class="radio-el" for="radio-transfer">Transfer</label>
-	</div>
-  <div id="tr-income">
-    <form class="fs-4 income-form" action="">
-      <input id="tr_amount" class="fs-1" type="number" required="required" step="0.01" min="0.00" placeholder="0.00">
-      <input id="tr_name" type="text" required="required" placeholder="Nazwa Transakcji">
-      <div class="input-line">
-        <select id="tr_category" required="required" name="Kategoria">
-          <option value="" disabled selected>Kategoria</option>
-          {% include 'additional/income-categories-list.html' %}
-        </select>
-        <select id="tr_account" required="required" name="Konto">
-          <option value="" disabled selected>Konto</option>
-          {% include 'additional/account-list.html' %}
-        </select>
-      </div>
-      <div class="input-line">
-        <span class="date-label fs-4">Data</span>
-        <input id="tr_date" type=date required="required">
-        <span class="time-label fs-4">Czas</span>
-        <input id="tr_time" type=time>
-      </div>
-      <div class="input-line">
-        <input id="tr_reset" class="fs-3" type="reset" value="Wyczyszć">
-        <input id="tr_submit" class="fs-3" type="submit" value="Dodaj">
-      </div>
-    </form>
-  </div>
-  <div id="tr-expense">
-    <form class="fs-4 income-form" action="">
-      <input id="tr_amount" class="fs-1" type="number" required="required" step="0.01" min="0.00" placeholder="0.00">
-      <input id="tr_name" type="text" required="required" placeholder="Nazwa Transakcji">
-      <div class="input-line">
-        <select id="tr_category" required="required" name="Kategoria">
-          <option value="" disabled selected>Kategoria</option>
-          {% include 'additional/expense-categories-list.html' %}
-        </select>
-        <select id="tr_account" required="required" name="Konto">
-          <option value="" disabled selected>Konto</option>
-          {% include 'additional/account-list.html' %}
-        </select>
-      </div>
-      <div class="input-line">
-        <span class="date-label fs-4">Data</span>
-        <input id="tr_date" type=date required="required">
-        <span class="time-label fs-4">Czas</span>
-        <input id="tr_time" type=time>
-      </div>
-      <div class="input-line">
-        <input id="tr_reset" class="fs-3" type="reset" value="Wyczyszć">
-        <input id="tr_submit" class="fs-3" type="submit" value="Dodaj">
-      </div>
-    </form>
-  </div>
-  <div id="tr-transfer">
-    <form class="fs-4 income-form" action="">
-      <input id="tr_amount" class="fs-1" type="number" required="required" step="0.01" min="0.00" placeholder="0.00">
-      <input id="tr_name" type="text" required="required" placeholder="Nazwa Transakcji">
-      <div class="input-line">
-        <select id="tr_account_from" name="Konto" required="required">
-          <option value="" disabled selected>Konto z</option>
-          {% include 'additional/account-list.html' %}
-        </select>
-        <select id="tr_account_to" name="Konto" required="required">
-          <option value="" disabled selected>Konto do</option>
-          {% include 'additional/account-list.html' %}
-        </select>
-      </div>
-      <div class="input-line">
-        <span class="date-label fs-4">Data</span>
-        <input id="tr_date" type=date required="required">
-        <span class="time-label fs-4">Czas</span>
-        <input id="tr_time" type=time>
-      </div>
-      <div class="input-line">
-        <input id="tr_reset" class="fs-3" type="reset" value="Wyczyszć">
-        <input id="tr_submit" class="fs-3" type="submit" value="Dodaj">
-      </div>
-    </form>
-  </div>
+  <form class="fs-4 income-form" action="">
+    <div class="input-line">
+      <input id="acc_amount" class="fs-1" type="number" required="required" step="0.01" min="0.01" placeholder="Aktualne saldo">
+    </div>
+    <input id="acc_name" type="text" required="required" placeholder="Nazwa Instytucji">
+    <select id="acc_currency" required="required" name="Waluta">
+      <option value="" disabled selected>Waluta</option>
+      {% include 'additional/currencies.html' %}
+    </select>
+    <select id="acc_type" required="required" name="Konto">
+      <option value="" disabled selected>Rodzaj Konta</option>
+      {% include 'additional/account-types.html' %}
+    </select>
+    <select id="acc_card_type" required="required" name="Karta">
+      <option value="" disabled selected>Rodzaj Karty (jeżeli dotyczy)</option>
+      {% include 'additional/card-types.html' %}
+    </select>
+    <input id="acc_card_num" class="fs-1" type="tel" inputmode="numeric" pattern="[0-9]{4,4}" required="required" maxlength="4" placeholder="Ostatnie 4 cyfry karty">
+    <div class="input-line">
+      <input id="acc_reset" class="fs-3" type="reset" value="Wyczyszć">
+      <input id="acc_submit" class="fs-3" type="submit" value="Dodaj">
+    </div>
+  </form>
 </div>

@@ -1,0 +1,191 @@
+.modal-top {
+	display: flex;
+	justify-content: space-between;
+}
+
+.switch-field {
+	margin: 2rem 0 0.5rem;
+	display: flex;
+	flex: 1;
+	justify-content: center;
+}
+
+.switch-field input {
+	position: absolute !important;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	width: 1px;
+	border: 0;
+	overflow: hidden;
+}
+
+.switch-field label {
+	background-color: white;
+	font-size: 14px;
+	line-height: 1;
+	text-align: center;
+	padding: 8px 16px;
+	margin-right: -1px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease-in-out;
+}
+
+.switch-field label:hover {
+	cursor: pointer;
+}
+
+.switch-field input:checked + label{
+	box-shadow: none;
+	color: #F3F8F5;
+}
+
+.radio-el {
+	flex: 1 1 auto;
+}
+
+.switch-field #radio-income:checked + label{
+	background-color: #239341;
+}
+
+.switch-field #radio-expense:checked + label{
+	background-color: #FA5656;
+}
+
+.switch-field #radio-transfer:checked + label{
+	background-color: #568ffa;
+}
+
+.switch-field label:first-of-type {
+	border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.switch-field label:last-of-type {
+	border-radius: 0 0.5rem 0.5rem 0;
+}
+
+input {
+	color: inherit;
+	-webkit-appearance: none;
+}
+
+#acc_amount:focus:invalid, #acc_card_num:focus:invalid{
+	border-radius: 1rem;
+	background-color: #fff3f3;
+	border: 1px solid red;
+}
+
+#acc_amount, #acc_card_num {
+	text-align: center;
+	width: 70%;
+	display: flex;
+	padding: 1rem;
+	margin: 0.5rem auto;
+	border: none;
+	border-radius: 1rem;
+	border-bottom: 1px solid #ccc;
+}
+
+#acc_amount:focus, #acc_card_num:focus {
+	border-bottom: 1px solid #46644F;
+}
+
+#acc_amount::placeholder, #acc_card_num::placeholder {
+	text-align: center; 
+}
+
+#acc_card_num {
+	font-size: inherit;
+	width: 50%;
+}
+
+#acc_name {
+	width: 100%;
+	padding: 1rem;
+	margin: 0.5rem 0;
+	border: 1px solid #ccc;
+	border-radius: 0.8rem;
+}
+
+#acc_name:focus {
+	border: 1px solid #46644F;
+}
+
+.input-line {
+	gap: 1rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+select {
+	border-radius: 0.8rem;
+}
+
+#acc_type, #acc_card_type, #acc_currency {
+	text-align-last: center;
+	width: 100%;
+	border: 1px solid #ccc;
+}
+
+#acc_delete, #acc_reset, #acc_submit {
+	padding: 1rem;
+	margin: 0.5rem 0 0;
+	border-radius: 0.8rem;
+	width: 30%;
+	border: 1px solid #ccc;
+}
+
+#acc_delete, #acc_reset {
+	background: none;
+}
+
+#acc_delete:hover {
+	background-color: #e48c8c;
+}
+
+#acc_reset:hover {
+	background-color: #F3F8F5;
+}
+
+#acc_delete:active {
+	color: #f8f3f3;
+	background-color: #644646;
+}
+
+#acc_reset:active {
+	color: #F3F8F5;
+	background-color: #46644F;
+}
+
+form:invalid #acc_submit {
+	opacity: 0.3;
+	pointer-events: none;
+}
+
+#acc_submit {
+	color: #F3F8F5;
+	background-color: #46644F;
+}
+
+#acc_submit:hover {
+	opacity: 0.9;
+}
+
+#acc_submit:active {
+	color: #46644F;
+	background-color: #F3F8F5;
+}
+
+@media (max-width: 800px) {
+	.input-line {
+		flex-direction: column;
+	}
+
+	.input-line > * {
+		width: 100% !important;
+	}
+
+	.date-label, .time-label {
+		display: block;
+		padding: 0 1rem;
+	}
+}

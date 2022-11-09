@@ -1,23 +1,23 @@
 // Get the modal
-var Modal = document.getElementById('add-tr-btn-modal');
+var edAccModal = document.getElementById('edit-acc-btn-modal');
 
 // Get the <span> element that closes the modal
-var Span = document.getElementsByClassName("tr-close")[0];
+var edAccSpan = document.getElementsByClassName("tr-close")[1];
 
 // When the user clicks the button, open the modal 
-function AddTrBtnClick() {
-    Modal.style.display = "block";
+function editAccBtnClick() {
+    edAccModal.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
-Span.onclick = function() {
-    Modal.style.display = "none";
+edAccSpan.onclick = function() {
+    edAccModal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.addEventListener("click", function(event) {
-    if (event.target == Modal) {
-        Modal.style.display = "none";
+    if (event.target == edAccModal) {
+        edAccModal.style.display = "none";
     }
 });
 

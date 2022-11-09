@@ -68,15 +68,6 @@ input {
 	-webkit-appearance: none;
 }
 
-#tr-income,
-#tr-transfer {
-	display: none;
-}
-
-#tr-expense {
-	display: block;
-}
-
 #goal_amount:focus:invalid {
 	border-radius: 1rem;
 	background-color: #fff3f3;
@@ -132,7 +123,7 @@ select {
 	border: 1px solid #ccc;
 }
 
-#goal_reset, #goal_submit {
+#goal_delete, #goal_reset, #goal_submit {
 	padding: 1rem;
 	margin: 0.5rem 0 0;
 	border-radius: 0.8rem;
@@ -140,12 +131,21 @@ select {
 	border: 1px solid #ccc;
 }
 
-#goal_reset {
+#goal_delete, #goal_reset {
 	background: none;
+}
+
+#goal_delete:hover {
+	background-color: #e48c8c;
 }
 
 #goal_reset:hover {
 	background-color: #F3F8F5;
+}
+
+#goal_delete:active {
+	color: #f8f3f3;
+	background-color: #644646;
 }
 
 #goal_reset:active {
