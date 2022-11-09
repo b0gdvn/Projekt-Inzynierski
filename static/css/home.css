@@ -118,8 +118,8 @@
 }
 
 .chart-doughnut {
-	height: 6rem;
-	width: 6rem;
+	height: 6rem !important;
+	width: 6rem !important;
 	margin: auto 0 auto 1rem;
 }
 

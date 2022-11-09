@@ -4,9 +4,13 @@
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/f-modal.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/tr-modal.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/etr-modal.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modals/f-modal.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modals/tr-modal.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modals/etr-modal.css') }}">
+
+  <script src="{{url_for('static', filename='js/modals/tr-modal.js')}}" async></script>
+  <script src="{{url_for('static', filename='js/modals/etr-modal.js')}}" async></script>
+  <script src="{{url_for('static', filename='js/modals/f-modal.js')}}" async></script>
 {% endblock %}
 {% block content %}
 <div id="add-tr-btn-modal" class="modal">
@@ -53,7 +57,7 @@
             <div class="amount bg-danger fc-danger">-90.00 PLN</div>
           </div>
           <div class="flex-cell-edit" role="cell">
-            <a onclick="editTrBtnClick()" class="fa fa-lg fa-pen"></a>
+            <a onclick="editTrBtnClick()" class="fa fa-lg fa-pen"></a> <!-- Przesyłać id transakcji w funkcji i otwierać jej dane do edycji -->
           </div>
         </div>
       </div>

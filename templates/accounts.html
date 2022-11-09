@@ -4,6 +4,12 @@
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/accounts.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modals/add-acc-modal.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modals/edit-acc-modal.css') }}">
+
+  <script src="{{url_for('static', filename='js/modals/add-acc-modal.js')}}" async></script>
+  <script src="{{url_for('static', filename='js/modals/edit-acc-modal.js')}}" async></script>
+
 {% endblock %}
 {% block content %}
 <div class="accounts-flexbox">

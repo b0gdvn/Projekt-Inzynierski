@@ -25,8 +25,16 @@ function validateFilterForm() {
     var minAmount = parseFloat(document.forms["filter"]["tr_amount_min"].value);
     var maxAmount = parseFloat(document.forms["filter"]["tr_amount_max"].value);
 
+    var minDate = Date.parse(document.forms["filter"]["tr_date_min"].value);
+    var maxDate = Date.parse(document.forms["filter"]["tr_date_max"].value);
+
+    if (minDate > maxDate && minDate != null && maxDate != null) {
+        alert("Data od powinna być wcześniejsza od Daty do");
+        return false;
+    }
+
     if (minAmount >= maxAmount && minAmount!=0 && maxAmount!=0) {
         alert("Minimalna wartość transakcji powinna być mniejsza niż maksymalna");
         return false;
-    }
-  }
+    } 
+}
