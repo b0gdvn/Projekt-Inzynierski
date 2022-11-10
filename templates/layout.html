@@ -85,6 +85,15 @@
         <a class="fs-1" href="{{ url_for('home') }}">Capythal</a>
         <button id="nav-toggler" class="nav-toggler fa fa-bars" href=""></button>
       </div>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}    
+      {% endwith %}
       {%block content%}
       {%endblock%}
     </main>

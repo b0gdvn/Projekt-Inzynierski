@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous" async></script>
+        <title>Capythal - Rejestracja</title>
+    {% endblock %}
+  </head>
+  <body>
+    <main>
+        <a class="logo">Capythal</a>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset>
+                <legend>Utwórz konto</legend>
+                <div class="form-group">
+                    {{ form.login.label(class="auth-input-label") }}
+                    {{ form.login(class="auth-input") }}
+                </div>
+                <div class="form-group">
+                    {{ form.user_name.label(class="auth-input-label") }}
+                    {{ form.user_name(class="auth-input") }}
+                </div>
+                <div class="form-group">
+                    {{ form.user_surname.label(class="auth-input-label") }}
+                    {{ form.user_surname(class="auth-input") }}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label(class="auth-input-label") }}
+                    {{ form.email(class="auth-input") }}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label(class="auth-input-label") }}
+                    {{ form.password(class="auth-input") }}
+                </div>
+                <div class="form-group">
+                    {{ form.confirm_password.label(class="auth-input-label") }}
+                    {{ form.confirm_password(class="auth-input") }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="submit-btn") }}
+            </div>
+        </form>
+        <div class="other-page">
+            <a href="{{ url_for('login') }}" class="other-page-btn">Zaloguj się</a> jeżeli masz już konto
+        </div>
+    </main>
+    <footer class="fc-secondary fw-light">
+      2022 © Capythal
+    </footer>
+  </body>
+</html>

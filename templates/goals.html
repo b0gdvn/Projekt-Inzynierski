@@ -22,85 +22,17 @@
     <span class="goal-plus-sign fa fa-plus"></span>
     <span class="fs-1">Dodaj Cel</span>
   </a>
-  <div class="goal-info style-orange">
-    <span class="fs-1 fw-light">2,772.00 / 3,600.00 PLN</span>
-    <span class="fs-1 fw-semibold">Wycieczka do Paryża</span>
-    <div class="goal-bottom">
-      <progress class="goal-progress" value="77" max="100"></progress>
-      <a onclick="editGoalBtnClick()" class="goal-edit">
-        <span class="fs-2">Edytuj Cel</span>
-      </a>
+  {% for goal in goals_list %}
+    <div class="goal-info style-{{ goal.color }}">
+      <span class="fs-1 fw-light">{{ goal.amount_available | currencyFormat }} / {{ goal.amount_required | currencyFormat }} {{ goal.currency }}</span>
+      <span class="fs-1 fw-semibold">{{ goal.name }}</span>
+      <div class="goal-bottom">
+        <progress class="goal-progress" value="{{ goal.percentage }}" max="100"></progress>
+        <a onclick="editGoalBtnClick()" class="goal-edit">
+          <span class="fs-2">Edytuj Cel</span>
+        </a>
+      </div>
     </div>
-  </div>
-  <div class="goal-info style-red">
-    <span class="fs-1 fw-light">3,000.00 / 12,000.00 PLN</span>
-    <span class="fs-1 fw-semibold">Remont Mieszkania</span>
-    <div class="goal-bottom">
-      <progress class="goal-progress" value="25" max="100"></progress>
-      <a href="" class="goal-edit">
-        <span class="fs-2">Edytuj Cel</span>
-      </a>
-    </div>
-  </div>
-  <div class="goal-info style-blue">
-    <span class="fs-1 fw-light">23,220.00 / 43,000.00 PLN</span>
-    <span class="fs-1 fw-semibold">Zakup Auta</span>
-    <div class="goal-bottom">
-      <progress class="goal-progress" value="54" max="100"></progress>
-      <a href="" class="goal-edit">
-        <span class="fs-2">Edytuj Cel</span>
-      </a>
-    </div>
-  </div>
-  <div class="goal-info style-violet">
-    <span class="fs-1 fw-light">23,220.00 / 43,000.00 PLN</span>
-    <span class="fs-1 fw-semibold">Zakup Auta</span>
-    <div class="goal-bottom">
-      <progress class="goal-progress" value="54" max="100"></progress>
-      <a href="" class="goal-edit">
-        <span class="fs-2">Edytuj Cel</span>
-      </a>
-    </div>
-  </div>
-  <div class="goal-info style-pink">
-    <span class="fs-1 fw-light">23,220.00 / 43,000.00 PLN</span>
-    <span class="fs-1 fw-semibold">Zakup Auta</span>
-    <div class="goal-bottom">
-      <progress class="goal-progress" value="54" max="100"></progress>
-      <a href="" class="goal-edit">
-        <span class="fs-2">Edytuj Cel</span>
-      </a>
-    </div>
-  </div>
-  <div class="goal-info style-cyan">
-    <span class="fs-1 fw-light">23,220.00 / 43,000.00 PLN</span>
-    <span class="fs-1 fw-semibold">Zakup Auta</span>
-    <div class="goal-bottom">
-      <progress class="goal-progress" value="54" max="100"></progress>
-      <a href="" class="goal-edit">
-        <span class="fs-2">Edytuj Cel</span>
-      </a>
-    </div>
-  </div>
-  <div class="goal-info style-green">
-    <span class="fs-1 fw-light">23,220.00 / 43,000.00 PLN</span>
-    <span class="fs-1 fw-semibold">Zakup Auta</span>
-    <div class="goal-bottom">
-      <progress class="goal-progress" value="54" max="100"></progress>
-      <a href="" class="goal-edit">
-        <span class="fs-2">Edytuj Cel</span>
-      </a>
-    </div>
-  </div>
-  <div class="goal-info style-yellow">
-    <span class="fs-1 fw-light">23,220.00 / 43,000.00 PLN</span>
-    <span class="fs-1 fw-semibold">Zakup Auta</span>
-    <div class="goal-bottom">
-      <progress class="goal-progress" value="54" max="100"></progress>
-      <a href="" class="goal-edit">
-        <span class="fs-2">Edytuj Cel</span>
-      </a>
-    </div>
-  </div>
+  {% endfor %}
 </div>
 {% endblock %}

@@ -133,11 +133,6 @@ progress::-moz-progress-value {
 	background-color: #D0DAD4;
 }
 
-.bg-acc-card-green {
-	background-color: #D6F2DF;
-}
-
-
 /* color styles */
 
 .style-red {
@@ -243,6 +238,15 @@ progress::-moz-progress-value {
 }
 
 /*------------PARAMETERS------------*/
+.alert-success {
+	display: flex;
+	flex: 1 1 100%;
+	background-color: #D0DAD4;
+	padding: 1rem;
+	margin: 1rem 1rem 0;
+	border-radius: 1rem;
+}
+
 
 .main-content, .navbar {
 	transition: all 0.4s ease-in-out;
