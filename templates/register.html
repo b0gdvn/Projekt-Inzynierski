@@ -21,27 +21,81 @@
                 <legend>Utwórz konto</legend>
                 <div class="form-group">
                     {{ form.login.label(class="auth-input-label") }}
-                    {{ form.login(class="auth-input") }}
+                    {% if form.login.errors %}
+                        {{ form.login(class="auth-input invalid") }}
+                        <div class="invalid-feedback">  
+                            {% for error in form.login.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.login(class="auth-input") }}
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     {{ form.user_name.label(class="auth-input-label") }}
-                    {{ form.user_name(class="auth-input") }}
+                    {% if form.user_name.errors %}
+                        {{ form.user_name(class="auth-input invalid") }}
+                        <div class="invalid-feedback">  
+                            {% for error in form.user_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.user_name(class="auth-input") }}
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     {{ form.user_surname.label(class="auth-input-label") }}
-                    {{ form.user_surname(class="auth-input") }}
+                    {% if form.user_surname.errors %}
+                        {{ form.user_surname(class="auth-input invalid") }}
+                        <div class="invalid-feedback">  
+                            {% for error in form.user_surname.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.user_surname(class="auth-input") }}
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     {{ form.email.label(class="auth-input-label") }}
-                    {{ form.email(class="auth-input") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="auth-input invalid") }}
+                        <div class="invalid-feedback">  
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="auth-input") }}
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     {{ form.password.label(class="auth-input-label") }}
-                    {{ form.password(class="auth-input") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="auth-input invalid") }}
+                        <div class="invalid-feedback">  
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="auth-input") }}
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     {{ form.confirm_password.label(class="auth-input-label") }}
-                    {{ form.confirm_password(class="auth-input") }}
+                    {% if form.confirm_password.errors %}
+                        {{ form.confirm_password(class="auth-input invalid") }}
+                        <div class="invalid-feedback">  
+                            {% for error in form.confirm_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.confirm_password(class="auth-input") }}
+                    {% endif %}
                 </div>
             </fieldset>
             <div class="form-group">

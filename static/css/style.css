@@ -247,8 +247,7 @@ progress::-moz-progress-value {
 	border-radius: 1rem;
 }
 
-
-.main-content, .navbar {
+.navbar {
 	transition: all 0.4s ease-in-out;
 }
 

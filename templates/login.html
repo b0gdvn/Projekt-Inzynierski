@@ -14,15 +14,6 @@
   </head>
   <body>
     <main>
-        {% with messages = get_flashed_message(with_categories=true)
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert-{{ category }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}    
-        {% endwith %}
         <a class="logo">Capythal</a>
         <form method="POST" action="">
             {{ form.hidden_tag() }}
@@ -30,19 +21,53 @@
                 <legend>Logowanie</legend>
                 <div class="form-group">
                     {{ form.email.label(class="auth-input-label") }}
-                    {{ form.email(class="auth-input") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="auth-input invalid") }}
+                        <div class="invalid-feedback">  
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="auth-input") }}
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     {{ form.password.label(class="auth-input-label") }}
-                    {{ form.password(class="auth-input") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="auth-input invalid") }}
+                        <div class="invalid-feedback">  
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="auth-input") }}
+                    {% endif %}
+                </div>
+                <div class="remember-check">
+                    {{ form.remember(class="remember-check-input") }}
+                    {{ form.remember.label() }}
                 </div>
             </fieldset>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}    
+            {% endwith %}
             <div class="form-group">
                 {{ form.submit(class="submit-btn") }}
             </div>
+            <div class="password-reset">
+                <a href="#">Nie pamiętam hasła</a>
+            </div>
         </form>
         <div class="other-page">
-            <a href="{{ url_for('register') }}" class="other-page-btn">Zarejestruj się</a> jeżeli masz już konto
+            <a href="{{ url_for('register') }}" class="other-page-btn">Utwórz konto</a> jeżeli jeżeli jeszcze nie masz
         </div>
     </main>
     <footer class="fc-secondary fw-light">

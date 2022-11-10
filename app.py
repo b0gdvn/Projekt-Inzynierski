@@ -1,4 +1,5 @@
 from flask import Flask, render_template, flash, url_for, redirect
+from flask_sqlalchemy import SQLAlchemy
 from forms import registrationForm, loginForm
 import os
 
@@ -7,13 +8,33 @@ app=Flask(__name__)
 # Klucz autentyfikacji
 app.config['SECRET_KEY'] = 'd91fa1479fcdb3eaa587fd43f44ea668'
 
-# Formatowanie wartości pieniędzy
-@app.template_filter()
-def currencyFormat(value):
-    value = float(value)
-    return "{:,.2f}".format(value)
+# Baza danych
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///capythal.db'
 
+db = SQLAlchemy(app)
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    login = db.Column(db.String(20), unique=True, nullable=False)
+    user_name = db.Column(db.String(30), nullable=False)
+    user_surname = db.Column(db.String(30), nullable=False)
+    email = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+
+    def __repr__(self):
+        return f"User"('{self.login}', '{self.email}', '{self.user_name}', '{self.user_surname}')
+
+class Transaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+class Account(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+class Goal(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+class Setting(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
 
 # Dane
 goals_list = [
@@ -42,6 +63,12 @@ goals_list = [
         'color': 'green'
     }
 ]
+
+# Formatowanie wartości pieniędzy
+@app.template_filter()
+def currencyFormat(value):
+    value = float(value)
+    return "{:,.2f}".format(value)
 
 # Układ strony
 @app.route('/')
@@ -73,9 +100,14 @@ def register():
         return redirect(url_for('home'))
     return render_template("register.html", form=form)
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = loginForm()
+    if form.validate_on_submit():
+        if form.email.data == 'admin@admin.com' and form.password.data == '111111': #fejkowy mail i hasło do testów
+            return redirect(url_for('home'))
+        else:
+            flash('Logowanie nie powiodło się, spróbuj ponownie', 'danger')
     return render_template("login.html", form=form)
 
 # Uruchomienie aplikacji
