@@ -5,6 +5,8 @@
   {{ super() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/modals/tr-modal.css') }}">
+
+  <script src="{{url_for('static', filename='js/modals/tr-modal.js')}}" async></script>
 {% endblock %}
 {% block content %}
 <div id="add-tr-btn-modal" class="modal">

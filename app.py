@@ -1,6 +1,7 @@
 from flask import Flask, render_template, flash, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from forms import registrationForm, loginForm
+from datetime import datetime
 import os
 
 app=Flask(__name__)
@@ -13,28 +14,118 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///capythal.db'
 
 db = SQLAlchemy(app)
 
-class User(db.Model):
+class user(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    login = db.Column(db.String(20), unique=True, nullable=False)
-    user_name = db.Column(db.String(30), nullable=False)
-    user_surname = db.Column(db.String(30), nullable=False)
+    name = db.Column(db.String(30), nullable=False)
+    surname = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
 
+    setting = db.relationship("setting", back_populates="user", uselist=False)
+    account = db.relationship("account", backref="user", lazy=True)
+
     def __repr__(self):
-        return f"User"('{self.login}', '{self.email}', '{self.user_name}', '{self.user_surname}')
+        return f"User"('{self.login}', '{self.email}', '{self.name}', '{self.surname}')
 
-class Transaction(db.Model):
+class currency(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
 
-class Account(db.Model):
+    account = db.relationship("account", backref="currency", lazy=True)
+
+    def __repr__(self):
+        return f"Currency",'{self.name}'
+
+class card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+    number = db.Column(db.Integer)
+
+    account = db.relationship("account", backref="card", lazy=True)
+
+    def __repr__(self):
+        return f"Card type",'{self.name}'
+
+class fin_inst(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), nullable=False)
+
+    account = db.relationship("account", backref="fin_inst", lazy=True)
+
+    def __repr__(self):
+        return f"Financial Institution",'{self.name}'
+
+class acc_type(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+
+    account = db.relationship("account", backref="acc_type", lazy=True)
+
+    def __repr__(self):
+        return f"Account Type",'{self.name}'
+
+class tr_type(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(10), nullable=False)
+
+    def __repr__(self):
+        return f"Transaction Type",'{self.name}'
+
+class style(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+
+    category = db.relationship("category", backref="style", lazy=True)
+    account = db.relationship("account", backref="style", lazy=True)
+
+    def __repr__(self):
+        return f"Style color",'{self.name}'
+
+class category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    style_id = db.Column(db.Integer, db.ForeignKey('style.id'), nullable=False)
+    name = db.Column(db.String(20), nullable=False)
+
+    def __repr__(self):
+        return f"Category",'{self.name}'
+
+class account(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    currency_id = db.Column(db.Integer, db.ForeignKey('currency.id'), nullable=False)
+    card_id = db.Column(db.Integer, db.ForeignKey('card.id'))
+    fin_inst_id = db.Column(db.Integer, db.ForeignKey('fin_inst.id'), nullable=False)
+    acc_type_id = db.Column(db.Integer, db.ForeignKey('acc_type.id'), nullable=False)
+    style_id = db.Column(db.Integer, db.ForeignKey('style.id'), nullable=False)
+
+class transaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    account_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
+    tr_type_id = db.Column(db.Integer, db.ForeignKey('tr_type.id'), nullable=False)
+    title = db.Column(db.String(50), nullable=False)
+    type = db.Column(db.String(8), nullable=False) #?
+    amount = db.Column(db.Numeric(10,2), nullable=False)
+    datetime = db.Column(db.DateTime, nullable=False , default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"Transaction"('{self.title}', '{self.type}', '{self.amount}', '{self.datetime}')
+
+class Settings(db.Base):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    account_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    currency_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    # many-to-one side remains, see tip below
+    user = db.relationship("user", back_populates="setting")
+
+    def __repr__(self):
+        return f"User"('{self.id}', '{self.user_id}', '{self.account_id}', '{self.currency_id}')
 
 class Goal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-class Setting(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
 
 # Dane
 goals_list = [

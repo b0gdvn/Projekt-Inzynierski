@@ -20,19 +20,6 @@
             <fieldset>
                 <legend>Utwórz konto</legend>
                 <div class="form-group">
-                    {{ form.login.label(class="auth-input-label") }}
-                    {% if form.login.errors %}
-                        {{ form.login(class="auth-input invalid") }}
-                        <div class="invalid-feedback">  
-                            {% for error in form.login.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.login(class="auth-input") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
                     {{ form.user_name.label(class="auth-input-label") }}
                     {% if form.user_name.errors %}
                         {{ form.user_name(class="auth-input invalid") }}
