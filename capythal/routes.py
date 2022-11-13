@@ -1,7 +1,8 @@
 from flask import render_template, flash, url_for, redirect
+from capythal import app, db, bcrypt
 from capythal.forms import registrationForm, loginForm
 from capythal.models import user, currency, card, fin_inst, acc_type, tr_type, style, category, account, transaction, settings, goal
-from capythal import app
+from flask_login import login_user
 
 # Dane
 goals_list = [
@@ -63,15 +64,22 @@ def history():
 def register():
     form = registrationForm()
     if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        new_user = user(name = form.user_name.data, surname = form.user_surname.data, email = form.email.data, password = hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+
         flash(f'Witaj {form.user_name.data}, twoje konto zostało utworzone!', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     return render_template("register.html", form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = loginForm()
     if form.validate_on_submit():
-        if form.email.data == 'admin@admin.com' and form.password.data == '111111': #fejkowy mail i hasło do testów
+        user_login = user.query.filter_by(email=form.email.data).first()
+        if user_login and bcrypt.check_password_hash(user_login.password, form.password.data):
+            login_user(user_login, remember=form.remember.data)
             return redirect(url_for('home'))
         else:
             flash('Logowanie nie powiodło się, spróbuj ponownie', 'danger')
