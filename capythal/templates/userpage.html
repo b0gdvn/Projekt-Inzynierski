@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block title %}Konto użytkownika{% endblock %}
+{% set active_page = "userpage" %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/userpage.css') }}">
+{% endblock %}
+{% block content %}
+<div class="userpage-flexbox">
+  <div class="user-full-name">{{ current_user.name }} {{ current_user.surname }}</div>
+  <div class="user-email">{{ current_user.email }}</div>
+</div>
+{% endblock %}

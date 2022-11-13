@@ -1,0 +1,19 @@
+.userpage-flexbox {
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+    background-color: white;
+    border-radius: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.user-full-name {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.user-email {
+    font-weight: 300;
+}

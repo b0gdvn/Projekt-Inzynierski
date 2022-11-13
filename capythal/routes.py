@@ -77,6 +77,14 @@ def history():
     else:
         return redirect(url_for('login'))
 
+@app.route('/userpage')
+def userpage():
+    if current_user.is_authenticated:
+        return render_template("userpage.html")
+    else:
+        return redirect(url_for('login'))
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:

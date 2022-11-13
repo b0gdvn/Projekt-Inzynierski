@@ -22,6 +22,3 @@ class loginForm(FlaskForm):
     password = PasswordField('Hasło', validators=[DataRequired(), Length(min=6, max=20)])
     remember = BooleanField('Zapamiętaj mnie')
     submit = SubmitField('Zaloguj Się')
-
-    def __getitem__(self, key):
-        return self.__dict__[key]
