@@ -32,12 +32,11 @@ class currency(db.Model):
 class card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
-    number = db.Column(db.Integer)
 
     account = db.relationship("account", backref="card", lazy=True)
 
     def __repr__(self):
-        return f"Card type('{self.name}', '{self.number}')"
+        return f"Card type('{self.id}', '{self.name}')"
 
 class fin_inst(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -61,6 +60,7 @@ class tr_type(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(10), nullable=False)
 
+    category = db.relationship("category", backref="tr_type", lazy=True)
     transaction = db.relationship("transaction", backref="tr_type", lazy=True)
 
     def __repr__(self):
@@ -80,6 +80,7 @@ class style(db.Model):
 class category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     style_id = db.Column(db.Integer, db.ForeignKey('style.id'), nullable=False)
+    tr_type_id = db.Column(db.Integer, db.ForeignKey('tr_type.id'), nullable=False)
     name = db.Column(db.String(20), nullable=False)
 
     transaction = db.relationship("transaction", backref="category", lazy=True)
@@ -95,6 +96,7 @@ class account(db.Model):
     fin_inst_id = db.Column(db.Integer, db.ForeignKey('fin_inst.id'), nullable=False)
     acc_type_id = db.Column(db.Integer, db.ForeignKey('acc_type.id'), nullable=False)
     style_id = db.Column(db.Integer, db.ForeignKey('style.id'), nullable=False)
+    card_number = db.Column(db.String(4))
 
     transaction = db.relationship("transaction", backref="account", lazy=True)
     settings = db.relationship("settings", back_populates="account", uselist=False)
@@ -108,12 +110,12 @@ class transaction(db.Model):
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     tr_type_id = db.Column(db.Integer, db.ForeignKey('tr_type.id'), nullable=False)
-    title = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(50), nullable=False)
     amount = db.Column(db.Numeric(12,2), nullable=False)
     datetime = db.Column(db.DateTime, nullable=False , default=datetime.utcnow)
 
     def __repr__(self):
-        return f"Transaction('{self.title}', '{self.type}', '{self.amount}', '{self.datetime}')"
+        return f"Transaction('{self.name}', '{self.tr_type_id}', '{self.amount}', '{self.datetime}')"
 
 class settings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -131,9 +133,9 @@ class goal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
     style_id = db.Column(db.Integer, db.ForeignKey('style.id'), nullable=False)
-    title = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(50), nullable=False)
     amount_req = db.Column(db.Numeric(12,2), nullable=False)
     amount_avb = db.Column(db.Numeric(12,2), nullable=False)
 
     def __repr__(self):
-        return f"Goal('{self.id}', '{self.style_id}', '{self.title}', '{self.amount_req}', '{self.amount_avb}')"
+        return f"Goal('{self.id}', '{self.style_id}', '{self.name}', '{self.amount_req}', '{self.amount_avb}')"
