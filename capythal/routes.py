@@ -2,7 +2,7 @@ from flask import render_template, flash, url_for, redirect
 from capythal import app, db, bcrypt
 from capythal.forms import registrationForm, loginForm
 from capythal.models import user, currency, card, fin_inst, acc_type, tr_type, style, category, account, transaction, settings, goal
-from flask_login import login_user
+from flask_login import login_user, logout_user, current_user
 
 # Dane
 goals_list = [
@@ -62,6 +62,8 @@ def history():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = registrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -75,6 +77,8 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = loginForm()
     if form.validate_on_submit():
         user_login = user.query.filter_by(email=form.email.data).first()
@@ -84,3 +88,8 @@ def login():
         else:
             flash('Logowanie nie powiodło się, spróbuj ponownie', 'danger')
     return render_template("login.html", form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
