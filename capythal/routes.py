@@ -42,23 +42,40 @@ def currencyFormat(value):
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template("home.html")
+    if current_user.is_authenticated:
+        return render_template("home.html")
+    else:
+        return redirect(url_for('login'))    
 
 @app.route('/stats')
 def stats():
-    return render_template("stats.html")
+    if current_user.is_authenticated:
+        return render_template("stats.html")
+    else:
+        return redirect(url_for('login'))
     
 @app.route('/accounts')
 def accounts():
-    return render_template("accounts.html")
+    if current_user.is_authenticated:
+        return render_template("accounts.html")
+    else:
+        return redirect(url_for('login'))
+    
 
 @app.route('/goals')
 def goals():
-    return render_template("goals.html", goals_list = goals_list)
+    if current_user.is_authenticated:
+        return render_template("goals.html", goals_list = goals_list)
+    else:
+        return redirect(url_for('login'))
+    
 
 @app.route('/history')
 def history():
-    return render_template("history.html")
+    if current_user.is_authenticated:
+        return render_template("history.html")
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
