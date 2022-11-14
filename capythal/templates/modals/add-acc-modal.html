@@ -3,27 +3,22 @@
     <span class="fw-semibold">Nowe Konto</span>
     <a class="tr-close">Zamknij</a>
   </div>
-  <form class="fs-4 income-form" action="">
+  <form class="fs-4 income-form" method="POST" action="">
+    {{ form.hidden_tag() }}
     <div class="input-line">
       <input id="acc_amount" class="fs-1" type="number" required="required" step="0.01" min="0.01" placeholder="Aktualne saldo">
     </div>
-    <input id="acc_name" type="text" required="required" placeholder="Nazwa Instytucji">
-    <select id="acc_currency" required="required" name="Waluta">
-      <option value="" disabled selected>Waluta</option>
-      {% include 'additional/currencies.html' %}
-    </select>
-    <select id="acc_type" required="required" name="Konto">
-      <option value="" disabled selected>Rodzaj Konta</option>
-      {% include 'additional/account-types.html' %}
-    </select>
-    <select id="acc_card_type" required="required" name="Karta">
-      <option value="" disabled selected>Rodzaj Karty (jeżeli dotyczy)</option>
-      {% include 'additional/card-types.html' %}
-    </select>
-    <input id="acc_card_num" class="fs-1" type="tel" inputmode="numeric" pattern="[0-9]{4,4}" required="required" maxlength="4" placeholder="Ostatnie 4 cyfry karty">
+    {{ form.fin_inst(id="acc_name") }}
+    {{ form.currency.label(class="input-label") }}
+    {{ form.currency(id="acc_currency") }}
+    {{ form.acc_type.label(class="input-label") }}
+    {{ form.acc_type(id="acc_type") }}
+    {{ form.card_type.label(class="input-label") }}
+    {{ form.card_type(id="acc_card_type") }}
+    {{ form.card_number(id="acc_card_num") }}
     <div class="input-line">
       <input id="acc_reset" class="fs-3" type="reset" value="Wyczyszć">
-      <input id="acc_submit" class="fs-3" type="submit" value="Dodaj">
+      {{ form.submit(id="acc_submit", class="fs-3") }}
     </div>
   </form>
 </div>

@@ -17,5 +17,6 @@ bcrypt = Bcrypt(app)
 
 # Logowanie
 login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 
 from capythal import routes

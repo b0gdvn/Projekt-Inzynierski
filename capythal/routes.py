@@ -1,8 +1,9 @@
 from flask import render_template, flash, url_for, redirect
 from capythal import app, db, bcrypt
-from capythal.forms import registrationForm, loginForm
+from capythal.forms import registrationForm, loginForm, addAccForm
 from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, settings, goal
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
+from random import randint
 
 # Dane
 goals_list = [
@@ -54,14 +55,20 @@ def stats():
     else:
         return redirect(url_for('login'))
     
-@app.route('/accounts')
+@app.route('/accounts', methods=['GET', 'POST'])
+@login_required
 def accounts():
-    if current_user.is_authenticated:
-        accounts = db.session.query(account,currency,card,acc_type,style).join(currency).join(card).join(acc_type).join(style).all()
-        # accounts = account.query.filter_by(user_id = current_user.id)
-        return render_template("accounts.html", accounts = accounts)
-    else:
-        return redirect(url_for('login'))
+    form = addAccForm()
+    accounts = db.session.query(account,currency,card,acc_type,style).join(currency).join(card).join(acc_type).join(style).filter(account.user_id == current_user.id)
+    
+    if form.validate_on_submit():
+        new_acc = account(user_id = current_user.id, currency_id = form.currency.data, card_id = form.card_type.data, acc_type_id = form.acc_type.data, style_id = randint(1,10), card_number = form.card_number.data, fin_inst = form.fin_inst.data )
+        db.session.add(new_acc)
+        db.session.commit()
+        return redirect(url_for('accounts')) 
+
+    return render_template("accounts.html", accounts = accounts, form = form)
+      
     
 
 @app.route('/goals')
