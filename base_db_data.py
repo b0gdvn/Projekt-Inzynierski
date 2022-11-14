@@ -1,5 +1,7 @@
 from capythal import db
-from capythal.models import currency, card, acc_type, tr_type, style, category
+from capythal.models import user, currency, card, acc_type, tr_type, style, category
+
+# UWAGA! Uruchomnienie tego kodu usunie wszystkie rekordy użytkowników istniejące wcześniej
 
 db.drop_all()
 db.create_all()
@@ -24,15 +26,16 @@ tr_types = ['Wydatek', 'Przychód']
 for t in tr_types:
     db.session.add(tr_type(name=t))
 
-styles = ['Czerwony', 'Niebieski', 'Turkusowy', 'Zielony', 'Szary', 'Limonkowy', 'Pomarańczowy', 'Różowy', 'Fioletowy', 'Żółty']
+colors = ['red', 'blue', 'cyan', 'green', 'grey', 'lime', 'orange', 'pink', 'violet', 'yellow']
+colors_pl = ['Czerwony', 'Niebieski', 'Turkusowy', 'Zielony', 'Szary', 'Limonkowy', 'Pomarańczowy', 'Różowy', 'Fioletowy', 'Żółty']
 
-for s in styles:
-    db.session.add(style(name=s))
+for c, pl in zip(colors, colors_pl):
+    db.session.add(style(name=c, name_pl=pl))
 
 exp_categories = ['Odzież', 'Jedzenie', 'Transport', 'Samochód', 'Dom', 'Rozrywka', 'Dzieci', 'Podróżowanie', 'Zdrowie', 'Wygląd', 'Urządzenia', 'Komunikacja', 'Edukacja', 'Inne']
 
 for n, e in enumerate(exp_categories):
-    db.session.add(category(style_id=n%len(styles), tr_type_id=1, name=e))
+    db.session.add(category(style_id=n%len(colors), tr_type_id=1, name=e))
 
 inc_categories = ['Wynagrodzenie', 'Premia', 'Sprzedaż', 'Inne']
 

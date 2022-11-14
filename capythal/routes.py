@@ -1,7 +1,7 @@
 from flask import render_template, flash, url_for, redirect
 from capythal import app, db, bcrypt
 from capythal.forms import registrationForm, loginForm
-from capythal.models import user, currency, card, fin_inst, acc_type, tr_type, style, category, account, transaction, settings, goal
+from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, settings, goal
 from flask_login import login_user, logout_user, current_user
 
 # Dane
@@ -57,7 +57,9 @@ def stats():
 @app.route('/accounts')
 def accounts():
     if current_user.is_authenticated:
-        return render_template("accounts.html")
+        accounts = db.session.query(account,currency,card,acc_type,style).join(currency).join(card).join(acc_type).join(style).all()
+        # accounts = account.query.filter_by(user_id = current_user.id)
+        return render_template("accounts.html", accounts = accounts)
     else:
         return redirect(url_for('login'))
     

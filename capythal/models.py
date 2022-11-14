@@ -38,15 +38,6 @@ class card(db.Model):
     def __repr__(self):
         return f"Card type('{self.id}', '{self.name}')"
 
-class fin_inst(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), nullable=False)
-
-    account = db.relationship("account", backref="fin_inst", lazy=True)
-
-    def __repr__(self):
-        return f"Financial Institution('{self.name}')"
-
 class acc_type(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
@@ -69,6 +60,7 @@ class tr_type(db.Model):
 class style(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
+    name_pl = db.Column(db.String(20), nullable=False)
 
     category = db.relationship("category", backref="style", lazy=True)
     account = db.relationship("account", backref="style", lazy=True)
@@ -93,10 +85,11 @@ class account(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     currency_id = db.Column(db.Integer, db.ForeignKey('currency.id'), nullable=False)
     card_id = db.Column(db.Integer, db.ForeignKey('card.id'))
-    fin_inst_id = db.Column(db.Integer, db.ForeignKey('fin_inst.id'), nullable=False)
     acc_type_id = db.Column(db.Integer, db.ForeignKey('acc_type.id'), nullable=False)
     style_id = db.Column(db.Integer, db.ForeignKey('style.id'), nullable=False)
     card_number = db.Column(db.String(4))
+    fin_inst = db.Column(db.String(20))
+    # dodać amount
 
     transaction = db.relationship("transaction", backref="account", lazy=True)
     settings = db.relationship("settings", back_populates="account", uselist=False)
