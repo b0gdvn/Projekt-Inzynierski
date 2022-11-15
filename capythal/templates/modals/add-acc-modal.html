@@ -4,21 +4,21 @@
     <a class="tr-close">Zamknij</a>
   </div>
   <form class="fs-4 income-form" method="POST" action="">
-    {{ form.hidden_tag() }}
+    {{ form_add.hidden_tag() }}
     <div class="input-line">
       <input id="acc_amount" class="fs-1" type="number" required="required" step="0.01" min="0.01" placeholder="Aktualne saldo">
     </div>
-    {{ form.fin_inst(id="acc_name") }}
-    {{ form.currency.label(class="input-label") }}
-    {{ form.currency(id="acc_currency") }}
-    {{ form.acc_type.label(class="input-label") }}
-    {{ form.acc_type(id="acc_type") }}
-    {{ form.card_type.label(class="input-label") }}
-    {{ form.card_type(id="acc_card_type") }}
-    {{ form.card_number(id="acc_card_num") }}
+    {{ form_add.fin_inst(id="acc_name") }}
+    {{ form_add.currency.label(class="input-label") }}
+    {{ form_add.currency(id="acc_currency") }}
+    {{ form_add.acc_type.label(class="input-label") }}
+    {{ form_add.acc_type(id="acc_type") }}
+    {{ form_add.card_type.label(class="input-label") }}
+    {{ form_add.card_type(id="acc_card_type") }}
+    {{ form_add.card_number(id="acc_card_num") }}
     <div class="input-line">
       <input id="acc_reset" class="fs-3" type="reset" value="Wyczyszć">
-      {{ form.submit(id="acc_submit", class="fs-3") }}
+      {{ form_add.submit(id="acc_submit", class="fs-3") }}
     </div>
   </form>
 </div>

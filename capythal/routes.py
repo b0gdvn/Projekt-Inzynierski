@@ -58,16 +58,16 @@ def stats():
 @app.route('/accounts', methods=['GET', 'POST'])
 @login_required
 def accounts():
-    form = addAccForm()
+    form_add = addAccForm()
     accounts = db.session.query(account,currency,card,acc_type,style).join(currency).join(card).join(acc_type).join(style).filter(account.user_id == current_user.id)
     
-    if form.validate_on_submit():
-        new_acc = account(user_id = current_user.id, currency_id = form.currency.data, card_id = form.card_type.data, acc_type_id = form.acc_type.data, style_id = randint(1,10), card_number = form.card_number.data, fin_inst = form.fin_inst.data )
+    if form_add.validate_on_submit():
+        new_acc = account(user_id = current_user.id, currency_id = form_add.currency.data, card_id = form_add.card_type.data, acc_type_id = form_add.acc_type.data, style_id = randint(1,10), card_number = form_add.card_number.data, fin_inst = form_add.fin_inst.data )
         db.session.add(new_acc)
         db.session.commit()
         return redirect(url_for('accounts')) 
 
-    return render_template("accounts.html", accounts = accounts, form = form)
+    return render_template("accounts.html", accounts = accounts, form_add = form_add)
       
     
 
