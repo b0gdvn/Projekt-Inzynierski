@@ -1,12 +1,12 @@
 // Get the modal
-var edAccModal = document.getElementById('edit-acc-btn-modal');
+var edAccModal = document.getElementsByClassName('modal')[1];
 
 // Get the <span> element that closes the modal
-var edAccSpan = document.getElementsByClassName("tr-close")[1];
+var edAccSpan = document.getElementsByClassName("tr-close");
 
-// When the user clicks the button, open the modal 
-function editAccBtnClick() {
-    edAccModal.style.display = "block";
+// When the user clicks the button, open the modal
+function editAccBtnClick(i) {
+    document.getElementsByClassName('modal')[i].style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
@@ -20,27 +20,3 @@ window.addEventListener("click", function(event) {
         edAccModal.style.display = "none";
     }
 });
-
-document.getElementById("radio-income").addEventListener('change', (event) => {
-    if (event.currentTarget.checked) {
-        document.getElementById("tr-income").style.display = "block";
-        document.getElementById("tr-expense").style.display = "none";
-        document.getElementById("tr-transfer").style.display = "none";
-    }
-})
-
-document.getElementById("radio-expense").addEventListener('change', (event) => {
-    if (event.currentTarget.checked) {
-        document.getElementById("tr-income").style.display = "none";
-        document.getElementById("tr-expense").style.display = "block";
-        document.getElementById("tr-transfer").style.display = "none";
-    }
-})
-
-document.getElementById("radio-transfer").addEventListener('change', (event) => {
-    if (event.currentTarget.checked) {
-        document.getElementById("tr-income").style.display = "none";
-        document.getElementById("tr-expense").style.display = "none";
-        document.getElementById("tr-transfer").style.display = "block";
-    }
-})

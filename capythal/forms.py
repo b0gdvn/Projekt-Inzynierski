@@ -30,3 +30,14 @@ class addAccForm(FlaskForm):
     card_number = StringField('Ostatnie 4 cyfry Karty', validators=[Length(max=4)], render_kw={'placeholder': 'Ostatnie 4 cyfry karty'})
     fin_inst = StringField('Instytucja Finansowa', validators=[Length(max=20)], render_kw={'placeholder': 'Nazwa Instytucji Finansowej'})
     submit = SubmitField('Dodaj')
+
+class editAccForm(FlaskForm):
+    currency = SelectField('Waluta',[DataRequired()],choices=[(1, 'PLN'), (2, 'USD'), (3, 'EUR'), (4, 'GBP'), (5, 'BTC')])
+    card_type = SelectField('Karta',[DataRequired()],choices=[(1, '-'), (2, 'MasterCard' ), (3, 'Visa'), (4, 'Inna')])
+    acc_type = SelectField('Typ Konta',[DataRequired()],choices=[(1, 'Rachunek Bieżący'), (2, 'Karta Kredytowa'), (3, 'Konto Maklerskie'), (4, 'Gotówka'), (5, 'Inne')])
+    card_number = StringField('Ostatnie 4 cyfry Karty', validators=[Length(max=4)], render_kw={'placeholder': 'Ostatnie 4 cyfry karty'})
+    fin_inst = StringField('Instytucja Finansowa', validators=[Length(max=20)], render_kw={'placeholder': 'Nazwa Instytucji Finansowej'})
+    submit = SubmitField('Zapisz')
+
+class idForm(FlaskForm):
+    submit = SubmitField('Edytuj Konto')
