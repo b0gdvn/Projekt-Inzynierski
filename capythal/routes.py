@@ -1,8 +1,9 @@
 from flask import render_template, flash, url_for, redirect
 from capythal import app, db, bcrypt
-from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm, idForm
+from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm
 from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, settings, goal
 from flask_login import login_user, logout_user, current_user, login_required
+from sqlalchemy import update
 from random import randint
 
 # Dane
@@ -60,28 +61,26 @@ def stats():
 def accounts():
     form_add = addAccForm()
     form_edit = editAccForm()
-    form_id = idForm()
 
-    i = 1
     accounts = db.session.query(account,currency,card,acc_type,style).join(currency).join(card).join(acc_type).join(style).filter(account.user_id == current_user.id)
     
-    if form_add.validate_on_submit():
+    if form_add.submitNewAcc.data and form_add.validate():
         new_acc = account(user_id = current_user.id, currency_id = form_add.currency.data, card_id = form_add.card_type.data, acc_type_id = form_add.acc_type.data, style_id = randint(1,10), card_number = form_add.card_number.data, fin_inst = form_add.fin_inst.data )
         db.session.add(new_acc)
         db.session.commit()
         return redirect(url_for('accounts'))
-    
-    
-    # form_edit.card_number.data = form_id
 
+    if form_edit.submitEditAcc.data and form_edit.validate():
+        #edit_acc = account.query.filter(account.id == form_edit.account_id.data)
+        db.session.execute(
+            update(account)
+            .where((account.id == form_edit.account_id.data)&(account.user_id == current_user.id))
+            .values(fin_inst = form_add.fin_inst.data))
 
-    if form_edit.validate_on_submit():
-        edit_acc = account(user_id = current_user.id, currency_id = form_add.currency.data, card_id = form_add.card_type.data, acc_type_id = form_add.acc_type.data, style_id = randint(1,10), card_number = form_add.card_number.data, fin_inst = form_add.fin_inst.data )
-        db.session.add(edit_acc)
         db.session.commit()
         return redirect(url_for('accounts')) 
 
-    return render_template("accounts.html", accounts = accounts, form_add = form_add, form_edit = form_edit, form_id = form_id)
+    return render_template("accounts.html", accounts = accounts, form_add = form_add, form_edit = form_edit)
 
 
 

@@ -22,34 +22,6 @@
     <span class="fs-1">Dodaj Konto</span>
   </a>
   {% for account,currency,card,acc_type,style in accounts %}
-    <div class="modal">
-      <!-- {% include 'modals/edit-acc-modal.html' %} -->
-      <div class="modal-content">
-        <div class="modal-top fs-3">
-          <span class="fw-semibold">Edytuj Konto</span>
-          <a class="tr-close">Zamknij</a>
-        </div>
-        <form class="fs-4 income-form" method="POST" action="">
-          {{ form_edit.hidden_tag() }}
-          <div class="input-line">
-            <input id="acc_amount" class="fs-1" type="number" required="required" step="0.01" min="0.01" placeholder="Aktualne saldo">
-          </div>
-          {{ form_edit.fin_inst(id="acc_name", value=account.fin_inst )}}
-          {{ form_edit.currency.label(class="input-label") }}
-          {{ form_edit.currency(id="acc_currency", value=currency.name ) }}
-          {{ form_edit.acc_type.label(class="input-label") }}
-          {{ form_edit.acc_type(id="acc_type") }}
-          {{ form_edit.card_type.label(class="input-label") }}
-          {{ form_edit.card_type(id="acc_card_type") }}
-          {{ form_edit.card_number(id="acc_card_num" ) }}
-          <div class="input-line">
-            <input id="acc_reset" class="fs-3" type="reset" value="Wyczyszć">
-            {{ form_edit.submit(id="acc_submit", class="fs-3") }}
-          </div>
-        </form>
-      </div>
-    </div>
-
     <div class="account-info style-{{ style.name }}">
       <span class="fs-1 fw-light">5,877.92 {{ currency.name }}</span>
       <span class="fs-1 fw-semibold">{{ acc_type.name }}</span>
@@ -59,11 +31,34 @@
       {% if account.card_number %}
       <span class="fs-4">**** {{ account.card_number }}</span>  <!-- dodać If not none -->
       {% endif %}
-      {{ account.id }}
-      <!-- {{ form_id.submit(onclick="editAccBtnClick(1)") }} -->
-      <a onclick="editAccBtnClick({{ 1 }})" class="account-edit" value=1>
+      <a href="#modal{{ account.id }}" class="account-edit" value=1>
         <span class="fs-2">Edytuj Konto</span>
       </a>
+      <div class="popup" id="modal{{ account.id }}">
+        <a class="popup_overlay" href="#"></a>
+        <div class="popup_wrapper">
+            <a class="popup_close" href="#">Zamknij</a>
+            <form class="fs-4 income-form" method="POST" action="">
+              {{ form_edit.hidden_tag() }}
+              <div class="input-line">
+                <input id="acc_amount" class="fs-1" type="number" required="required" step="0.01" min="0.01" placeholder="Aktualne saldo">
+              </div>
+              {{ form_edit.fin_inst(id="acc_name", value=account.fin_inst )}}
+              {{ form_edit.currency.label(class="input-label") }}
+              {{ form_edit.currency(id="acc_currency", value=currency.name ) }}
+              {{ form_edit.acc_type.label(class="input-label") }}
+              {{ form_edit.acc_type(id="acc_type") }}
+              {{ form_edit.card_type.label(class="input-label") }}
+              {{ form_edit.card_type(id="acc_card_type") }}
+              {{ form_edit.card_number(id="acc_card_num") }}
+              {{ form_edit.account_id(type="hidden", value = account.id) }}
+              <div class="input-line">
+                <input id="acc_reset" class="fs-3" type="reset" value="Wyczyszć">
+                {{ form_edit.submitEditAcc(id="acc_submit", class="fs-3") }}
+              </div>
+            </form>
+        </div>
+    </div>
     </div>
   {% endfor %}
 </div>

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, HiddenField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from capythal.models import user
 
@@ -29,7 +29,7 @@ class addAccForm(FlaskForm):
     acc_type = SelectField('Typ Konta',[DataRequired()],choices=[(1, 'Rachunek Bieżący'), (2, 'Karta Kredytowa'), (3, 'Konto Maklerskie'), (4, 'Gotówka'), (5, 'Inne')])
     card_number = StringField('Ostatnie 4 cyfry Karty', validators=[Length(max=4)], render_kw={'placeholder': 'Ostatnie 4 cyfry karty'})
     fin_inst = StringField('Instytucja Finansowa', validators=[Length(max=20)], render_kw={'placeholder': 'Nazwa Instytucji Finansowej'})
-    submit = SubmitField('Dodaj')
+    submitNewAcc = SubmitField('Dodaj')
 
 class editAccForm(FlaskForm):
     currency = SelectField('Waluta',[DataRequired()],choices=[(1, 'PLN'), (2, 'USD'), (3, 'EUR'), (4, 'GBP'), (5, 'BTC')])
@@ -37,7 +37,5 @@ class editAccForm(FlaskForm):
     acc_type = SelectField('Typ Konta',[DataRequired()],choices=[(1, 'Rachunek Bieżący'), (2, 'Karta Kredytowa'), (3, 'Konto Maklerskie'), (4, 'Gotówka'), (5, 'Inne')])
     card_number = StringField('Ostatnie 4 cyfry Karty', validators=[Length(max=4)], render_kw={'placeholder': 'Ostatnie 4 cyfry karty'})
     fin_inst = StringField('Instytucja Finansowa', validators=[Length(max=20)], render_kw={'placeholder': 'Nazwa Instytucji Finansowej'})
-    submit = SubmitField('Zapisz')
-
-class idForm(FlaskForm):
-    submit = SubmitField('Edytuj Konto')
+    account_id = StringField('account_id')
+    submitEditAcc = SubmitField('Zapisz')
