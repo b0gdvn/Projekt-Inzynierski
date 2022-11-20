@@ -75,7 +75,7 @@ def accounts():
         db.session.execute(
             update(account)
             .where((account.id == form_edit.account_id.data) & (account.user_id == current_user.id))
-            .values(fin_inst = form_edit.fin_inst.data, currency_id = form_edit.currency.data, card_id = form_edit.card_type.data, acc_type_id = form_edit.acc_type.data))
+            .values(currency_id = form_edit.currency.data, card_id = form_edit.card_type.data, acc_type_id = form_edit.acc_type.data, card_number = form_edit.card_number.data, fin_inst = form_edit.fin_inst.data))
 
         db.session.commit()
         return redirect(url_for('accounts'))

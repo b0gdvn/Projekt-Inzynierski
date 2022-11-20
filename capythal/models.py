@@ -87,9 +87,11 @@ class account(db.Model):
     card_id = db.Column(db.Integer, db.ForeignKey('card.id'))
     acc_type_id = db.Column(db.Integer, db.ForeignKey('acc_type.id'), nullable=False)
     style_id = db.Column(db.Integer, db.ForeignKey('style.id'), nullable=False)
+    
+    amount = db.Column(db.Float(20,2), default = 0)
     card_number = db.Column(db.String(4))
     fin_inst = db.Column(db.String(20))
-    # dodać amount
+    
 
     transaction = db.relationship("transaction", backref="account", lazy=True)
     settings = db.relationship("settings", back_populates="account", uselist=False)

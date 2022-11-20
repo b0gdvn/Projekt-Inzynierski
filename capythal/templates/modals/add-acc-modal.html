@@ -5,9 +5,8 @@
   </div>
   <form class="fs-4 income-form" method="POST" action="">
     {{ form_add.hidden_tag() }}
-    <div class="input-line">
-      <input id="acc_amount" class="fs-1" type="number" required="required" step="0.01" min="0.01" placeholder="Aktualne saldo">
-    </div>
+    
+    {{ form_add.amount(id="acc_amount", class="fs-1", type="number", required="required", step="0.01", min="0.01", placeholder="Aktualne saldo") }}
     {{ form_add.fin_inst(id="acc_name") }}
     {{ form_add.currency.label(class="input-label") }}
     {{ form_add.currency(id="acc_currency") }}

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, HiddenField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, FloatField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from capythal.models import user
 
@@ -24,6 +24,7 @@ class loginForm(FlaskForm):
     submit = SubmitField('Zaloguj Się')
 
 class addAccForm(FlaskForm):
+    amount = FloatField('Aktualne saldo')
     currency = SelectField('Waluta',[DataRequired()],choices=[(1, 'PLN'), (2, 'USD'), (3, 'EUR'), (4, 'GBP'), (5, 'BTC')])
     card_type = SelectField('Karta',[DataRequired()],choices=[(1, '-'), (2, 'MasterCard' ), (3, 'Visa'), (4, 'Inna')])
     acc_type = SelectField('Typ Konta',[DataRequired()],choices=[(1, 'Rachunek Bieżący'), (2, 'Karta Kredytowa'), (3, 'Konto Maklerskie'), (4, 'Gotówka'), (5, 'Inne')])
