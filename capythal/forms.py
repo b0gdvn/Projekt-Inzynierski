@@ -39,3 +39,4 @@ class editAccForm(FlaskForm):
     fin_inst = StringField('Instytucja Finansowa', validators=[Length(max=20)], render_kw={'placeholder': 'Nazwa Instytucji Finansowej'})
     account_id = StringField('account_id')
     submitEditAcc = SubmitField('Zapisz')
+    deleteAcc = SubmitField('Usuń')

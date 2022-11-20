@@ -274,14 +274,15 @@ input[type=checkbox] {
 
 .popup_wrapper {
     position: fixed;
-    z-index: 9;
-    width: 80%;
-    max-width: 1200px;
+    z-index: 130;
+    width: calc(100% - 4rem);
+    max-width: 40rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 8px;
-    padding: 58px 32px 32px 32px;
+    border-radius: 1rem;
+    padding: 1rem;
+	padding-top: 3rem;
     background: #fff;
 }
 

@@ -3,7 +3,7 @@ from capythal import app, db, bcrypt
 from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm
 from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, settings, goal
 from flask_login import login_user, logout_user, current_user, login_required
-from sqlalchemy import update
+from sqlalchemy import update, delete
 from random import randint
 
 # Dane
@@ -74,11 +74,21 @@ def accounts():
         #edit_acc = account.query.filter(account.id == form_edit.account_id.data)
         db.session.execute(
             update(account)
-            .where((account.id == form_edit.account_id.data)&(account.user_id == current_user.id))
-            .values(fin_inst = form_add.fin_inst.data))
+            .where((account.id == form_edit.account_id.data) & (account.user_id == current_user.id))
+            .values(fin_inst = form_edit.fin_inst.data, currency_id = form_edit.currency.data, card_id = form_edit.card_type.data, acc_type_id = form_edit.acc_type.data))
 
         db.session.commit()
-        return redirect(url_for('accounts')) 
+        return redirect(url_for('accounts'))
+    
+    if form_edit.deleteAcc.data and form_edit.validate():
+        #edit_acc = account.query.filter(account.id == form_edit.account_id.data)
+        db.session.execute(
+            delete(account)
+            .where((account.id == form_edit.account_id.data) & (account.user_id == current_user.id)))
+
+        db.session.commit()
+        return redirect(url_for('accounts'))
+
 
     return render_template("accounts.html", accounts = accounts, form_add = form_add, form_edit = form_edit)
 
