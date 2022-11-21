@@ -10,29 +10,7 @@
   <script src="{{url_for('static', filename='js/modals/edit-goal-modal.js')}}" async></script>
 {% endblock %}
 {% block content %}
-<div id="add-goal-btn-modal" class="modal">
-  <div class="modal-content">
-    <div class="modal-top fs-3">
-      <span class="fw-semibold">Nowy Cel</span>
-      <a class="tr-close">Zamknij</a>
-    </div>
-    <form class="fs-4 income-form" action="">
-      <div class="input-line">
-        <input id="goal_amount_min" name="goal_amount_min" class="fs-1" type="number" step="0.01" min="0" placeholder="Dostępne">
-        <input id="goal_amount_max" name="goal_amount_max" class="fs-1" type="number" required="required" step="0.01" min="0.02" placeholder="Cel">
-      </div>
-      <input id="goal_name" type="text" required="required" placeholder="Nazwa Celu">
-      <select id="goal_account" required="required" name="Konto">
-        <option value="" disabled selected>Konto</option>
-        {% include 'additional/account-list.html' %}
-      </select>
-      <div class="input-line">
-        <input id="goal_reset" class="fs-3" type="reset" value="Wyczyszć">
-        <input id="goal_submit" class="fs-3" type="submit" value="Dodaj">
-      </div>
-    </form>
-  </div>
-</div>
+
 <div id="edit-goal-btn-modal" class="modal">
   <div class="modal-content">
     <div class="modal-top fs-3">
@@ -58,19 +36,53 @@
 </div>
 
 <div class="goals-flexbox">
-  <a onclick="addGoalBtnClick()" class="goal-add bg-main-btn fc-main-btn">
+  <a href="#modal-add" class="goal-add bg-main-btn fc-main-btn">
     <span class="goal-plus-sign fa fa-plus"></span>
     <span class="fs-1">Dodaj Cel</span>
   </a>
-  {% for goal in goals_list %}
-    <div class="goal-info style-{{ goal.color }}">
-      <span class="fs-1 fw-light">{{ goal.amount_available | currencyFormat }} / {{ goal.amount_required | currencyFormat }} {{ goal.currency }}</span>
+  <div class="popup" id="modal-add">
+    <a class="popup_overlay" href="#"></a>
+    <div class="popup_wrapper">
+      <a class="popup_close" href="#">Zamknij</a>
+      <form class="fs-4 income-form" method="POST" action="">
+        {{ form_add.hidden_tag() }}
+        <div class="input-line">
+          {{ form_add.amount_avb(id="goal_amount_min", class="fs-1", type="number", step="0.01", min="0", placeholder="Dostępne") }}
+          {{ form_add.amount_req(id="goal_amount_max", class="fs-1", type="number", required="required", step="0.01", min="0.02", placeholder="Cel") }}
+        </div>
+        {{ form_add.name(id="goal_name", type="text", required="required", placeholder="Nazwa Celu") }}
+        {{ form_add.account(id="goal_account", required="required") }}
+        <div class="input-line">
+          <input id="goal_reset" class="fs-3" type="reset" value="Wyczyszć">
+          {{ form_add.submitNewGoal(id="goal_submit", class="fs-3") }}
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% for goal,account,currency,style in goals %}
+    <div class="goal-info style-{{ style.color }}">
+      <span class="fs-1 fw-light">{{ goal.amount_avb | currencyFormat }} / {{ goal.amount_req | currencyFormat }} {{ currency.name }}</span>
       <span class="fs-1 fw-semibold">{{ goal.name }}</span>
       <div class="goal-bottom">
         <progress class="goal-progress" value="{{ goal.percentage }}" max="100"></progress>
-        <a onclick="editGoalBtnClick()" class="goal-edit">
-          <span class="fs-2">Edytuj Cel</span>
+        <a href="#modal{{ account.id }}" class="account-edit" value=1>
+          <span class="fs-2">Edytuj Konto</span>
         </a>
+        <div class="popup" id="modal{{ goal.id }}">
+          <a class="popup_overlay" href="#"></a>
+          <div class="popup_wrapper">
+            <a class="popup_close" href="#">Zamknij</a>
+            <form class="fs-4 income-form" method="POST" action="">
+              {{ form_edit.hidden_tag() }}
+              
+              <div class="input-line">
+                {{ form_edit.deleteGoal(id="goal_delete", class="fs-3") }}
+                {{ form_edit.submitEditGoal(id="goal_submit", class="fs-3") }}
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   {% endfor %}

@@ -1,38 +1,10 @@
 from flask import render_template, flash, url_for, redirect
 from capythal import app, db, bcrypt
-from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm
+from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm, addGoalForm, editGoalForm
 from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, settings, goal
 from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy import update, delete
 from random import randint
-
-# Dane
-goals_list = [
-    {
-        'name': 'Wycieczka do Paryża',
-        'amount_available': 2772.00,
-        'amount_required': 3600.00,
-        'currency': 'PLN',
-        'percentage': 77,
-        'color': 'orange'
-    },
-    {
-        'name': 'Remont Mieszkania',
-        'amount_available': 3000.00,
-        'amount_required': 12000.00,
-        'currency': 'PLN',
-        'percentage': 25,
-        'color': 'blue'
-    },
-    {
-        'name': 'Zakup Samochodu',
-        'amount_available': 23220.00,
-        'amount_required': 43000.00,
-        'currency': 'PLN',
-        'percentage': 54,
-        'color': 'green'
-    }
-]
 
 # Formatowanie wartości pieniędzy
 @app.template_filter()
@@ -67,7 +39,6 @@ def accounts():
         return redirect(url_for('accounts'))
 
     if form_edit.submitEditAcc.data and form_edit.validate():
-        #edit_acc = account.query.filter(account.id == form_edit.account_id.data)
         db.session.execute(
             update(account)
             .where((account.id == form_edit.account_id.data) & (account.user_id == current_user.id))
@@ -77,7 +48,6 @@ def accounts():
         return redirect(url_for('accounts'))
     
     if form_edit.deleteAcc.data and form_edit.validate():
-        #edit_acc = account.query.filter(account.id == form_edit.account_id.data)
         db.session.execute(
             delete(account)
             .where((account.id == form_edit.account_id.data) & (account.user_id == current_user.id)))
@@ -90,7 +60,40 @@ def accounts():
 @app.route('/goals')
 @login_required
 def goals():
-    return render_template("goals.html", goals_list = goals_list)
+    form_add = addGoalForm()
+    form_edit = editGoalForm()
+
+    goals = db.session.query(goal,account,currency,style).join(account, goal.account_id==account.id).join(currency, currency.id==account.currency_id).join(style, goal.style_id==style.id).filter(account.user_id == current_user.id)
+    
+    user_accs = db.session.query(account,acc_type).join(acc_type).join(style).filter(account.user_id == current_user.id)
+    accs_list = [(i.account.id, i.account.fin_inst) for i in user_accs]
+    form_add.account.choices = accs_list
+    
+    if form_add.submitNewGoal.data and form_add.validate():
+        new_goal = goal(account_id = form_add.account.data, amount_req = form_add.amount_req.data, amount_avb = form_add.amount_avb.data, name = form_add.name.data, )
+        db.session.add(new_goal)
+        db.session.commit()
+        return redirect(url_for('goals'))
+
+    if form_edit.submitEditGoal.data and form_edit.validate():
+        db.session.execute(
+            update(account)
+            .where((account.id == form_edit.account_id.data) & (account.user_id == current_user.id))
+            .values(currency_id = form_edit.currency.data, card_id = form_edit.card_type.data, acc_type_id = form_edit.acc_type.data, card_number = form_edit.card_number.data, fin_inst = form_edit.fin_inst.data))
+
+        db.session.commit()
+        return redirect(url_for('goals'))
+    
+    if form_edit.deleteGoal.data and form_edit.validate():
+        db.session.execute(
+            delete(account)
+            .where((account.id == form_edit.account_id.data) & (account.user_id == current_user.id)))
+
+        db.session.commit()
+        return redirect(url_for('goals'))
+
+
+    return render_template("goals.html", goals = goals, form_add = form_add, form_edit = form_edit)
     
 
 @app.route('/history')
