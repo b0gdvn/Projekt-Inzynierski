@@ -43,18 +43,14 @@ def currencyFormat(value):
 # Układ strony
 @app.route('/')
 @app.route('/home')
+@login_required
 def home():
-    if current_user.is_authenticated:
-        return render_template("home.html")
-    else:
-        return redirect(url_for('login'))    
+    return render_template("home.html")
 
 @app.route('/stats')
+@login_required
 def stats():
-    if current_user.is_authenticated:
-        return render_template("stats.html")
-    else:
-        return redirect(url_for('login'))
+    return render_template("stats.html")
     
 @app.route('/accounts', methods=['GET', 'POST'])
 @login_required
@@ -89,32 +85,23 @@ def accounts():
         db.session.commit()
         return redirect(url_for('accounts'))
 
-
     return render_template("accounts.html", accounts = accounts, form_add = form_add, form_edit = form_edit)
 
-
-
 @app.route('/goals')
+@login_required
 def goals():
-    if current_user.is_authenticated:
-        return render_template("goals.html", goals_list = goals_list)
-    else:
-        return redirect(url_for('login'))
+    return render_template("goals.html", goals_list = goals_list)
     
 
 @app.route('/history')
+@login_required
 def history():
-    if current_user.is_authenticated:
-        return render_template("history.html")
-    else:
-        return redirect(url_for('login'))
+    return render_template("history.html")
 
 @app.route('/userpage')
+@login_required
 def userpage():
-    if current_user.is_authenticated:
-        return render_template("userpage.html")
-    else:
-        return redirect(url_for('login'))
+    return render_template("userpage.html")
 
 
 @app.route('/register', methods=['GET', 'POST'])

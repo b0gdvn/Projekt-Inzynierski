@@ -5,8 +5,6 @@
   {{ super() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/accounts.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/modals/account-modal.css') }}">
-
-  <script src="{{url_for('static', filename='js/modals/add-acc-modal.js')}}" async></script>
 {% endblock %}
 {% block content %}
 <div class="accounts-flexbox">
