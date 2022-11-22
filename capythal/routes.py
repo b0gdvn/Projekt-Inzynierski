@@ -57,7 +57,7 @@ def accounts():
 
     return render_template("accounts.html", accounts = accounts, form_add = form_add, form_edit = form_edit)
 
-@app.route('/goals')
+@app.route('/goals', methods=['GET', 'POST'])
 @login_required
 def goals():
     form_add = addGoalForm()
@@ -66,34 +66,35 @@ def goals():
     goals = db.session.query(goal,account,currency,style).join(account, goal.account_id==account.id).join(currency, currency.id==account.currency_id).join(style, goal.style_id==style.id).filter(account.user_id == current_user.id)
     
     user_accs = db.session.query(account,acc_type).join(acc_type).join(style).filter(account.user_id == current_user.id)
-    accs_list = [(i.account.id, i.account.fin_inst) for i in user_accs]
+    accs_list = [(i.account.id, f"{i.account.fin_inst} - {i.acc_type.name}") for i in user_accs]
     form_add.account.choices = accs_list
-    
+    form_edit.account.choices = accs_list
+
     if form_add.submitNewGoal.data and form_add.validate():
-        new_goal = goal(account_id = form_add.account.data, amount_req = form_add.amount_req.data, amount_avb = form_add.amount_avb.data, name = form_add.name.data, )
+        new_goal = goal(account_id = form_add.account.data, amount_req = form_add.amount_req.data, amount_avb = form_add.amount_avb.data, style_id = randint(1,10), name = form_add.name.data )
         db.session.add(new_goal)
         db.session.commit()
         return redirect(url_for('goals'))
 
-    if form_edit.submitEditGoal.data and form_edit.validate():
+    if form_edit.submitEditGoal.data:
         db.session.execute(
-            update(account)
-            .where((account.id == form_edit.account_id.data) & (account.user_id == current_user.id))
-            .values(currency_id = form_edit.currency.data, card_id = form_edit.card_type.data, acc_type_id = form_edit.acc_type.data, card_number = form_edit.card_number.data, fin_inst = form_edit.fin_inst.data))
+            update(goal)
+            .where(goal.id == form_edit.goal_id.data)
+            .values(account_id = form_add.account.data, amount_req = form_add.amount_req.data, amount_avb = form_add.amount_avb.data, name = form_add.name.data))
 
         db.session.commit()
         return redirect(url_for('goals'))
     
-    if form_edit.deleteGoal.data and form_edit.validate():
+    if form_edit.deleteGoal.data:
         db.session.execute(
-            delete(account)
-            .where((account.id == form_edit.account_id.data) & (account.user_id == current_user.id)))
+            delete(goal)
+            .where((goal.id == form_edit.goal_id.data)))
 
         db.session.commit()
         return redirect(url_for('goals'))
 
 
-    return render_template("goals.html", goals = goals, form_add = form_add, form_edit = form_edit)
+    return render_template("goals.html", goals = goals, form_add = form_add, form_edit = form_edit, accs_list = accs_list)
     
 
 @app.route('/history')

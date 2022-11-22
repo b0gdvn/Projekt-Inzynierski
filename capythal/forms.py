@@ -54,5 +54,6 @@ class editGoalForm(FlaskForm):
     amount_avb = FloatField('Dostępne')
     account = SelectField('Konto', coerce=int)
     name = StringField('Nazwa Celu', validators=[Length(max=20)], render_kw={'placeholder': 'Nazwa Celu'})
-    submitEditGoal = SubmitField('Dodaj')
+    goal_id = StringField('goal_id')
+    submitEditGoal = SubmitField('Zapisz')
     deleteGoal = SubmitField('Usuń')

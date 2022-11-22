@@ -19,8 +19,25 @@
     gap: 1rem;
 }
 
+.goal-add-disabled {
+    opacity: 0.4;
+}
+
+.acc-redirect {
+    color: inherit;
+}
+
+.acc-redirect:hover {
+    color: #1F2E23;
+    opacity: 1;
+}
+
 .goal-add:hover {
     opacity: 0.9;
+}
+
+.goal-add-disabled:hover {
+    opacity: 0.4;
 }
 
 .goal-plus-sign {
