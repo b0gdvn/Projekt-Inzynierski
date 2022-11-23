@@ -19,7 +19,7 @@
       <form class="fs-4 income-form" method="POST" action="">
         {{ form_add.hidden_tag() }}
         {{ form_add.amount(id="acc_amount", class="fs-1", type="number", required="required", step="0.01", min="0.01", placeholder="Aktualne saldo") }}
-        {{ form_add.fin_inst(id="acc_name") }}
+        {{ form_add.fin_inst(id="acc_name", required="required") }}
         {{ form_add.currency.label(class="input-label") }}
         {{ form_add.currency(id="acc_currency") }}
         {{ form_add.acc_type.label(class="input-label") }}
@@ -54,7 +54,7 @@
           <form class="fs-4 income-form" method="POST" action="">
             {{ form_edit.hidden_tag() }}
             
-            {{ form_edit.fin_inst(id="acc_name", value=account.fin_inst )}}
+            {{ form_edit.fin_inst(id="acc_name", value=account.fin_inst, required="required" )}}
             {{ form_edit.currency.label(class="input-label") }}
             <select name="currency" id="acc_currency">
               <option {% if currency.id == 1 %}selected{% endif %} value="1">PLN</option>

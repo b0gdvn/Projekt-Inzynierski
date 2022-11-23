@@ -13,11 +13,15 @@ def currencyFormat(value):
     return "{:,.2f}".format(value)
 
 # Układ strony
-@app.route('/')
-@app.route('/home')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
-    return render_template("home.html")
+    accounts = db.session.query(account,currency,card,acc_type,style).join(currency).join(card).join(acc_type).join(style).filter(account.user_id == current_user.id)
+    acc_types = db.session.query(acc_type).join(account).filter(account.user_id == current_user.id)
+    acc_list = db.session.query(account).join(acc_type).filter(account.user_id == current_user.id)
+
+    return render_template("home.html", accounts = accounts, acc_types = acc_types, acc_list = acc_list)
 
 @app.route('/stats')
 @login_required
