@@ -117,7 +117,7 @@
 	margin: auto 0;
 }
 
-.chart-doughnut {
+#chart-doughnut {
 	height: 6rem !important;
 	width: 6rem !important;
 	margin: auto 0 auto 1rem;

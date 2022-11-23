@@ -21,7 +21,7 @@ def home():
     acc_types = db.session.query(acc_type).join(account).filter(account.user_id == current_user.id)
     acc_list = db.session.query(account).join(acc_type).filter(account.user_id == current_user.id)
 
-    return render_template("home.html", accounts = accounts, acc_types = acc_types, acc_list = acc_list)
+    return render_template("home.html", accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
 
 @app.route('/stats')
 @login_required
@@ -145,3 +145,10 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+
+@app.route('/test-page')
+@login_required
+def test():
+
+    return render_template("test.html")
