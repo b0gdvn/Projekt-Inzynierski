@@ -110,7 +110,54 @@
             <div class="fs-3 fw-semibold">Procent Wydatków</div>
           </div>
           <div class="account-stat-percentage-1">
-            <canvas id="chart-doughnut"></canvas>
+            <canvas id="chart-doughnut-{{ account.id }}"></canvas>
+            <script>
+              var ctxDoughnut = document.getElementById('chart-doughnut-{{ account.id }}').getContext("2d");
+              var doughnut_data = [{{ pct }}, {{ 100 - pct }}];
+              var pctg = {
+                id: "pctg",
+                beforeDraw(chart, args, options) {
+                  const { ctx, chartArea: {top, right, bottom, left, width, height} } = chart;
+                  ctx.save();
+
+                  ctx.font = "1.5rem sans-serif";
+                  ctx.fillStyle = "#1F2E23";
+                  ctx.textAlign = "center";
+                  ctx.fillText("{{ pct }}%", width / 2, top + (height/2) + 8);
+                }
+              };
+
+              var donutConfig = {
+              type: 'doughnut',
+              data: {
+                labels: ["Dostępne", "Użyte"],
+                datasets: [
+                  {
+                    data: doughnut_data,
+                    borderColor: "transparent",
+                    backgroundColor: [
+                    "#46644F",
+                    "#D3DCD6"
+                    ],
+                    hoverBackgroundColor: [
+                    "#46644F",
+                    "#D3DCD6"
+                    ]
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      display: false,
+                    },
+                  },
+                  cutout: "60%"
+                },
+                plugins: [pctg]
+              };
+              var chartDoughnut = new Chart(ctxDoughnut, donutConfig);
+            </script>
           </div>
         </div>
         <div class="item-account-stat bg-success">
@@ -266,58 +313,6 @@
   </div>  
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-// Chart Doughnut
-var ctxDoughnut = document.getElementById('chart-doughnut').getContext("2d");
-
-var doughnut_data = [{{ pct }}, {{ 100 - pct }}];
-var doughnut_pct = "{{ pct }}%";
-
-var pctg = {
-  id: "pctg",
-  beforeDraw(chart, args, options) {
-    const { ctx, chartArea: {top, right, bottom, left, width, height} } = chart;
-    ctx.save();
-
-    ctx.font = "1.5rem sans-serif";
-    ctx.fillStyle = "#1F2E23";
-    ctx.textAlign = "center";
-    ctx.fillText(doughnut_pct, width / 2, top + (height/2) + 8);
-  }
-};
-
-var donutConfig = {
-type: 'doughnut',
-data: {
-  labels: ["Dostępne", "Użyte"],
-  datasets: [
-    {
-      data: doughnut_data,
-      borderColor: "transparent",
-      backgroundColor: [
-      "#46644F",
-      "#D3DCD6"
-      ],
-      hoverBackgroundColor: [
-      "#46644F",
-      "#D3DCD6"
-      ]
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-    cutout: "60%"
-  },
-  plugins: [pctg]
-};
-
-var chartDoughnut = new Chart(ctxDoughnut, donutConfig);
-</script>
 <script>
 // Chart Line
 
