@@ -67,7 +67,7 @@
   <div class="item-account bg-white">
     <div class="card-container">
       {% for account,currency,card,acc_type,style in accounts %}
-      <div id={{ account.id }} class="item-account-card style-{{ style.name }} fs-3">
+      <div class="acc-{{ account.id }} item-account-card style-{{ style.name }} fs-3">
         <div class="card-line">
           <div class="item-account-type">{{ acc_type.name }}</div>
           <div class="item-account-bank fw-light">{{ account.fin_inst }}</div>
@@ -88,49 +88,51 @@
       </div>
       {% endfor %}
     </div>
-    
     <div class="item-account-select">
       <select id="choose" class="account-select fs-4">
         {% for acc_type in acc_types %}
           <optgroup label="{{ acc_type.name }}">
           {% for account in acc_list %}
             {% if account.acc_type_id == acc_type.id %}
-            <option value={{ account.id }}>{{ account.fin_inst }}</option>
+            <option value="acc-{{ account.id }}">{{ account.fin_inst }}</option>
             {% endif %}
           {% endfor %}
         {% endfor %}
       </select>
     </div>
-    
-    
+    <div>
+      {% for account,currency,card,acc_type,style in accounts %}
+      <div class="acc-{{ account.id }} account-stats">
+        <div class="item-account-stat bg-success">
+          <div class="account-stat-info">
+            <!-- <div class="fs-4">Limit Karty</div> -->
+            <!-- <div class="fs-3 fw-semibold">10,000 PLN</div> -->
+            <div class="fs-3 fw-semibold">Procent Wydatków</div>
+          </div>
+          <div class="account-stat-percentage-1">
+            <canvas id="chart-doughnut"></canvas>
+          </div>
+        </div>
+        <div class="item-account-stat bg-success">
+          <div class="account-stat-info">
+            <div class="fs-4">Wydatki tygodniowe</div>
+            <div class="fs-3 fw-semibold">570,93 PLN</div>
+          </div>
+          <div class="account-stat-percentage-2 bg-main-btn fc-main-btn">
+            <span class="my-auto fa fa-lg fa-caret-down"></span>
+            <span class="my-auto ml-2 fs-2 fw-semibold">12%</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
     <script type="text/javascript" src="{{url_for('static', filename='js/jquery.js')}}"></script>
     <script type="text/javascript">
       $("#choose").change(function(){
-        $("#" + this.value).show().siblings().hide();
+        $("." + this.value).show().siblings().hide();
       });
       $("#choose").change();
     </script>
-    <div class="account-stats">
-      <div class="item-account-stat bg-success">
-      <div class="account-stat-info">
-        <div class="fs-4">Limit Karty</div>
-        <div class="fs-3 fw-semibold">10,000 PLN</div>
-      </div>
-      <div class="account-stat-percentage-1">
-        <canvas id="chart-doughnut"></canvas>
-      </div>
-    </div>
-    <div class="item-account-stat bg-success">
-      <div class="account-stat-info">
-        <div class="fs-4">Wydatki tygodniowe</div>
-        <div class="fs-3 fw-semibold">570,93 PLN</div>
-      </div>
-      <div class="account-stat-percentage-2 bg-main-btn fc-main-btn">
-        <span class="my-auto fa fa-lg fa-caret-down"></span>
-        <span class="my-auto ml-2 fs-2 fw-semibold">12%</span>
-      </div>
-    </div>
-    </div>
     
     <a onclick="AddTrBtnClick()" class="item-add-tr-lg fs-3 fc-main-btn bg-main-btn">
       <span class="item-add-tr-text fw-semibold">Dodaj transakcję</span>
@@ -268,62 +270,55 @@
 // Chart Doughnut
 var ctxDoughnut = document.getElementById('chart-doughnut').getContext("2d");
 
+var doughnut_data = [{{ pct }}, {{ 100 - pct }}];
+var doughnut_pct = "{{ pct }}%";
+
 var pctg = {
-id: "pctg",
-beforeDraw(chart, args, options) {
+  id: "pctg",
+  beforeDraw(chart, args, options) {
     const { ctx, chartArea: {top, right, bottom, left, width, height} } = chart;
     ctx.save();
 
     ctx.font = "1.5rem sans-serif";
     ctx.fillStyle = "#1F2E23";
     ctx.textAlign = "center";
-    ctx.fillText("{{ pct }}%", width / 2, top + (height/2) + 8);
-}
+    ctx.fillText(doughnut_pct, width / 2, top + (height/2) + 8);
+  }
 };
 
 var donutConfig = {
 type: 'doughnut',
 data: {
-    labels: ["Dostępne", "Użyte"],
-    datasets: [
+  labels: ["Dostępne", "Użyte"],
+  datasets: [
     {
-        data: [{{ pct }}, {{ 100 - pct }}],
-        borderColor: "transparent",
-        backgroundColor: [
-        "#46644F",
-        "#D3DCD6"
-        ],
-        hoverBackgroundColor: [
-        "#46644F",
-        "#D3DCD6"
-        ]
+      data: doughnut_data,
+      borderColor: "transparent",
+      backgroundColor: [
+      "#46644F",
+      "#D3DCD6"
+      ],
+      hoverBackgroundColor: [
+      "#46644F",
+      "#D3DCD6"
+      ]
     }]
-},
-options: {
-    elements: {
-    center: {
-        text: "{{ pct }}%",
-        color: '#FF6384', // Default is #000000
-        fontStyle: 'Arial', // Default is Arial
-        sidePadding: 20, // Default is 20 (as a percentage)
-        minFontSize: 25, // Default is 20 (in px), set to false and text will not wrap.
-        lineHeight: 25 // Default is 25 (in px), used for when text wraps
-    }
-    },
+  },
+  options: {
     responsive: true,
     plugins: {
-    legend: {
+      legend: {
         display: false,
-    },
+      },
     },
     cutout: "60%"
-},
-plugins: [pctg]
+  },
+  plugins: [pctg]
 };
 
 var chartDoughnut = new Chart(ctxDoughnut, donutConfig);
-
-
+</script>
+<script>
 // Chart Line
 
 var ctxLine = document.getElementById("chart-line").getContext("2d");
@@ -389,20 +384,20 @@ options: {
     },
     x: {
         grid: {
-        drawBorder: false,
-        display: false,
-        drawOnChartArea: false,
-        drawTicks: false,
+          drawBorder: false,
+          display: false,
+          drawOnChartArea: false,
+          drawTicks: false,
         },
         ticks: {
-        display: true,
-        color: '#b2b9bf',
-        font: {
-            size: 10,
-            family: "Inter",
-            style: 'normal',
-            lineHeight: 2
-        },
+          display: true,
+          color: '#b2b9bf',
+          font: {
+              size: 10,
+              family: "Inter",
+              style: 'normal',
+              lineHeight: 2
+          },
         }
     },
     },
