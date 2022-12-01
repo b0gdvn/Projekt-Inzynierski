@@ -107,7 +107,8 @@
           <div class="account-stat-info">
             <!-- <div class="fs-4">Limit Karty</div> -->
             <!-- <div class="fs-3 fw-semibold">10,000 PLN</div> -->
-            <div class="fs-3 fw-semibold">Procent Wydatków</div>
+            <div class="fs-4">Procent od wszystkich</div>
+            <div class="fs-3 fw-semibold">Dostępnych Środków</div>
           </div>
           <div class="account-stat-percentage-1">
             <canvas id="chart-doughnut-{{ account.id }}"></canvas>
@@ -323,61 +324,61 @@ gradientStroke.addColorStop(1, 'rgba(70,100,79,0.2)');
 gradientStroke.addColorStop(0, 'rgba(70,100,79,0.0)');
 
 var dataChartMain = {
-labels: ["Pn", "Wt", "Śr", "Cz", "Pt", "Sb", "Nd"],
-datasets: [
+  labels: ["Pn", "Wt", "Śr", "Cz", "Pt", "Sb", "Nd"],
+  datasets: [
     {
-    label: "Wydatki",
-    tension: 0.4,
-    borderWidth: 0,
-    pointRadius: 0,
-    borderColor: "#46644F",
-    borderWidth: 4,
-    backgroundColor: gradientStroke,
-    fill: true,
-    data: [150, 430, 300, 520, 350],
-    maxBarThickness: 6
+      label: "Wydatki",
+      tension: 0.4,
+      borderWidth: 0,
+      pointRadius: 0,
+      borderColor: "#46644F",
+      borderWidth: 4,
+      backgroundColor: gradientStroke,
+      fill: true,
+      data: [150, 430, 300, 520, 350],
+      maxBarThickness: 6
     }
-],
+  ],
 };
 
 var chartLine = new Chart(ctxLine, {
-type: "line",
-data: dataChartMain,
-options: {
+  type: "line",
+  data: dataChartMain,
+  options: {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-    legend: {
+      legend: {
         display: false,
-    }
+      }
     },
     interaction: {
-    intersect: false,
-    mode: 'index',
+      intersect: false,
+      mode: 'index',
     },
     scales: {
-    y: {
+      y: {
         grid: {
-        drawBorder: false,
-        display: true,
-        drawOnChartArea: true,
-        drawTicks: false,
-        borderDash: [2, 25]
+          drawBorder: false,
+          display: true,
+          drawOnChartArea: true,
+          drawTicks: false,
+          borderDash: [2, 25]
         },
         ticks: {
-        display: true,
-        maxTicksLimit: 5,
-        color: '#b2b9bf',
-        font: {
+          display: true,
+          maxTicksLimit: 5,
+          color: '#b2b9bf',
+          font: {
             size: 10,
             family: "Inter",
             style: 'normal',
             lineHeight: 2
-        },
+          },
         },
 
-    },
-    x: {
+      },
+      x: {
         grid: {
           drawBorder: false,
           display: false,
@@ -388,15 +389,15 @@ options: {
           display: true,
           color: '#b2b9bf',
           font: {
-              size: 10,
-              family: "Inter",
-              style: 'normal',
-              lineHeight: 2
+            size: 10,
+            family: "Inter",
+            style: 'normal',
+            lineHeight: 2
           },
         }
+      },
     },
-    },
-},
+  },
 });
 </script>
 {% endblock %}
