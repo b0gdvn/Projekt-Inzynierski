@@ -74,6 +74,7 @@ class category(db.Model):
     style_id = db.Column(db.Integer, db.ForeignKey('style.id'), nullable=False)
     tr_type_id = db.Column(db.Integer, db.ForeignKey('tr_type.id'), nullable=False)
     name = db.Column(db.String(20), nullable=False)
+    icon = db.Column(db.String(20), nullable=False)
 
     transaction = db.relationship("transaction", backref="category", lazy=True)
 
@@ -107,7 +108,8 @@ class transaction(db.Model):
     tr_type_id = db.Column(db.Integer, db.ForeignKey('tr_type.id'), nullable=False)
     name = db.Column(db.String(50), nullable=False)
     amount = db.Column(db.Numeric(12,2), nullable=False)
-    datetime = db.Column(db.DateTime, nullable=False , default=datetime.utcnow)
+    date = db.Column(db.Date, nullable=False , default=datetime.today)
+    time = db.Column(db.Time, nullable=False , default=datetime.utcnow)
 
     def __repr__(self):
         return f"Transaction('{self.name}', '{self.tr_type_id}', '{self.amount}', '{self.datetime}')"

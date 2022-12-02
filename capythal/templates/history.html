@@ -33,6 +33,7 @@
       <span class="tr-plus fa fa-fw fa-plus bg-success-secondary"></span>
     </a>
   </div>
+  
   <div class="table-container" role="table" aria-label="Destinations">
     <div class="flex-table header" role="rowgroup">
       <div class="flex-row first-header" role="columnheader">Data</div>
@@ -42,76 +43,34 @@
       <div class="flex-row" role="columnheader">Kwota</div>
       <div class="flex-row-edit" role="columnheader">Edycja</div>
     </div>
+    {% for tr_date,account in tr_dates %}
     <div class="flex-table row" role="rowgroup">
-      <div class="flex-row rowspan first">19.10.2022</div>
+      <div class="flex-row rowspan first">{{ tr_date.strftime("%d.%m.%Y") }}</div>
       <div class="column">
-        <div class="flex-row">
-          <div class="flex-cell" role="cell">
-            <div class="category-square style-green my-auto">
-              <span class="fa fa-lg fa-book"></span>
+        {% for transaction,tr_type,account,currency,category,style in transactions %}
+          {% if transaction.date == tr_date %}
+          <div class="flex-row">
+            <div class="flex-cell" role="cell">
+              <div class="category-square style-{{ style.name }} my-auto">
+                <span class="fa fa-lg fa-{{ category.icon }}"></span>
+              </div>
+            </div>
+            <div class="flex-cell" role="cell">{{ transaction.name }}</div>
+            <div class="flex-cell cell-time" role="cell">{{ transaction.time.strftime("%-H:%M") }}</div>
+            <div class="flex-cell cell-amount" role="cell">
+              <div class="amount {% if tr_type.name == 'Wydatek' %}{{ 'bg-danger fc-danger' }}{% else %}{{ 'bg-success fc-success' }}{% endif %}">
+                {% if tr_type.name == 'Wydatek' %}{{ "-" }}{% endif %}{{ transaction.amount }} {{ currency.name }}
+              </div>
+            </div>
+            <div class="flex-cell-edit" role="cell">
+              <a onclick="editTrBtnClick()" class="fa fa-lg fa-pen"></a>
             </div>
           </div>
-          <div class="flex-cell" role="cell">Lekcja Francuskiego</div>
-          <div class="flex-cell" role="cell">19:23</div>
-          <div class="flex-cell" role="cell">
-            <div class="amount bg-danger fc-danger">-90.00 PLN</div>
-          </div>
-          <div class="flex-cell-edit" role="cell">
-            <a onclick="editTrBtnClick()" class="fa fa-lg fa-pen"></a> <!-- Przesyłać id transakcji w funkcji i otwierać jej dane do edycji -->
-          </div>
-        </div>
+          {% endif %}
+        {% endfor %}
       </div>
     </div>
-    <div class="flex-table row" role="rowgroup">
-      <div class="flex-row rowspan first">17.10.2022</div>
-      <div class="column">
-        <div class="flex-row">
-          <div class="flex-cell" role="cell">
-            <div class="category-square style-red my-auto">
-              <span class="fa fa-lg fa-briefcase"></span>
-            </div>
-          </div>
-          <div class="flex-cell" role="cell">Premia Miesięczna</div>
-          <div class="flex-cell" role="cell">11:24</div>
-          <div class="flex-cell" role="cell">
-            <div class="amount bg-success fc-success">+3,490.20 PLN</div>
-          </div>
-          <div class="flex-cell-edit" role="cell">
-            <a href="" class="fa fa-lg fa-pen"></a>
-          </div>
-        </div>
-        <div class="flex-row" role="rowgroup">
-          <div class="flex-cell" role="cell">
-            <div class="category-square style-red my-auto">
-              <span class="fa fa-lg fa-briefcase"></span>
-            </div>
-          </div>
-          <div class="flex-cell" role="cell">Premia Miesięczna</div>
-          <div class="flex-cell" role="cell">11:24</div>
-          <div class="flex-cell" role="cell">
-            <div class="amount bg-success fc-success">+3,490.20 PLN</div>
-          </div>
-          <div class="flex-cell-edit" role="cell">
-            <a href="" class="fa fa-lg fa-pen"></a>
-          </div>
-        </div>
-        <div class="flex-row" role="rowgroup">
-          <div class="flex-cell" role="cell">
-            <div class="category-square style-red my-auto">
-              <span class="fa fa-lg fa-briefcase"></span>
-            </div>
-          </div>
-          <div class="flex-cell" role="cell">Premia Miesięczna</div>
-          <div class="flex-cell" role="cell">11:24</div>
-          <div class="flex-cell" role="cell">
-            <div class="amount bg-success fc-success">+3,490.20 PLN</div>
-          </div>
-          <div class="flex-cell-edit" role="cell">
-            <a href="" class="fa fa-lg fa-pen"></a>
-          </div>
-        </div>
-      </div>
-    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

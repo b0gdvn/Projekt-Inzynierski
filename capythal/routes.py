@@ -104,7 +104,10 @@ def goals():
 @app.route('/history')
 @login_required
 def history():
-    return render_template("history.html")
+    transactions = db.session.query(transaction,tr_type,account,currency,category,style).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).join(category, transaction.category_id==category.id).join(style, category.style_id==style.id).filter(account.user_id == current_user.id)
+    tr_dates = db.session.query(transaction.date,account).join(account, transaction.account_id==account.id).filter(account.user_id == current_user.id).distinct()
+    
+    return render_template("history.html", transactions = transactions, tr_dates = tr_dates)
 
 @app.route('/userpage')
 @login_required
