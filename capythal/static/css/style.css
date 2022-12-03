@@ -294,6 +294,10 @@ input[type=checkbox] {
     right: 26px;
 }
 
+.popup_close:hover {
+    font-weight: bolder;
+}
+
 /*------------PARAMETERS------------*/
 .alert-success {
 	display: flex;

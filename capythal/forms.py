@@ -57,3 +57,17 @@ class editGoalForm(FlaskForm):
     goal_id = StringField('goal_id')
     submitEditGoal = SubmitField('Zapisz')
     deleteGoal = SubmitField('Usuń')
+
+class addTrForm(FlaskForm):
+    amount = FloatField('Kwota')
+    # account = SelectField('Konto', coerce=int)
+    # name = StringField('Nazwa Celu', validators=[Length(max=20)], render_kw={'placeholder': 'Nazwa Celu'})
+    submitNewTr = SubmitField('Dodaj')
+
+class editTrForm(FlaskForm):
+    amount = FloatField('Kwota')
+    # account = SelectField('Konto', coerce=int)
+    # name = StringField('Nazwa Celu', validators=[Length(max=20)], render_kw={'placeholder': 'Nazwa Celu'})
+    tr_id = StringField('tr_id')
+    submitEditTr = SubmitField('Zapisz')
+    deleteTr = SubmitField('Usuń')

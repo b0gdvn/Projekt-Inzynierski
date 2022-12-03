@@ -4,7 +4,7 @@
 }
 
 .switch-field {
-	margin: 2rem 0 0.5rem;
+	margin: 0.5rem 0;
 	display: flex;
 	flex: 1;
 	justify-content: center;
@@ -119,6 +119,10 @@ input {
 .input-line {
 	display: flex;
 	justify-content: space-between;
+}
+
+.input-line-submit {
+	justify-content: end;
 }
 
 select {

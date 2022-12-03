@@ -13,14 +13,106 @@
   <script src="{{url_for('static', filename='js/modals/f-modal.js')}}" async></script>
 {% endblock %}
 {% block content %}
-<div id="add-tr-btn-modal" class="modal">
-  {% include 'modals/tr-modal.html' %}
-</div>
 <div id="filter-btn-modal" class="modal">
-  {% include 'modals/f-modal.html' %}
+  <div class="modal-content">
+    <div class="modal-top fs-3">
+      <span class="fw-semibold">Filtruj</span>
+      <a class="tr-close">Zamknij</a>
+    </div>
+    <div class="switch-field-filter">
+      <input type="checkbox" id="radio-income-f" name="switch-one" value="income" checked/>
+      <label class="radio-el" for="radio-income-f">Przychody</label>
+      <input type="checkbox" id="radio-expense-f" name="switch-one" value="expense" checked/>
+      <label class="radio-el" for="radio-expense-f">Wydatki</label>
+    </div>
+    <div id="tr-filter">
+      <form class="fs-4 income-form" name="filter" action="" onsubmit="return validateFilterForm()">
+        <div class="input-line">
+          <input id="tr_amount_min" name="tr_amount_min" class="fs-1" type="number" step="0.01" min="0" placeholder="Min wartość">
+          <input id="tr_amount_max" name="tr_amount_max" class="fs-1" type="number" step="0.01" min="0.02" placeholder="Max wartość">
+        </div>
+        <div class="input-line">
+          <select id="tr_category" name="Kategoria">
+            <option value="" disabled selected>Kategoria</option>
+            <option value='clothes'>Odzież</option>
+            <option value='food'>Jedzenie</option>
+            <option value='transport'>Transport</option>
+            <option value='car'>Samochód</option>
+            <option value='house'>Dom</option>
+            <option value='entertainment'>Rozrywka</option>
+            <option value='kids'>Dzieci</option>
+            <option value='traveling'>Podróżowanie</option>
+            <option value='health'>Zdrowie</option>
+            <option value='appearance'>Wygląd</option>
+            <option value='devices'>Urządzenia</option>
+            <option value='communication'>Komunikacja</option>
+            <option value='education'>Edukacja</option>
+            <option value='other'>Inne</option>
+          </select>
+          <select id="tr_account" name="Konto">
+            <option value="" disabled selected>Konto</option>
+            <optgroup label="Karty Kredytowe">
+              <option value="1">Santander</option>
+              <option value="2">PeKaO</option>
+            </optgroup>
+            <optgroup label="Konta Bieżące">
+              <option value="3">GetIn</option>
+              <option value="4">Santander</option>
+            </optgroup>
+            <optgroup label="Inne">
+              <option value="5">XTB</option>
+              <option value="6">Binance</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="input-line">
+          <span class="date-label-f fs-4">Od</span>
+          <input id="tr_date_min" type=date>
+          <span class="date-label-f fs-4">Do</span>
+          <input id="tr_date_max" type=date>
+        </div>
+        <div class="input-line">
+          <input id="tr_reset" class="fs-3" type="reset" value="Resetuj">
+          <input id="tr_submit" class="fs-3" type="submit" value="Filtruj">
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 <div id="edit-tr-btn-modal" class="modal">
-  {% include 'modals/etr-modal.html' %}
+  <div class="modal-content">
+    <div class="modal-top fs-3">
+      <span class="fw-semibold">Edycja Transakcji</span>
+      <a class="tr-close">Zamknij</a>
+    </div>
+    <div id="tr-edit">
+      <form class="fs-4 income-form" action="">
+        <input id="tr_amount" class="fs-1" type="number" step="0.01" min="0.01" placeholder="0.00" oninput="validity.valid||(value='');" required="required">
+        <input id="tr_name" type="text" placeholder="Nazwa Transakcji" required="required">
+        <div class="input-line">
+          <select id="tr_account_from" name="Konto" required="required">
+            <option value="" disabled selected>Konto z</option>
+            <option value="">Jedzenie</option>
+            <option value="">Transport</option>
+          </select>
+          <select id="tr_account_to" name="Konto" required="required">
+            <option value="" disabled selected>Konto do</option>
+            <option value="">Jedzenie</option>
+            <option value="">Transport</option>
+          </select>
+        </div>
+        <div class="input-line">
+          <input id="tr_date" type=date required="required">
+          <input id="tr_time" type=time required="required">
+        </div>
+        <div class="input-line">
+          <input id="tr_reset" class="fs-3" type="reset" value="Wyczyszć">
+          <input id="tr_delete" class="fs-3" type="submit" value="Usuń">
+          <input id="tr_submit" class="fs-3" type="submit" value="Zapisz">
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <div class="history-flexbox bg-white">
@@ -28,10 +120,162 @@
     <a onclick="filterBtnClick()" class="filter-btn fs-3 fw-semibold">
       <span>Filtry</span>
     </a>
-    <a onclick="AddTrBtnClick()" class="add-tr-btn fs-3">
+    <a href="#modal-add" class="add-tr-btn fs-3">
       <span class="fw-semibold">Dodaj transakcję</span>
-      <span class="tr-plus fa fa-fw fa-plus bg-success-secondary"></span>
+      <span class="tr-plus fa fa-fw fa-xl fa-plus bg-success-secondary"></span>
     </a>
+    <div class="popup" id="modal-add">
+      <a class="popup_overlay" href="#"></a>
+      <div class="popup_wrapper">
+        <a class="popup_close" href="#">Zamknij</a>
+        <div class="switch-field">
+          <input type="radio" id="radio-income" name="switch-two" value="yes" />
+          <label class="radio-el" for="radio-income">Przychód</label>
+          <input type="radio" id="radio-expense" name="switch-two" value="maybe" checked/>
+          <label class="radio-el" for="radio-expense">Wydatek</label>
+          <input type="radio" id="radio-transfer" name="switch-two" value="no" />
+          <label class="radio-el" for="radio-transfer">Transfer</label>
+        </div>
+        <div id="tr-income">
+          <form id="inc-form" class="fs-4 income-form" action="">
+            {{ form_add.hidden_tag() }}
+            <input id="tr_amount" class="fs-1" type="number" required="required" step="0.01" min="0.01" placeholder="0.00">
+            <input id="tr_name" type="text" required="required" placeholder="Nazwa Transakcji">
+            <div class="input-line">
+              <select id="tr_category" required="required" name="Kategoria">
+                <option value="" disabled selected>Kategoria</option>
+                <option value='salary'>Wynagrodzenie</option>
+                <option value='bonus'>Premia</option>
+                <option value='sell'>Sprzedaż</option>
+                <option value='other'>Inne</option>
+              </select>
+              <select id="tr_account" required="required" name="Konto">
+                <option value="" disabled selected>Konto</option>
+                <optgroup label="Karty Kredytowe">
+                  <option value="1">Santander</option>
+                  <option value="2">PeKaO</option>
+                </optgroup>
+                <optgroup label="Konta Bieżące">
+                    <option value="3">GetIn</option>
+                    <option value="4">Santander</option>
+                </optgroup>
+                <optgroup label="Inne">
+                    <option value="5">XTB</option>
+                    <option value="6">Binance</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="input-line">
+              <span class="date-label fs-4">Data</span>
+              <input id="tr_date" type=date required="required">
+              <span class="time-label fs-4">Czas</span>
+              <input id="tr_time" type=time required="required">
+            </div>
+            <div class="input-line input-line-submit">
+              <input id="tr_submit" class="fs-3" type="submit" value="Dodaj">
+            </div>
+          </form>
+        </div>
+        <div id="tr-expense">
+          <form id="exp-form" class="fs-4 income-form" action="">
+            {{ form_add.hidden_tag() }}
+            <input id="tr_amount" class="fs-1" type="number" required="required" step="0.01" min="0.01" placeholder="0.00">
+            <input id="tr_name" type="text" required="required" placeholder="Nazwa Transakcji">
+            <div class="input-line">
+              <select id="tr_category" required="required" name="Kategoria">
+                <option value="" disabled selected>Kategoria</option>
+                <option value='clothes'>Odzież</option>
+                <option value='food'>Jedzenie</option>
+                <option value='transport'>Transport</option>
+                <option value='car'>Samochód</option>
+                <option value='house'>Dom</option>
+                <option value='entertainment'>Rozrywka</option>
+                <option value='kids'>Dzieci</option>
+                <option value='traveling'>Podróżowanie</option>
+                <option value='health'>Zdrowie</option>
+                <option value='appearance'>Wygląd</option>
+                <option value='devices'>Urządzenia</option>
+                <option value='communication'>Komunikacja</option>
+                <option value='education'>Edukacja</option>
+                <option value='other'>Inne</option>
+              </select>
+              <select id="tr_account" required="required" name="Konto">
+                <option value="" disabled selected>Konto</option>
+                <optgroup label="Karty Kredytowe">
+                  <option value="1">Santander</option>
+                  <option value="2">PeKaO</option>
+                </optgroup>
+                <optgroup label="Konta Bieżące">
+                  <option value="3">GetIn</option>
+                  <option value="4">Santander</option>
+                </optgroup>
+                <optgroup label="Inne">
+                  <option value="5">XTB</option>
+                  <option value="6">Binance</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="input-line">
+              <span class="date-label fs-4">Data</span>
+              <input id="tr_date" type=date required="required">
+              <span class="time-label fs-4">Czas</span>
+              <input id="tr_time" type=time required="required">
+            </div>
+            <div class="input-line input-line-submit">
+              <input id="tr_submit" class="fs-3" type="submit" value="Dodaj">
+            </div>
+          </form>
+        </div>
+        <div id="tr-transfer">
+          <form id="transf-form" class="fs-4 income-form" action="">
+            {{ form_add.hidden_tag() }}
+            <input id="tr_amount" class="fs-1" type="number" required="required" step="0.01" min="0.01" placeholder="0.00">
+            <input id="tr_name" type="text" required="required" placeholder="Nazwa Transakcji">
+            <div class="input-line">
+              <select id="tr_account_from" name="Konto" required="required">
+                <option value="" disabled selected>Konto z</option>
+                <optgroup label="Karty Kredytowe">
+                  <option value="1">Santander</option>
+                  <option value="2">PeKaO</option>
+                </optgroup>
+                <optgroup label="Konta Bieżące">
+                  <option value="3">GetIn</option>
+                  <option value="4">Santander</option>
+                </optgroup>
+                <optgroup label="Inne">
+                  <option value="5">XTB</option>
+                  <option value="6">Binance</option>
+                </optgroup>
+              </select>
+              <select id="tr_account_to" name="Konto" required="required">
+                <option value="" disabled selected>Konto do</option>
+                <optgroup label="Karty Kredytowe">
+                  <option value="1">Santander</option>
+                  <option value="2">PeKaO</option>
+                </optgroup>
+                <optgroup label="Konta Bieżące">
+                  <option value="3">GetIn</option>
+                  <option value="4">Santander</option>
+                </optgroup>
+                <optgroup label="Inne">
+                  <option value="5">XTB</option>
+                  <option value="6">Binance</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="input-line">
+              <span class="date-label fs-4">Data</span>
+              <input id="tr_date" type=date required="required">
+              <span class="time-label fs-4">Czas</span>
+              <input id="tr_time" type=time required="required">
+            </div>
+            <div class="input-line input-line-submit">
+              <input id="tr_submit" class="fs-3" type="submit" value="Dodaj">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
   
   <div class="table-container" role="table" aria-label="Destinations">

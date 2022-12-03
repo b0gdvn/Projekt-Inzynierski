@@ -1,6 +1,6 @@
 from flask import render_template, flash, url_for, redirect
 from capythal import app, db, bcrypt
-from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm, addGoalForm, editGoalForm
+from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm, addGoalForm, editGoalForm, addTrForm, editTrForm
 from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, settings, goal
 from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy import update, delete
@@ -104,10 +104,38 @@ def goals():
 @app.route('/history')
 @login_required
 def history():
+    form_add = addTrForm()
+    form_edit = editTrForm()
+
     transactions = db.session.query(transaction,tr_type,account,currency,category,style).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).join(category, transaction.category_id==category.id).join(style, category.style_id==style.id).filter(account.user_id == current_user.id)
     tr_dates = db.session.query(transaction.date,account).join(account, transaction.account_id==account.id).filter(account.user_id == current_user.id).distinct()
     
-    return render_template("history.html", transactions = transactions, tr_dates = tr_dates)
+    if form_add.submitNewTr.data and form_add.validate():
+        new_tr = transaction(user_id = current_user.id, amount = form_add.amount.data, currency_id = form_add.currency.data, card_id = form_add.card_type.data, acc_type_id = form_add.acc_type.data, style_id = randint(1,10), card_number = form_add.card_number.data, fin_inst = form_add.fin_inst.data )
+        # /\poprawiane wartosci
+        db.session.add(new_tr)
+        db.session.commit()
+        return redirect(url_for('history'))
+
+    if form_edit.submitEditTr.data and form_edit.validate():
+        db.session.execute(
+            update(transaction)
+            .where((transaction.id == form_edit.tr_id.data) & (account.user_id == current_user.id))
+            .values(currency_id = form_edit.currency.data, card_id = form_edit.card_type.data, acc_type_id = form_edit.acc_type.data, card_number = form_edit.card_number.data, fin_inst = form_edit.fin_inst.data))
+            # /\poprawiane wartosci
+
+        db.session.commit()
+        return redirect(url_for('history'))
+    
+    if form_edit.deleteTr.data and form_edit.validate():
+        db.session.execute(
+            delete(transaction)
+            .where((transaction.id == form_edit.tr_id.data) & (account.user_id == current_user.id)))
+
+        db.session.commit()
+        return redirect(url_for('history'))
+
+    return render_template("history.html", transactions = transactions, form_add = form_add, form_edit = form_edit, tr_dates = tr_dates)
 
 @app.route('/userpage')
 @login_required
