@@ -1,9 +1,9 @@
 from flask import render_template, flash, url_for, redirect
 from capythal import app, db, bcrypt
-from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm, addGoalForm, editGoalForm, addTrForm, editTrForm
+from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm, addGoalForm, editGoalForm, addTrForm, editTrForm, addIncTrForm, addExpTrForm, addTrfTrForm
 from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, settings, goal
 from flask_login import login_user, logout_user, current_user, login_required
-from sqlalchemy import update, delete
+from sqlalchemy import update, delete, desc
 from random import randint
 
 # Formatowanie wartości pieniędzy
@@ -97,45 +97,72 @@ def goals():
         db.session.commit()
         return redirect(url_for('goals'))
 
-
     return render_template("goals.html", goals = goals, form_add = form_add, form_edit = form_edit, accs_list = accs_list)
     
 
-@app.route('/history')
+@app.route('/history', methods=['GET', 'POST'])
 @login_required
 def history():
     form_add = addTrForm()
     form_edit = editTrForm()
+    form_inc_add = addIncTrForm()
+    form_exp_add = addExpTrForm()
+    form_trf_add = addTrfTrForm()
 
     transactions = db.session.query(transaction,tr_type,account,currency,category,style).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).join(category, transaction.category_id==category.id).join(style, category.style_id==style.id).filter(account.user_id == current_user.id)
-    tr_dates = db.session.query(transaction.date,account).join(account, transaction.account_id==account.id).filter(account.user_id == current_user.id).distinct()
+    tr_dates = db.session.query(transaction.date,account).join(account, transaction.account_id==account.id).filter(account.user_id == current_user.id).distinct(transaction.date).order_by(desc(transaction.date))
+    inc_cat_list = db.session.query(category).filter(category.tr_type_id == 2)
+    form_inc_add.inc_category.choices = [(i.id, i.name) for i in inc_cat_list]
+
+    exp_cat_list = db.session.query(category).filter(category.tr_type_id == 1)
+    form_exp_add.exp_category.choices = [(i.id, i.name) for i in exp_cat_list]
+
+    user_accs = db.session.query(account,acc_type,currency).join(acc_type).join(style).join(currency).filter(account.user_id == current_user.id)
+    accs_list = [(i.account.id, f"{i.account.fin_inst} - {i.acc_type.name} {i.currency.name}") for i in user_accs]
+    form_inc_add.account.choices = accs_list
+    form_exp_add.account.choices = accs_list
+    form_trf_add.account_f.choices = accs_list
+    form_trf_add.account_to.choices = accs_list
+    # form_edit.account.choices = accs_list
+
+    if form_inc_add.submitNewTr.data and form_inc_add.validate():
+        new_tr = transaction(account_id = form_inc_add.account.data, category_id = form_inc_add.inc_category.data, tr_type_id = form_inc_add.tr_type_id.data, name = form_inc_add.tr_name.data, amount = form_inc_add.tr_amount.data, date = form_inc_add.tr_date.data, time = form_inc_add.tr_time.data)
+        db.session.add(new_tr)
+        db.session.commit()
+        return redirect(url_for('history'))
     
-    if form_add.submitNewTr.data and form_add.validate():
-        new_tr = transaction(user_id = current_user.id, amount = form_add.amount.data, currency_id = form_add.currency.data, card_id = form_add.card_type.data, acc_type_id = form_add.acc_type.data, style_id = randint(1,10), card_number = form_add.card_number.data, fin_inst = form_add.fin_inst.data )
-        # /\poprawiane wartosci
+    if form_exp_add.submitNewTr.data and form_exp_add.validate():
+        new_tr = transaction(account_id = form_exp_add.account.data, category_id = form_exp_add.exp_category.data, tr_type_id = form_exp_add.tr_type_id.data, name = form_exp_add.tr_name.data, amount = form_exp_add.tr_amount.data, date = form_exp_add.tr_date.data, time = form_exp_add.tr_time.data)
         db.session.add(new_tr)
         db.session.commit()
         return redirect(url_for('history'))
 
-    if form_edit.submitEditTr.data and form_edit.validate():
-        db.session.execute(
-            update(transaction)
-            .where((transaction.id == form_edit.tr_id.data) & (account.user_id == current_user.id))
-            .values(currency_id = form_edit.currency.data, card_id = form_edit.card_type.data, acc_type_id = form_edit.acc_type.data, card_number = form_edit.card_number.data, fin_inst = form_edit.fin_inst.data))
-            # /\poprawiane wartosci
-
+    if form_trf_add.submitNewTr.data and form_trf_add.validate():
+        new_tr_f = transaction(account_id = form_trf_add.account_f.data, category_id = 19, tr_type_id = 1, name = f'Transfer - Wpływ', amount = form_trf_add.tr_amount.data, date = form_trf_add.tr_date.data, time = form_trf_add.tr_time.data)
+        new_tr_to = transaction(account_id = form_trf_add.account_to.data, category_id = 19, tr_type_id = 2, name = f'Transfer - Wychodzący', amount = form_trf_add.tr_amount.data, date = form_trf_add.tr_date.data, time = form_trf_add.tr_time.data)
+        db.session.add(new_tr_to)
+        db.session.add(new_tr_f)
         db.session.commit()
-        return redirect(url_for('history'))
+
+    # if form_edit.submitEditTr.data and form_edit.validate():
+    #     db.session.execute(
+    #         update(transaction)
+    #         .where((transaction.id == form_edit.tr_id.data) & (account.user_id == current_user.id))
+    #         .values(currency_id = form_edit.currency.data, card_id = form_edit.card_type.data, acc_type_id = form_edit.acc_type.data, card_number = form_edit.card_number.data, fin_inst = form_edit.fin_inst.data))
+    #         # /\poprawiane wartosci
+
+    #     db.session.commit()
+    #     return redirect(url_for('history'))
     
-    if form_edit.deleteTr.data and form_edit.validate():
-        db.session.execute(
-            delete(transaction)
-            .where((transaction.id == form_edit.tr_id.data) & (account.user_id == current_user.id)))
+    # if form_edit.deleteTr.data and form_edit.validate():
+    #     db.session.execute(
+    #         delete(transaction)
+    #         .where((transaction.id == form_edit.tr_id.data) & (account.user_id == current_user.id)))
 
-        db.session.commit()
-        return redirect(url_for('history'))
+    #     db.session.commit()
+    #     return redirect(url_for('history'))
 
-    return render_template("history.html", transactions = transactions, form_add = form_add, form_edit = form_edit, tr_dates = tr_dates)
+    return render_template("history.html", transactions = transactions, form_add = form_add, form_edit = form_edit, tr_dates = tr_dates, accs_list = accs_list, inc_cat_list = inc_cat_list, exp_cat_list = exp_cat_list, form_inc_add = form_inc_add, form_exp_add = form_exp_add, form_trf_add = form_trf_add)
 
 @app.route('/userpage')
 @login_required

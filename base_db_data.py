@@ -46,11 +46,13 @@ inc_icon = ['money-check-dollar', 'money-bill-1-wave', 'clipboard-check', 'ellip
 for n, (inc, ico) in enumerate(zip(inc_categories, inc_icon), start=1):
     db.session.add(category(style_id=n, tr_type_id=2, name=inc, icon=ico))
 
+db.session.add(category(style_id = 5, tr_type_id = 3, name="Transfer", icon = "money-bill-transfer"))
+
 db.session.add(account(user_id=1, amount=3221.21, currency_id=1, card_id=3, acc_type_id=2, style_id=randint(1,10), card_number='2211', fin_inst='PeKaO'))
 db.session.add(account(user_id=1, amount=424.00, currency_id=1, card_id=2, acc_type_id=1, style_id=randint(1,10), card_number='1234', fin_inst='Santander'))
 db.session.add(account(user_id=1, amount=5392.39, currency_id=2, card_id=1, acc_type_id=3, style_id=randint(1,10), fin_inst='XTB'))
 db.session.add(account(user_id=1, amount=213.90, currency_id=3, card_id=2, acc_type_id=2, style_id=randint(1,10), card_number='3322', fin_inst='GetIn Bank'))
-db.session.add(account(user_id=1, amount=3412.36, currency_id=1, card_id=1, acc_type_id=4, style_id=randint(1,10)))
+db.session.add(account(user_id=1, amount=3412.36, currency_id=1, card_id=1, acc_type_id=4, style_id=randint(1,10), fin_inst='Portfel'))
 
 db.session.add(transaction(account_id=2, category_id=2, tr_type_id=1, name='McDonalds', amount=24.50, date=datetime.strptime('2022-11-22', '%Y-%m-%d'), time=datetime.strptime('18:34:00', '%H:%M:%S').time()))
 db.session.add(transaction(account_id=2, category_id=1, tr_type_id=1, name='H&M koszulka', amount=69.90, date=datetime.strptime('2022-11-22', '%Y-%m-%d'), time=datetime.strptime('14:03:00', '%H:%M:%S').time()))

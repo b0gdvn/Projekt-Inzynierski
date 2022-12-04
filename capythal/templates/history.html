@@ -137,140 +137,65 @@
           <label class="radio-el" for="radio-transfer">Transfer</label>
         </div>
         <div id="tr-income">
-          <form id="inc-form" class="fs-4 income-form" action="">
-            {{ form_add.hidden_tag() }}
-            <input id="tr_amount" class="fs-1" type="number" required="required" step="0.01" min="0.01" placeholder="0.00">
-            <input id="tr_name" type="text" required="required" placeholder="Nazwa Transakcji">
+          <form id="inc-form" class="fs-4 income-form" method="POST" action="">
+            {{ form_inc_add.hidden_tag() }}
+            {{ form_inc_add.tr_type_id(type="hidden", value = 2) }}
+            {{ form_inc_add.tr_amount(id="tr_amount", class="fs-1", type="number", required="required", step="0.01", min="0.01", placeholder="0.00")}}
+            {{ form_inc_add.tr_name(id="tr_name", type="text", required="required", placeholder="Nazwa Transakcji") }}
             <div class="input-line">
-              <select id="tr_category" required="required" name="Kategoria">
-                <option value="" disabled selected>Kategoria</option>
-                <option value='salary'>Wynagrodzenie</option>
-                <option value='bonus'>Premia</option>
-                <option value='sell'>Sprzedaż</option>
-                <option value='other'>Inne</option>
-              </select>
-              <select id="tr_account" required="required" name="Konto">
-                <option value="" disabled selected>Konto</option>
-                <optgroup label="Karty Kredytowe">
-                  <option value="1">Santander</option>
-                  <option value="2">PeKaO</option>
-                </optgroup>
-                <optgroup label="Konta Bieżące">
-                    <option value="3">GetIn</option>
-                    <option value="4">Santander</option>
-                </optgroup>
-                <optgroup label="Inne">
-                    <option value="5">XTB</option>
-                    <option value="6">Binance</option>
-                </optgroup>
-              </select>
+              {{ form_inc_add.inc_category(id="tr_category", required="required") }}
+              {{ form_inc_add.account(id="tr_account", required="required") }}
             </div>
             <div class="input-line">
               <span class="date-label fs-4">Data</span>
-              <input id="tr_date" type=date required="required">
+              {{ form_inc_add.tr_date(id="tr_date") }}
               <span class="time-label fs-4">Czas</span>
-              <input id="tr_time" type=time required="required">
+              {{ form_inc_add.tr_time(id="tr_time") }}
             </div>
             <div class="input-line input-line-submit">
-              <input id="tr_submit" class="fs-3" type="submit" value="Dodaj">
+              {{ form_inc_add.submitNewTr(id="tr_submit", class="fs-3") }}
             </div>
           </form>
         </div>
         <div id="tr-expense">
-          <form id="exp-form" class="fs-4 income-form" action="">
-            {{ form_add.hidden_tag() }}
-            <input id="tr_amount" class="fs-1" type="number" required="required" step="0.01" min="0.01" placeholder="0.00">
-            <input id="tr_name" type="text" required="required" placeholder="Nazwa Transakcji">
+          <form id="exp-form" class="fs-4 income-form" method="POST" action="">
+            {{ form_exp_add.hidden_tag() }}
+            {{ form_exp_add.tr_type_id(type="hidden", value = 1) }}
+            {{ form_exp_add.tr_amount(id="tr_amount", class="fs-1", type="number", required="required", step="0.01", min="0.01", placeholder="0.00")}}
+            {{ form_exp_add.tr_name(id="tr_name", type="text", required="required", placeholder="Nazwa Transakcji") }}
             <div class="input-line">
-              <select id="tr_category" required="required" name="Kategoria">
-                <option value="" disabled selected>Kategoria</option>
-                <option value='clothes'>Odzież</option>
-                <option value='food'>Jedzenie</option>
-                <option value='transport'>Transport</option>
-                <option value='car'>Samochód</option>
-                <option value='house'>Dom</option>
-                <option value='entertainment'>Rozrywka</option>
-                <option value='kids'>Dzieci</option>
-                <option value='traveling'>Podróżowanie</option>
-                <option value='health'>Zdrowie</option>
-                <option value='appearance'>Wygląd</option>
-                <option value='devices'>Urządzenia</option>
-                <option value='communication'>Komunikacja</option>
-                <option value='education'>Edukacja</option>
-                <option value='other'>Inne</option>
-              </select>
-              <select id="tr_account" required="required" name="Konto">
-                <option value="" disabled selected>Konto</option>
-                <optgroup label="Karty Kredytowe">
-                  <option value="1">Santander</option>
-                  <option value="2">PeKaO</option>
-                </optgroup>
-                <optgroup label="Konta Bieżące">
-                  <option value="3">GetIn</option>
-                  <option value="4">Santander</option>
-                </optgroup>
-                <optgroup label="Inne">
-                  <option value="5">XTB</option>
-                  <option value="6">Binance</option>
-                </optgroup>
-              </select>
+              {{ form_exp_add.exp_category(id="tr_category", required="required") }}
+              {{ form_exp_add.account(id="tr_account", required="required") }}
             </div>
             <div class="input-line">
               <span class="date-label fs-4">Data</span>
-              <input id="tr_date" type=date required="required">
+              {{ form_exp_add.tr_date(id="tr_date") }}
               <span class="time-label fs-4">Czas</span>
-              <input id="tr_time" type=time required="required">
+              {{ form_exp_add.tr_time(id="tr_time") }}
             </div>
             <div class="input-line input-line-submit">
-              <input id="tr_submit" class="fs-3" type="submit" value="Dodaj">
+              {{ form_exp_add.submitNewTr(id="tr_submit", class="fs-3") }}
             </div>
           </form>
         </div>
         <div id="tr-transfer">
-          <form id="transf-form" class="fs-4 income-form" action="">
-            {{ form_add.hidden_tag() }}
-            <input id="tr_amount" class="fs-1" type="number" required="required" step="0.01" min="0.01" placeholder="0.00">
-            <input id="tr_name" type="text" required="required" placeholder="Nazwa Transakcji">
+          <form id="transf-form" class="fs-4 income-form" method="POST" action="">
+            {{ form_trf_add.hidden_tag() }}
+            {{ form_trf_add.tr_type_id(type="hidden", value = 3) }}
+            {{ form_trf_add.tr_amount(id="tr_amount", class="fs-1", type="number", required="required", step="0.01", min="0.01", placeholder="0.00")}}
             <div class="input-line">
-              <select id="tr_account_from" name="Konto" required="required">
-                <option value="" disabled selected>Konto z</option>
-                <optgroup label="Karty Kredytowe">
-                  <option value="1">Santander</option>
-                  <option value="2">PeKaO</option>
-                </optgroup>
-                <optgroup label="Konta Bieżące">
-                  <option value="3">GetIn</option>
-                  <option value="4">Santander</option>
-                </optgroup>
-                <optgroup label="Inne">
-                  <option value="5">XTB</option>
-                  <option value="6">Binance</option>
-                </optgroup>
-              </select>
-              <select id="tr_account_to" name="Konto" required="required">
-                <option value="" disabled selected>Konto do</option>
-                <optgroup label="Karty Kredytowe">
-                  <option value="1">Santander</option>
-                  <option value="2">PeKaO</option>
-                </optgroup>
-                <optgroup label="Konta Bieżące">
-                  <option value="3">GetIn</option>
-                  <option value="4">Santander</option>
-                </optgroup>
-                <optgroup label="Inne">
-                  <option value="5">XTB</option>
-                  <option value="6">Binance</option>
-                </optgroup>
-              </select>
+              {{ form_trf_add.account_f(id="tr_account", required="required") }}
+              {{ form_trf_add.account_to(id="tr_account", required="required") }}
             </div>
+            
             <div class="input-line">
               <span class="date-label fs-4">Data</span>
-              <input id="tr_date" type=date required="required">
+              {{ form_trf_add.tr_date(id="tr_date") }}
               <span class="time-label fs-4">Czas</span>
-              <input id="tr_time" type=time required="required">
+              {{ form_trf_add.tr_time(id="tr_time") }}
             </div>
             <div class="input-line input-line-submit">
-              <input id="tr_submit" class="fs-3" type="submit" value="Dodaj">
+              {{ form_trf_add.submitNewTr(id="tr_submit", class="fs-3") }}
             </div>
           </form>
         </div>
