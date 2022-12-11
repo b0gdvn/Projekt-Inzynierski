@@ -53,6 +53,7 @@
             <a class="popup_close" href="#">Zamknij</a>
             <form class="fs-4 income-form" method="POST" action="">
               {{ form_edit.hidden_tag() }}
+              {{ form_edit.goal_id(type="hidden", value = goal.id) }}
               <div class="input-line">
                 {{ form_edit.amount_avb(id="goal_amount_min", class="fs-1", type="number", required="required", step="0.01", min="0", value=goal.amount_avb) }}
                 {{ form_edit.amount_req(id="goal_amount_max", class="fs-1", type="number", required="required", step="0.01", min="0.02", value=goal.amount_req) }}
@@ -63,7 +64,6 @@
                   <option {% if id == account.id %}selected{% endif %} value={{ id }}>{{ acc }}</option>
                 {% endfor %}
               </select>
-              {{ form_edit.goal_id(type="hidden", value = goal.id) }}
               <div class="input-line">
                 {{ form_edit.deleteGoal(id="goal_delete", class="fs-3") }}
                 {{ form_edit.submitEditGoal(id="goal_submit", class="fs-3") }}

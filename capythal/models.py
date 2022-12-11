@@ -109,7 +109,7 @@ class transaction(db.Model):
     name = db.Column(db.String(50), nullable=False)
     amount = db.Column(db.Numeric(12,2), nullable=False)
     date = db.Column(db.Date, nullable=False , default=datetime.today)
-    time = db.Column(db.Time, nullable=False , default=datetime.utcnow)
+    time = db.Column(db.Time, nullable=False , default=datetime.now().time())
 
     def __repr__(self):
         return f"Transaction('{self.name}', '{self.tr_type_id}', '{self.amount}', '{self.datetime}')"

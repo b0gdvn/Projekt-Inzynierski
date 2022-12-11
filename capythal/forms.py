@@ -59,27 +59,6 @@ class editGoalForm(FlaskForm):
     submitEditGoal = SubmitField('Zapisz')
     deleteGoal = SubmitField('Usuń')
 
-class addTrForm(FlaskForm):
-    tr_type_id = IntegerField('tr_type_id')
-    tr_amount = FloatField('Kwota transakcji')
-    tr_name = StringField('Nazwa Transakcji', validators=[Length(max=20)], render_kw={'placeholder': 'Nazwa Celu'})
-    exp_category = SelectField('Kategoria')
-    inc_category = SelectField('Kategoria')
-    trn_category = IntegerField('tr_category') # has to be hidden in html
-    account = SelectField('Konto', coerce=int)
-    
-    tr_date = DateField('Data', default = datetime.now().date())
-    tr_time = TimeField('Czas', default = datetime.now().time())
-    submitNewTr = SubmitField('Dodaj')
-
-class editTrForm(FlaskForm):
-    tr_amount = FloatField('Kwota')
-    account_id = SelectField('Konto', coerce=int)
-    account = SelectField('Konto', coerce=int)
-    tr_id = StringField('tr_id')
-    submitEditTr = SubmitField('Zapisz')
-    deleteTr = SubmitField('Usuń')
-
 class addIncTrForm(FlaskForm):
     tr_type_id = IntegerField('tr_type_id')
     tr_amount = FloatField('Kwota transakcji')
@@ -109,3 +88,14 @@ class addTrfTrForm(FlaskForm):
     tr_date = DateField('Data', default = datetime.now().date())
     tr_time = TimeField('Czas', default = datetime.now().time())
     submitNewTr = SubmitField('Dodaj')
+
+class editTrForm(FlaskForm):
+    tr_id = StringField('transaction_id')
+    tr_amount = FloatField('Kwota transakcji')
+    tr_name = StringField('Nazwa Transakcji', validators=[Length(max=20)], render_kw={'placeholder': 'Nazwa Celu'})
+    inc_category = SelectField('Kategoria')
+    account = SelectField('Konto', coerce=int)
+    tr_date = DateField('Data', default = datetime.now().date())
+    tr_time = TimeField('Czas', default = datetime.now().time())
+    submitEditTr = SubmitField('Zmień')
+    deleteTr = SubmitField('Usuń')

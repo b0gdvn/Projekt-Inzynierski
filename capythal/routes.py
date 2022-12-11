@@ -1,6 +1,6 @@
 from flask import render_template, flash, url_for, redirect
 from capythal import app, db, bcrypt
-from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm, addGoalForm, editGoalForm, addTrForm, editTrForm, addIncTrForm, addExpTrForm, addTrfTrForm
+from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm, addGoalForm, editGoalForm, addIncTrForm, addExpTrForm, addTrfTrForm, editTrForm
 from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, settings, goal
 from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy import update, delete, desc
@@ -103,11 +103,10 @@ def goals():
 @app.route('/history', methods=['GET', 'POST'])
 @login_required
 def history():
-    form_add = addTrForm()
-    form_edit = editTrForm()
     form_inc_add = addIncTrForm()
     form_exp_add = addExpTrForm()
     form_trf_add = addTrfTrForm()
+    form_edit = editTrForm()
 
     transactions = db.session.query(transaction,tr_type,account,currency,category,style).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).join(category, transaction.category_id==category.id).join(style, category.style_id==style.id).filter(account.user_id == current_user.id)
     tr_dates = db.session.query(transaction.date,account).join(account, transaction.account_id==account.id).filter(account.user_id == current_user.id).distinct(transaction.date).order_by(desc(transaction.date))
@@ -123,7 +122,6 @@ def history():
     form_exp_add.account.choices = accs_list
     form_trf_add.account_f.choices = accs_list
     form_trf_add.account_to.choices = accs_list
-    # form_edit.account.choices = accs_list
 
     if form_inc_add.submitNewTr.data and form_inc_add.validate():
         new_tr = transaction(account_id = form_inc_add.account.data, category_id = form_inc_add.inc_category.data, tr_type_id = form_inc_add.tr_type_id.data, name = form_inc_add.tr_name.data, amount = form_inc_add.tr_amount.data, date = form_inc_add.tr_date.data, time = form_inc_add.tr_time.data)
@@ -144,25 +142,24 @@ def history():
         db.session.add(new_tr_f)
         db.session.commit()
 
-    # if form_edit.submitEditTr.data and form_edit.validate():
-    #     db.session.execute(
-    #         update(transaction)
-    #         .where((transaction.id == form_edit.tr_id.data) & (account.user_id == current_user.id))
-    #         .values(currency_id = form_edit.currency.data, card_id = form_edit.card_type.data, acc_type_id = form_edit.acc_type.data, card_number = form_edit.card_number.data, fin_inst = form_edit.fin_inst.data))
-    #         # /\poprawiane wartosci
+    if form_edit.submitEditTr.data:
+        db.session.execute(
+            update(transaction)
+            .where(transaction.id == form_edit.tr_id.data)
+            .values(name = form_edit.tr_name.data, amount = form_edit.tr_amount.data, date = form_edit.tr_date.data, time = form_edit.tr_time.data))
 
-    #     db.session.commit()
-    #     return redirect(url_for('history'))
+        db.session.commit()
+        return redirect(url_for('history'))
     
-    # if form_edit.deleteTr.data and form_edit.validate():
-    #     db.session.execute(
-    #         delete(transaction)
-    #         .where((transaction.id == form_edit.tr_id.data) & (account.user_id == current_user.id)))
+    if form_edit.deleteTr.data:
+        db.session.execute(
+            delete(transaction)
+            .where(transaction.id == form_edit.tr_id.data))
 
-    #     db.session.commit()
-    #     return redirect(url_for('history'))
+        db.session.commit()
+        return redirect(url_for('history'))
 
-    return render_template("history.html", transactions = transactions, form_add = form_add, form_edit = form_edit, tr_dates = tr_dates, accs_list = accs_list, inc_cat_list = inc_cat_list, exp_cat_list = exp_cat_list, form_inc_add = form_inc_add, form_exp_add = form_exp_add, form_trf_add = form_trf_add)
+    return render_template("history.html", transactions = transactions, tr_dates = tr_dates, accs_list = accs_list, inc_cat_list = inc_cat_list, exp_cat_list = exp_cat_list, form_inc_add = form_inc_add, form_exp_add = form_exp_add, form_trf_add = form_trf_add, form_edit = form_edit)
 
 @app.route('/userpage')
 @login_required
