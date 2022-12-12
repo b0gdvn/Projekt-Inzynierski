@@ -176,11 +176,11 @@
       <div class="flex-row" role="columnheader">Kwota</div>
       <div class="flex-row-edit" role="columnheader">Edycja</div>
     </div>
-    {% for tr_date,account in tr_dates %}
+    {% for tr_date in tr_dates %}
     <div class="flex-table row" role="rowgroup">
       <div class="flex-row rowspan first">{{ tr_date.strftime("%d.%m.%Y") }}</div>
       <div class="column">
-        {% for transaction,tr_type,account,currency,category,style in transactions %}
+        {% for transaction,tr_type,account,currency,category,style in transactions.items %}
           {% if transaction.date == tr_date %}
           <div class="flex-row">
             <div class="flex-cell" role="cell">

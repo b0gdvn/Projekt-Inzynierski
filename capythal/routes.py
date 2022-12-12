@@ -1,4 +1,4 @@
-from flask import render_template, flash, url_for, redirect
+from flask import render_template, flash, url_for, redirect, request
 from capythal import app, db, bcrypt
 from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm, addGoalForm, editGoalForm, addIncTrForm, addExpTrForm, addTrfTrForm, editTrForm
 from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, settings, goal
@@ -98,7 +98,6 @@ def goals():
         return redirect(url_for('goals'))
 
     return render_template("goals.html", goals = goals, form_add = form_add, form_edit = form_edit, accs_list = accs_list)
-    
 
 @app.route('/history', methods=['GET', 'POST'])
 @login_required
@@ -108,8 +107,15 @@ def history():
     form_trf_add = addTrfTrForm()
     form_edit = editTrForm()
 
-    transactions = db.session.query(transaction,tr_type,account,currency,category,style).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).join(category, transaction.category_id==category.id).join(style, category.style_id==style.id).filter(account.user_id == current_user.id)
-    tr_dates = db.session.query(transaction.date,account).join(account, transaction.account_id==account.id).filter(account.user_id == current_user.id).distinct(transaction.date).order_by(desc(transaction.date))
+    page = request.args.get('page',1,type=int)
+    transactions = db.session.query(transaction,tr_type,account,currency,category,style).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).join(category, transaction.category_id==category.id).join(style, category.style_id==style.id).filter(account.user_id == current_user.id).paginate(page=page, per_page=3)
+    tr_dates = []
+    for tr_date in transactions.items:
+        if not tr_date.transaction.date in tr_dates:
+            tr_dates.append(tr_date.transaction.date)
+
+    # tr_dates = db.session.query(transaction.date,account).join(account, transaction.account_id==account.id).filter(account.user_id == current_user.id).distinct(transaction.date).order_by(transaction.date.desc())
+    
     inc_cat_list = db.session.query(category).filter(category.tr_type_id == 2)
     form_inc_add.inc_category.choices = [(i.id, i.name) for i in inc_cat_list]
 

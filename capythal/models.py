@@ -112,7 +112,7 @@ class transaction(db.Model):
     time = db.Column(db.Time, nullable=False , default=datetime.now().time())
 
     def __repr__(self):
-        return f"Transaction('{self.name}', '{self.tr_type_id}', '{self.amount}', '{self.datetime}')"
+        return f"Transaction('{self.name}', '{self.tr_type_id}', '{self.amount}', '{self.date}')"
 
 class settings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
