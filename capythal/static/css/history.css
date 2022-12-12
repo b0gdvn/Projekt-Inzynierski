@@ -113,6 +113,19 @@
     padding: 0.5em 0.5em;
 }
 
+.page-btn, .page-btn-active {
+    transition: 0.2s;
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.2rem;
+    border: #46644F 2px solid;
+}
+
+.page-btn:hover, .page-btn-active {
+    transition: 0.2s;
+    background-color: #46644F;
+    color: #F3F8F5;
+}
+
 .flex-cell-edit {
     margin: auto 0;
     width: 12.5%;

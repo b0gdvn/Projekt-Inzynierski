@@ -228,6 +228,17 @@
       </div>
     </div>
     {% endfor %}
+    {% for page_num in transactions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+      {% if transactions.page == page_num %}
+        <a href="{{ url_for('history', page=page_num) }}" class="page-btn-active">{{ page_num }}</a>
+      {% else %}
+        <a href="{{ url_for('history', page=page_num) }}" class="page-btn">{{ page_num }}</a>
+      {% endif %}
+    {% else %}
+      ...
+    {% endif %}
+    {% endfor %}
   </div>
 </div>
 {% endblock %}
