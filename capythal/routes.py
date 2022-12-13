@@ -108,15 +108,12 @@ def history():
     form_edit = editTrForm()
 
     page = request.args.get('page',1,type=int)
-    transactions = db.session.query(transaction,tr_type,account,currency,category,style).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).join(category, transaction.category_id==category.id).join(style, category.style_id==style.id).filter(account.user_id == current_user.id).paginate(page=page, per_page=5)
-    
+    transactions = db.session.query(transaction,tr_type,account,currency,category,style).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).join(category, transaction.category_id==category.id).join(style, category.style_id==style.id).filter(account.user_id == current_user.id).order_by(desc(transaction.date)).paginate(page=page, per_page=5)
     
     tr_dates = []
     for tr_date in transactions.items:
         if not tr_date.transaction.date in tr_dates:
             tr_dates.append(tr_date.transaction.date)
-    tr_dates = sorted(tr_dates)
-    print(tr_dates)
 
     inc_cat_list = db.session.query(category).filter(category.tr_type_id == 2)
     form_inc_add.inc_category.choices = [(i.id, i.name) for i in inc_cat_list]

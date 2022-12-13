@@ -13,78 +13,76 @@
   <script src="{{url_for('static', filename='js/modals/f-modal.js')}}" async></script>
 {% endblock %}
 {% block content %}
-<div id="filter-btn-modal" class="modal">
-  <div class="modal-content">
-    <div class="modal-top fs-3">
-      <span class="fw-semibold">Filtruj</span>
-      <a class="tr-close">Zamknij</a>
-    </div>
-    <div class="switch-field-filter">
-      <input type="checkbox" id="radio-income-f" name="switch-one" value="income" checked/>
-      <label class="radio-el" for="radio-income-f">Przychody</label>
-      <input type="checkbox" id="radio-expense-f" name="switch-one" value="expense" checked/>
-      <label class="radio-el" for="radio-expense-f">Wydatki</label>
-    </div>
-    <div id="tr-filter">
-      <form class="fs-4 income-form" name="filter" action="" onsubmit="return validateFilterForm()">
-        <div class="input-line">
-          <input id="tr_amount_min" name="tr_amount_min" class="fs-1" type="number" step="0.01" min="0" placeholder="Min wartość">
-          <input id="tr_amount_max" name="tr_amount_max" class="fs-1" type="number" step="0.01" min="0.02" placeholder="Max wartość">
-        </div>
-        <div class="input-line">
-          <select id="tr_category" name="Kategoria">
-            <option value="" disabled selected>Kategoria</option>
-            <option value='clothes'>Odzież</option>
-            <option value='food'>Jedzenie</option>
-            <option value='transport'>Transport</option>
-            <option value='car'>Samochód</option>
-            <option value='house'>Dom</option>
-            <option value='entertainment'>Rozrywka</option>
-            <option value='kids'>Dzieci</option>
-            <option value='traveling'>Podróżowanie</option>
-            <option value='health'>Zdrowie</option>
-            <option value='appearance'>Wygląd</option>
-            <option value='devices'>Urządzenia</option>
-            <option value='communication'>Komunikacja</option>
-            <option value='education'>Edukacja</option>
-            <option value='other'>Inne</option>
-          </select>
-          <select id="tr_account" name="Konto">
-            <option value="" disabled selected>Konto</option>
-            <optgroup label="Karty Kredytowe">
-              <option value="1">Santander</option>
-              <option value="2">PeKaO</option>
-            </optgroup>
-            <optgroup label="Konta Bieżące">
-              <option value="3">GetIn</option>
-              <option value="4">Santander</option>
-            </optgroup>
-            <optgroup label="Inne">
-              <option value="5">XTB</option>
-              <option value="6">Binance</option>
-            </optgroup>
-          </select>
-        </div>
-        <div class="input-line">
-          <span class="date-label-f fs-4">Od</span>
-          <input id="tr_date_min" type=date>
-          <span class="date-label-f fs-4">Do</span>
-          <input id="tr_date_max" type=date>
-        </div>
-        <div class="input-line">
-          <input id="tr_reset" class="fs-3" type="reset" value="Resetuj">
-          <input id="tr_submit" class="fs-3" type="submit" value="Filtruj">
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 <div class="history-flexbox bg-white">
   <div class="buttons">
-    <a onclick="filterBtnClick()" class="filter-btn fs-3 fw-semibold">
+    <!-- Jeżeli będzie czas - wrócić do filtrowania na backend -->
+    <!-- <a href="#modal-filter" class="filter-btn fs-3 fw-semibold">
       <span>Filtry</span>
     </a>
+    <div class="popup" id="modal-filter">
+      <a class="popup_overlay" href="#"></a>
+      <div class="popup_wrapper">
+        <a class="popup_close" href="#">Zamknij</a>
+        <div class="switch-field-filter">
+          <input type="checkbox" id="radio-income-f" name="switch-one" value="income" checked/>
+          <label class="radio-el" for="radio-income-f">Przychody</label>
+          <input type="checkbox" id="radio-expense-f" name="switch-one" value="expense" checked/>
+          <label class="radio-el" for="radio-expense-f">Wydatki</label>
+        </div>
+        <div id="tr-filter">
+          <form class="fs-4 income-form" name="filter" action="" onsubmit="return validateFilterForm()">
+            <div class="input-line">
+              <input id="tr_amount_min" name="tr_amount_min" class="fs-1" type="number" step="0.01" min="0" placeholder="Min wartość">
+              <input id="tr_amount_max" name="tr_amount_max" class="fs-1" type="number" step="0.01" min="0.02" placeholder="Max wartość">
+            </div>
+            <div class="input-line">
+              <select id="tr_category" name="Kategoria">
+                <option value="" disabled selected>Kategoria</option>
+                <option value='clothes'>Odzież</option>
+                <option value='food'>Jedzenie</option>
+                <option value='transport'>Transport</option>
+                <option value='car'>Samochód</option>
+                <option value='house'>Dom</option>
+                <option value='entertainment'>Rozrywka</option>
+                <option value='kids'>Dzieci</option>
+                <option value='traveling'>Podróżowanie</option>
+                <option value='health'>Zdrowie</option>
+                <option value='appearance'>Wygląd</option>
+                <option value='devices'>Urządzenia</option>
+                <option value='communication'>Komunikacja</option>
+                <option value='education'>Edukacja</option>
+                <option value='other'>Inne</option>
+              </select>
+              <select id="tr_account" name="Konto">
+                <option value="" disabled selected>Konto</option>
+                <optgroup label="Karty Kredytowe">
+                  <option value="1">Santander</option>
+                  <option value="2">PeKaO</option>
+                </optgroup>
+                <optgroup label="Konta Bieżące">
+                  <option value="3">GetIn</option>
+                  <option value="4">Santander</option>
+                </optgroup>
+                <optgroup label="Inne">
+                  <option value="5">XTB</option>
+                  <option value="6">Binance</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="input-line">
+              <span class="date-label-f fs-4">Od</span>
+              <input id="tr_date_min" type=date>
+              <span class="date-label-f fs-4">Do</span>
+              <input id="tr_date_max" type=date>
+            </div>
+            <div class="input-line">
+              <input id="tr_reset" class="fs-3" type="reset" value="Resetuj">
+              <input id="tr_submit" class="fs-3" type="submit" value="Filtruj">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div> -->
     <a href="#modal-add" class="add-tr-btn fs-3">
       <span class="fw-semibold">Dodaj transakcję</span>
       <span class="tr-plus fa fa-fw fa-xl fa-plus bg-success-secondary"></span>
@@ -166,7 +164,6 @@
       </div>
     </div>
   </div>
-
   <div class="table-container" role="table" aria-label="Destinations">
     <div class="flex-table header" role="rowgroup">
       <div class="flex-row first-header" role="columnheader">Data</div>
@@ -228,17 +225,19 @@
       </div>
     </div>
     {% endfor %}
+    <div class="pagination">
     {% for page_num in transactions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-    {% if page_num %}
-      {% if transactions.page == page_num %}
-        <a href="{{ url_for('history', page=page_num) }}" class="page-btn-active">{{ page_num }}</a>
+      {% if page_num %}
+        {% if transactions.page == page_num %}
+          <a href="{{ url_for('history', page=page_num) }}" class="page-btn-active">{{ page_num }}</a>
+        {% else %}
+          <a href="{{ url_for('history', page=page_num) }}" class="page-btn">{{ page_num }}</a>
+        {% endif %}
       {% else %}
-        <a href="{{ url_for('history', page=page_num) }}" class="page-btn">{{ page_num }}</a>
+        ...
       {% endif %}
-    {% else %}
-      ...
-    {% endif %}
-    {% endfor %}
+    {% endfor %}  
+    </div>
   </div>
 </div>
 {% endblock %}

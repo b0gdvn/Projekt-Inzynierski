@@ -113,6 +113,12 @@
     padding: 0.5em 0.5em;
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
 .page-btn, .page-btn-active {
     transition: 0.2s;
     padding: 0.2rem 0.6rem;
