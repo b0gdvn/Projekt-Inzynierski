@@ -5,6 +5,12 @@ from capythal.models import user, currency, card, acc_type, tr_type, style, cate
 from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy import update, delete, desc
 from random import randint
+from forex_python.converter import CurrencyRates
+from forex_python.bitcoin import BtcConverter
+
+# Kursy walut
+cr = CurrencyRates()
+bt = BtcConverter()
 
 # Formatowanie wartości pieniędzy
 @app.template_filter()
@@ -141,11 +147,28 @@ def history():
         return redirect(url_for('history'))
 
     if form_trf_add.submitNewTr.data and form_trf_add.validate():
+        # if accf curr == accto curr = amount
+        # elif multiply amount by rate funtion
+        _,acc_f = db.session.query(account,currency).join(currency).where(account.id == form_trf_add.account_f.data).first()
+        cur_f = acc_f.name
+        _,acc_to = db.session.query(account,currency).join(currency).where(account.id == form_trf_add.account_to.data).first()
+        cur_to = acc_to.name
+
+        if cur_f == cur_to:
+            amount_to = form_trf_add.tr_amount.data
+        elif cur_f == 'BTC':
+            amount_to = round(bt.convert_btc_to_cur(form_trf_add.tr_amount.data, cur_to),2)
+        elif cur_to == 'BTC':
+            amount_to = round(bt.convert_to_btc(form_trf_add.tr_amount.data, cur_f),2)
+        else:
+            amount_to = round(cr.convert(cur_f, cur_to, form_trf_add.tr_amount.data),2)
+        
         new_tr_f = transaction(account_id = form_trf_add.account_f.data, category_id = 19, tr_type_id = 1, name = f'Transfer - Wpływ', amount = form_trf_add.tr_amount.data, date = form_trf_add.tr_date.data, time = form_trf_add.tr_time.data)
-        new_tr_to = transaction(account_id = form_trf_add.account_to.data, category_id = 19, tr_type_id = 2, name = f'Transfer - Wychodzący', amount = form_trf_add.tr_amount.data, date = form_trf_add.tr_date.data, time = form_trf_add.tr_time.data)
+        new_tr_to = transaction(account_id = form_trf_add.account_to.data, category_id = 19, tr_type_id = 2, name = f'Transfer - Wychodzący', amount = amount_to, date = form_trf_add.tr_date.data, time = form_trf_add.tr_time.data)
         db.session.add(new_tr_to)
         db.session.add(new_tr_f)
         db.session.commit()
+        return redirect(url_for('history'))
 
     if form_edit.submitEditTr.data:
         db.session.execute(
