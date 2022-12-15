@@ -202,6 +202,7 @@
                     <form id="inc-form" class="fs-4 income-form" method="POST" action="">
                       {{ form_edit.hidden_tag() }}
                       {{ form_edit.tr_id(type="hidden", value = transaction.id) }}
+                      {{ form_edit.tr_acc(type="hidden", value = transaction.account_id) }}
                       {{ form_edit.tr_amount(id="tr_amount", class="fs-1", type="number", required="required", step="0.01", min="0.01", placeholder="0.00", value=transaction.amount) }}
                       {{ form_edit.tr_name(id="tr_name", type="text", required="required", placeholder="Nazwa Transakcji", value=transaction.name) }}
                       <div class="input-line">

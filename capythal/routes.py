@@ -135,24 +135,38 @@ def history():
     form_trf_add.account_to.choices = accs_list
 
     if form_inc_add.submitNewTr.data and form_inc_add.validate():
+        acc = db.session.query(account).where(account.id == form_inc_add.account.data).first()
+        
         new_tr = transaction(account_id = form_inc_add.account.data, category_id = form_inc_add.inc_category.data, tr_type_id = form_inc_add.tr_type_id.data, name = form_inc_add.tr_name.data, amount = form_inc_add.tr_amount.data, date = form_inc_add.tr_date.data, time = form_inc_add.tr_time.data)
         db.session.add(new_tr)
+
+        db.session.execute(
+            update(account)
+            .where(account.id == form_exp_add.account.data)
+            .values(amount = (float(acc.amount) + float(form_inc_add.tr_amount.data))))
+
         db.session.commit()
         return redirect(url_for('history'))
     
     if form_exp_add.submitNewTr.data and form_exp_add.validate():
+        acc = db.session.query(account).where(account.id == form_exp_add.account.data).first()
+
         new_tr = transaction(account_id = form_exp_add.account.data, category_id = form_exp_add.exp_category.data, tr_type_id = form_exp_add.tr_type_id.data, name = form_exp_add.tr_name.data, amount = form_exp_add.tr_amount.data, date = form_exp_add.tr_date.data, time = form_exp_add.tr_time.data)
         db.session.add(new_tr)
+
+        db.session.execute(
+            update(account)
+            .where(account.id == form_exp_add.account.data)
+            .values(amount = (float(acc.amount) - float(form_exp_add.tr_amount.data))))
+
         db.session.commit()
         return redirect(url_for('history'))
 
     if form_trf_add.submitNewTr.data and form_trf_add.validate():
-        # if accf curr == accto curr = amount
-        # elif multiply amount by rate funtion
-        _,acc_f = db.session.query(account,currency).join(currency).where(account.id == form_trf_add.account_f.data).first()
-        cur_f = acc_f.name
-        _,acc_to = db.session.query(account,currency).join(currency).where(account.id == form_trf_add.account_to.data).first()
-        cur_to = acc_to.name
+        acc_f,acc_f_cur = db.session.query(account,currency).join(currency).where(account.id == form_trf_add.account_f.data).first()
+        cur_f = acc_f_cur.name
+        acc_to,acc_to_cur = db.session.query(account,currency).join(currency).where(account.id == form_trf_add.account_to.data).first()
+        cur_to = acc_to_cur.name
 
         if cur_f == cur_to:
             amount_to = form_trf_add.tr_amount.data
@@ -167,22 +181,65 @@ def history():
         new_tr_to = transaction(account_id = form_trf_add.account_to.data, category_id = 19, tr_type_id = 2, name = f'Transfer - Wychodzący', amount = amount_to, date = form_trf_add.tr_date.data, time = form_trf_add.tr_time.data)
         db.session.add(new_tr_to)
         db.session.add(new_tr_f)
+
+        db.session.execute(
+            update(account)
+            .where(account.id == form_trf_add.account_f.data)
+            .values(amount = (float(acc_f.amount) - form_trf_add.tr_amount.data)))
+            
+        db.session.execute(
+            update(account)
+            .where(account.id == form_trf_add.account_to.data)
+            .values(amount = (float(acc_to.amount) + amount_to)))
+
         db.session.commit()
         return redirect(url_for('history'))
 
     if form_edit.submitEditTr.data:
+        acc = db.session.query(account).where(account.id == form_edit.tr_acc.data).first()
+        tr = db.session.query(transaction).where(transaction.id == form_edit.tr_id.data).first()
+        tr_amount_before = tr.amount
+        
         db.session.execute(
             update(transaction)
             .where(transaction.id == form_edit.tr_id.data)
             .values(name = form_edit.tr_name.data, amount = form_edit.tr_amount.data, date = form_edit.tr_date.data, time = form_edit.tr_time.data))
+        
+        if 'Przychód' in str(tr.tr_type):
+            db.session.execute(
+                update(account)
+                .where(account.id == form_edit.tr_acc.data)
+                .values(amount = (float(acc.amount) - float(tr_amount_before) + float(form_edit.tr_amount.data))))
+
+        elif 'Wydatek' in str(tr.tr_type):
+            db.session.execute(
+                update(account)
+                .where(account.id == form_edit.tr_acc.data)
+                .values(amount = (float(acc.amount) + float(tr_amount_before) - float(form_edit.tr_amount.data))))
 
         db.session.commit()
         return redirect(url_for('history'))
     
     if form_edit.deleteTr.data:
+        acc = db.session.query(account).where(account.id == form_edit.tr_acc.data).first()
+        tr = db.session.query(transaction).where(transaction.id == form_edit.tr_id.data).first()
+        tr_amount_del = tr.amount
+
         db.session.execute(
             delete(transaction)
             .where(transaction.id == form_edit.tr_id.data))
+
+        if 'Przychód' in str(tr.tr_type):
+            db.session.execute(
+                update(account)
+                .where(account.id == form_edit.tr_acc.data)
+                .values(amount = (float(acc.amount) - float(tr_amount_del))))
+
+        elif 'Wydatek' in str(tr.tr_type):
+            db.session.execute(
+                update(account)
+                .where(account.id == form_edit.tr_acc.data)
+                .values(amount = (float(acc.amount) + float(tr_amount_del))))
 
         db.session.commit()
         return redirect(url_for('history'))

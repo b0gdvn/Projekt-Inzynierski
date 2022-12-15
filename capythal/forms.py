@@ -94,7 +94,7 @@ class editTrForm(FlaskForm):
     tr_amount = FloatField('Kwota transakcji')
     tr_name = StringField('Nazwa Transakcji', validators=[Length(max=20)], render_kw={'placeholder': 'Nazwa Celu'})
     inc_category = SelectField('Kategoria')
-    account = SelectField('Konto', coerce=int)
+    tr_acc = StringField('account_id')
     tr_date = DateField('Data', default = datetime.now().date())
     tr_time = TimeField('Czas', default = datetime.now().time())
     submitEditTr = SubmitField('Zmień')
