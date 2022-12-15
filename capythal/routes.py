@@ -1,5 +1,5 @@
 from flask import render_template, flash, url_for, redirect, request
-from capythal import app, db, bcrypt
+from capythal import app, db, bcrypt, cache
 from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm, addGoalForm, editGoalForm, addIncTrForm, addExpTrForm, addTrfTrForm, editTrForm
 from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, settings, goal
 from flask_login import login_user, logout_user, current_user, login_required
@@ -8,9 +8,26 @@ from random import randint
 from forex_python.converter import CurrencyRates
 from forex_python.bitcoin import BtcConverter
 
+
 # Kursy walut
 cr = CurrencyRates()
 bt = BtcConverter()
+
+@cache.cached(timeout=3600, key_prefix='usd')
+def usd_rate():
+    return cr.get_rate('USD', 'PLN')
+
+@cache.cached(timeout=3600, key_prefix='eur')
+def eur_rate():
+    return cr.get_rate('EUR', 'PLN')
+    
+@cache.cached(timeout=3600, key_prefix='gbp')
+def gbp_rate():
+    return cr.get_rate('GBP', 'PLN')
+
+@cache.cached(timeout=3600, key_prefix='btc')
+def btc_rate():
+    return bt.get_latest_price('PLN')
 
 # Formatowanie wartości pieniędzy
 @app.template_filter()
@@ -27,7 +44,20 @@ def home():
     acc_types = db.session.query(acc_type).join(account).filter(account.user_id == current_user.id)
     acc_list = db.session.query(account).join(acc_type).filter(account.user_id == current_user.id)
 
-    return render_template("home.html", accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
+    amount_sum = 0
+    for acc,cur,_,_,_ in accounts:
+        if cur.name == 'PLN':
+            amount_sum = float(amount_sum) + float(acc.amount)
+        elif cur.name == 'USD':
+            amount_sum = float(amount_sum) + float(acc.amount) * usd_rate()
+        elif cur.name == 'EUR':
+            amount_sum = float(amount_sum) + float(acc.amount) * eur_rate()
+        elif cur.name == 'GBP':
+            amount_sum = float(amount_sum) + float(acc.amount) * gbp_rate()
+        elif cur.name == 'BTC':
+            amount_sum = float(amount_sum) + float(acc.amount) * btc_rate()
+
+    return render_template("home.html", amount_sum = amount_sum, accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
 
 @app.route('/stats')
 @login_required
@@ -61,6 +91,7 @@ def accounts():
         db.session.execute(
             delete(account)
             .where((account.id == form_edit.account_id.data) & (account.user_id == current_user.id)))
+        # when account is deleted, delete connected goals and transactions
 
         db.session.commit()
         return redirect(url_for('accounts'))

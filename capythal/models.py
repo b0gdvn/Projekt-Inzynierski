@@ -92,7 +92,6 @@ class account(db.Model):
     amount = db.Column(db.Float(20,2), default = 0)
     card_number = db.Column(db.String(4))
     fin_inst = db.Column(db.String(20))
-    
 
     transaction = db.relationship("transaction", backref="account", lazy=True)
     settings = db.relationship("settings", back_populates="account", uselist=False)
