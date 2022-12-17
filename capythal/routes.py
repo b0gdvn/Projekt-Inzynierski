@@ -13,21 +13,34 @@ from forex_python.bitcoin import BtcConverter
 cr = CurrencyRates()
 bt = BtcConverter()
 
+
 @cache.cached(timeout=3600, key_prefix='usd')
 def usd_rate():
-    return cr.get_rate('USD', 'PLN')
+    try:
+        return cr.get_rate('USD', 'PLN')
+    except:
+        return 4.5
 
 @cache.cached(timeout=3600, key_prefix='eur')
 def eur_rate():
-    return cr.get_rate('EUR', 'PLN')
+    try:
+        return cr.get_rate('EUR', 'PLN')
+    except:
+        return 4.7
     
 @cache.cached(timeout=3600, key_prefix='gbp')
 def gbp_rate():
-    return cr.get_rate('GBP', 'PLN')
+    try:
+        return cr.get_rate('GBP', 'PLN')
+    except:
+        return 5.4
 
 @cache.cached(timeout=3600, key_prefix='btc')
 def btc_rate():
-    return bt.get_latest_price('PLN')
+    try:
+        return bt.get_latest_price('PLN')
+    except:
+        return 74000
 
 # Formatowanie wartości pieniędzy
 @app.template_filter()
