@@ -60,10 +60,11 @@ def home():
     accounts = db.session.query(account,currency,card,acc_type,style).join(currency).join(card).join(acc_type).join(style).filter(account.user_id == current_user.id)
     acc_types = db.session.query(acc_type).join(account).filter(account.user_id == current_user.id)
     acc_list = db.session.query(account).join(acc_type).filter(account.user_id == current_user.id)
-    transactions = db.session.query(transaction,tr_type,account,currency).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).filter(account.user_id == current_user.id).filter(transaction.date >= week_ago)
+    transactions = db.session.query(transaction,tr_type,account,currency).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).filter(account.user_id == current_user.id)
+    transactions_last_week = db.session.query(transaction,tr_type,account,currency).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).filter(account.user_id == current_user.id).filter(transaction.date >= week_ago)
     
     amount_sum_last_week = 0
-    for tr,type,acc,cur in transactions:
+    for tr,type,acc,cur in transactions_last_week:
         if type.name == 'Wydatek':
             amount = float(-1 * tr.amount)
         else:
@@ -95,7 +96,42 @@ def home():
     
     amount_chg = round((amount_sum + amount_sum_last_week) / amount_sum * 100) - 100
 
-    return render_template("home.html", amount_sum = amount_sum, amount_chg = amount_chg, accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
+    income_sum_last_week = 0
+    for tr,type,acc,cur in transactions_last_week:
+        if type.name == 'Przychód':
+            amount = float(tr.amount)
+
+            if cur.name == 'PLN':
+                income_sum_last_week = float(income_sum_last_week) + amount
+            elif cur.name == 'USD':
+                income_sum_last_week = float(income_sum_last_week) + amount * usd_rate()
+            elif cur.name == 'EUR':
+                income_sum_last_week = float(income_sum_last_week) + amount * eur_rate()
+            elif cur.name == 'GBP':
+                income_sum_last_week = float(income_sum_last_week) + amount * gbp_rate()
+            elif cur.name == 'BTC':
+                income_sum_last_week = float(income_sum_last_week) + amount * btc_rate()
+
+    income_sum = 0
+    for tr,type,acc,cur in transactions:
+        if type.name == 'Przychód':
+            amount = float(tr.amount)
+
+            if cur.name == 'PLN':
+                income_sum = float(income_sum) + amount
+            elif cur.name == 'USD':
+                income_sum = float(income_sum) + amount * usd_rate()
+            elif cur.name == 'EUR':
+                income_sum = float(income_sum) + amount * eur_rate()
+            elif cur.name == 'GBP':
+                income_sum = float(income_sum) + amount * gbp_rate()
+            elif cur.name == 'BTC':
+                income_sum = float(income_sum) + amount * btc_rate()
+    
+    income_chg = round((income_sum + income_sum_last_week) / income_sum * 100) - 100
+
+
+    return render_template("home.html", amount_sum = amount_sum, amount_chg = amount_chg, income_sum = income_sum, income_chg = income_chg, accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
 
 @app.route('/stats')
 @login_required
