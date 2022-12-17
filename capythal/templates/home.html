@@ -24,12 +24,19 @@
   <div class="item-stat bg-white">
     <div class="item-stat-info">
       <div class="fs-4">Dostępne Środki</div>
-      <div class="fs-3 fw-semibold">{{ amount_sum | currencyFormat}} PLN</div>
+      <div class="fs-3 fw-semibold">{{ amount_sum | currencyFormat }} PLN</div>
     </div>
+    {% if amount_chg < 0 %}
+    <div class="item-stat-percentage bg-danger fc-danger">
+      <span class="my-auto fa fa-lg fa-caret-down"></span>
+      <span class="ml-2 fs-3 fw-semibold">{{ -amount_chg }}%</span>
+    </div>
+    {% else %}
     <div class="item-stat-percentage bg-success fc-success">
       <span class="my-auto fa fa-lg fa-caret-up"></span>
-      <span class="ml-2 fs-3 fw-semibold">3%</span>
+      <span class="ml-2 fs-3 fw-semibold">{{ amount_chg }}%</span>
     </div>
+    {% endif %}
   </div>
   <div class="item-stat bg-white">
     <div class="item-stat-info">

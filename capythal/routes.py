@@ -5,6 +5,7 @@ from capythal.models import user, currency, card, acc_type, tr_type, style, cate
 from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy import update, delete, desc
 from random import randint
+import datetime
 from forex_python.converter import CurrencyRates
 from forex_python.bitcoin import BtcConverter
 
@@ -53,9 +54,31 @@ def currencyFormat(value):
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
+    today = datetime.date.today()
+    week_ago = today - datetime.timedelta(days=7)
+
     accounts = db.session.query(account,currency,card,acc_type,style).join(currency).join(card).join(acc_type).join(style).filter(account.user_id == current_user.id)
     acc_types = db.session.query(acc_type).join(account).filter(account.user_id == current_user.id)
     acc_list = db.session.query(account).join(acc_type).filter(account.user_id == current_user.id)
+    transactions = db.session.query(transaction,tr_type,account,currency).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).filter(account.user_id == current_user.id).filter(transaction.date >= week_ago)
+    
+    amount_sum_last_week = 0
+    for tr,type,acc,cur in transactions:
+        if type.name == 'Wydatek':
+            amount = float(-1 * tr.amount)
+        else:
+            amount = float(tr.amount)
+
+        if cur.name == 'PLN':
+            amount_sum_last_week = float(amount_sum_last_week) + amount
+        elif cur.name == 'USD':
+            amount_sum_last_week = float(amount_sum_last_week) + amount * usd_rate()
+        elif cur.name == 'EUR':
+            amount_sum_last_week = float(amount_sum_last_week) + amount * eur_rate()
+        elif cur.name == 'GBP':
+            amount_sum_last_week = float(amount_sum_last_week) + amount * gbp_rate()
+        elif cur.name == 'BTC':
+            amount_sum_last_week = float(amount_sum_last_week) + amount * btc_rate()
 
     amount_sum = 0
     for acc,cur,_,_,_ in accounts:
@@ -69,8 +92,10 @@ def home():
             amount_sum = float(amount_sum) + float(acc.amount) * gbp_rate()
         elif cur.name == 'BTC':
             amount_sum = float(amount_sum) + float(acc.amount) * btc_rate()
+    
+    amount_chg = round((amount_sum + amount_sum_last_week) / amount_sum * 100) - 100
 
-    return render_template("home.html", amount_sum = amount_sum, accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
+    return render_template("home.html", amount_sum = amount_sum, amount_chg = amount_chg, accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
 
 @app.route('/stats')
 @login_required
