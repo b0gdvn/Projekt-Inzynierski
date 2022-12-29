@@ -130,8 +130,41 @@ def home():
     
     income_chg = round((income_sum + income_sum_last_week) / income_sum * 100) - 100
 
+    expense_sum_last_week = 0
+    for tr,type,acc,cur in transactions_last_week:
+        if type.name == 'Wydatek':
+            amount = float(tr.amount)
 
-    return render_template("home.html", amount_sum = amount_sum, amount_chg = amount_chg, income_sum = income_sum, income_chg = income_chg, accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
+            if cur.name == 'PLN':
+                expense_sum_last_week = float(expense_sum_last_week) + amount
+            elif cur.name == 'USD':
+                expense_sum_last_week = float(expense_sum_last_week) + amount * usd_rate()
+            elif cur.name == 'EUR':
+                expense_sum_last_week = float(expense_sum_last_week) + amount * eur_rate()
+            elif cur.name == 'GBP':
+                expense_sum_last_week = float(expense_sum_last_week) + amount * gbp_rate()
+            elif cur.name == 'BTC':
+                expense_sum_last_week = float(expense_sum_last_week) + amount * btc_rate()
+
+    expense_sum = 0
+    for tr,type,acc,cur in transactions:
+        if type.name == 'Wydatek':
+            amount = float(tr.amount)
+
+            if cur.name == 'PLN':
+                expense_sum = float(expense_sum) + amount
+            elif cur.name == 'USD':
+                expense_sum = float(expense_sum) + amount * usd_rate()
+            elif cur.name == 'EUR':
+                expense_sum = float(expense_sum) + amount * eur_rate()
+            elif cur.name == 'GBP':
+                expense_sum = float(expense_sum) + amount * gbp_rate()
+            elif cur.name == 'BTC':
+                expense_sum = float(expense_sum) + amount * btc_rate()
+    
+    expense_chg = round((expense_sum + expense_sum_last_week) / expense_sum * 100) - 100
+
+    return render_template("home.html", amount_sum = amount_sum, amount_chg = amount_chg, income_sum = income_sum, income_chg = income_chg, expense_sum = expense_sum, expense_chg = expense_chg, accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
 
 @app.route('/stats')
 @login_required
