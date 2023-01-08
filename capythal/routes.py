@@ -14,7 +14,6 @@ from forex_python.bitcoin import BtcConverter
 cr = CurrencyRates()
 bt = BtcConverter()
 
-
 @cache.cached(timeout=3600, key_prefix='usd')
 def usd_rate():
     try:
@@ -43,7 +42,7 @@ def btc_rate():
     except:
         return 74000
 
-# Formatowanie wartości pieniędzy
+# Formatowanie wartości pieniędzy do postaci 0,000,000.00 PLN
 @app.template_filter()
 def currencyFormat(value):
     value = float(value)
@@ -60,8 +59,17 @@ def home():
     accounts = db.session.query(account,currency,card,acc_type,style).join(currency).join(card).join(acc_type).join(style).filter(account.user_id == current_user.id)
     acc_types = db.session.query(acc_type).join(account).filter(account.user_id == current_user.id)
     acc_list = db.session.query(account).join(acc_type).filter(account.user_id == current_user.id)
-    transactions = db.session.query(transaction,tr_type,account,currency).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).filter(account.user_id == current_user.id)
-    transactions_last_week = db.session.query(transaction,tr_type,account,currency).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).filter(account.user_id == current_user.id).filter(transaction.date >= week_ago)
+    transactions = db.session.query(transaction,tr_type,account,currency)\
+        .join(tr_type, transaction.tr_type_id==tr_type.id)\
+        .join(account, transaction.account_id==account.id)\
+        .join(currency, currency.id==account.currency_id)\
+        .filter(account.user_id == current_user.id)
+    transactions_last_week = db.session.query(transaction,tr_type,account,currency)\
+        .join(tr_type, transaction.tr_type_id==tr_type.id)\
+        .join(account, transaction.account_id==account.id)\
+        .join(currency, currency.id==account.currency_id)\
+        .filter(account.user_id == current_user.id)\
+        .filter(transaction.date >= week_ago)
     
     amount_sum_last_week = 0
     for tr,type,acc,cur in transactions_last_week:
@@ -94,7 +102,10 @@ def home():
         elif cur.name == 'BTC':
             amount_sum = float(amount_sum) + float(acc.amount) * btc_rate()
     
-    amount_chg = round((amount_sum + amount_sum_last_week) / amount_sum * 100) - 100
+    try:
+        amount_chg = round((amount_sum + amount_sum_last_week) / amount_sum * 100) - 100
+    except:
+        amount_chg = 0
 
     income_sum_last_week = 0
     for tr,type,acc,cur in transactions_last_week:
@@ -128,7 +139,10 @@ def home():
             elif cur.name == 'BTC':
                 income_sum = float(income_sum) + amount * btc_rate()
     
-    income_chg = round((income_sum + income_sum_last_week) / income_sum * 100) - 100
+    try:
+        income_chg = round((income_sum + income_sum_last_week) / income_sum * 100) - 100
+    except:
+        income_chg = 0
 
     expense_sum_last_week = 0
     for tr,type,acc,cur in transactions_last_week:
@@ -162,9 +176,13 @@ def home():
             elif cur.name == 'BTC':
                 expense_sum = float(expense_sum) + amount * btc_rate()
     
-    expense_chg = round((expense_sum + expense_sum_last_week) / expense_sum * 100) - 100
-
-    return render_template("home.html", amount_sum = amount_sum, amount_chg = amount_chg, income_sum = income_sum, income_chg = income_chg, expense_sum = expense_sum, expense_chg = expense_chg, accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
+    try:
+        expense_chg = round((expense_sum + expense_sum_last_week) / expense_sum * 100) - 100
+    except:
+        expense_chg = 0
+        
+    return render_template("home.html", amount_sum = amount_sum, amount_chg = amount_chg, income_sum = income_sum, income_chg = income_chg, expense_sum = expense_sum, expense_chg = expense_chg,\
+        accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
 
 @app.route('/stats')
 @login_required
@@ -180,7 +198,8 @@ def accounts():
     accounts = db.session.query(account,currency,card,acc_type,style).join(currency).join(card).join(acc_type).join(style).filter(account.user_id == current_user.id)
     
     if form_add.submitNewAcc.data and form_add.validate():
-        new_acc = account(user_id = current_user.id, amount = form_add.amount.data, currency_id = form_add.currency.data, card_id = form_add.card_type.data, acc_type_id = form_add.acc_type.data, style_id = randint(1,10), card_number = form_add.card_number.data, fin_inst = form_add.fin_inst.data )
+        new_acc = account(user_id = current_user.id, amount = form_add.amount.data, currency_id = form_add.currency.data, card_id = form_add.card_type.data, acc_type_id = form_add.acc_type.data,\
+            style_id = randint(1,10), card_number = form_add.card_number.data, fin_inst = form_add.fin_inst.data )
         db.session.add(new_acc)
         db.session.commit()
         return redirect(url_for('accounts'))
@@ -211,7 +230,8 @@ def goals():
     form_add = addGoalForm()
     form_edit = editGoalForm()
 
-    goals = db.session.query(goal,account,currency,style).join(account, goal.account_id==account.id).join(currency, currency.id==account.currency_id).join(style, goal.style_id==style.id).filter(account.user_id == current_user.id)
+    goals = db.session.query(goal,account,currency,style).join(account, goal.account_id==account.id).join(currency, currency.id==account.currency_id).join(style, goal.style_id==style.id)\
+        .filter(account.user_id == current_user.id)
     
     user_accs = db.session.query(account,acc_type).join(acc_type).join(style).filter(account.user_id == current_user.id)
     accs_list = [(i.account.id, f"{i.account.fin_inst} - {i.acc_type.name}") for i in user_accs]
@@ -219,7 +239,7 @@ def goals():
     form_edit.account.choices = accs_list
 
     if form_add.submitNewGoal.data and form_add.validate():
-        new_goal = goal(account_id = form_add.account.data, amount_req = form_add.amount_req.data, amount_avb = form_add.amount_avb.data, style_id = randint(1,10), name = form_add.name.data )
+        new_goal = goal(account_id = form_add.account.data, amount_req = form_add.amount_req.data, amount_avb = form_add.amount_avb.data, style_id = randint(1,10), name = form_add.name.data)
         db.session.add(new_goal)
         db.session.commit()
         return redirect(url_for('goals'))
@@ -252,7 +272,15 @@ def history():
     form_edit = editTrForm()
 
     page = request.args.get('page',1,type=int)
-    transactions = db.session.query(transaction,tr_type,account,currency,category,style).join(tr_type, transaction.tr_type_id==tr_type.id).join(account, transaction.account_id==account.id).join(currency, currency.id==account.currency_id).join(category, transaction.category_id==category.id).join(style, category.style_id==style.id).filter(account.user_id == current_user.id).order_by(desc(transaction.date)).paginate(page=page, per_page=5)
+    transactions = db.session.query(transaction,tr_type,account,currency,category,style)\
+        .join(tr_type, transaction.tr_type_id==tr_type.id)\
+        .join(account, transaction.account_id==account.id)\
+        .join(currency, currency.id==account.currency_id)\
+        .join(category, transaction.category_id==category.id)\
+        .join(style, category.style_id==style.id)\
+        .filter(account.user_id == current_user.id)\
+        .order_by(desc(transaction.date))\
+        .paginate(page=page, per_page=5)
     
     tr_dates = []
     for tr_date in transactions.items:
@@ -275,7 +303,8 @@ def history():
     if form_inc_add.submitNewTr.data and form_inc_add.validate():
         acc = db.session.query(account).where(account.id == form_inc_add.account.data).first()
         
-        new_tr = transaction(account_id = form_inc_add.account.data, category_id = form_inc_add.inc_category.data, tr_type_id = form_inc_add.tr_type_id.data, name = form_inc_add.tr_name.data, amount = form_inc_add.tr_amount.data, date = form_inc_add.tr_date.data, time = form_inc_add.tr_time.data)
+        new_tr = transaction(account_id = form_inc_add.account.data, category_id = form_inc_add.inc_category.data, tr_type_id = form_inc_add.tr_type_id.data,\
+            name = form_inc_add.tr_name.data, amount = form_inc_add.tr_amount.data, date = form_inc_add.tr_date.data, time = form_inc_add.tr_time.data)
         db.session.add(new_tr)
 
         db.session.execute(
@@ -289,7 +318,8 @@ def history():
     if form_exp_add.submitNewTr.data and form_exp_add.validate():
         acc = db.session.query(account).where(account.id == form_exp_add.account.data).first()
 
-        new_tr = transaction(account_id = form_exp_add.account.data, category_id = form_exp_add.exp_category.data, tr_type_id = form_exp_add.tr_type_id.data, name = form_exp_add.tr_name.data, amount = form_exp_add.tr_amount.data, date = form_exp_add.tr_date.data, time = form_exp_add.tr_time.data)
+        new_tr = transaction(account_id = form_exp_add.account.data, category_id = form_exp_add.exp_category.data, tr_type_id = form_exp_add.tr_type_id.data,\
+            name = form_exp_add.tr_name.data, amount = form_exp_add.tr_amount.data, date = form_exp_add.tr_date.data, time = form_exp_add.tr_time.data)
         db.session.add(new_tr)
 
         db.session.execute(
@@ -315,8 +345,10 @@ def history():
         else:
             amount_to = round(cr.convert(cur_f, cur_to, form_trf_add.tr_amount.data),2)
         
-        new_tr_f = transaction(account_id = form_trf_add.account_f.data, category_id = 19, tr_type_id = 1, name = f'Transfer - Wpływ', amount = form_trf_add.tr_amount.data, date = form_trf_add.tr_date.data, time = form_trf_add.tr_time.data)
-        new_tr_to = transaction(account_id = form_trf_add.account_to.data, category_id = 19, tr_type_id = 2, name = f'Transfer - Wychodzący', amount = amount_to, date = form_trf_add.tr_date.data, time = form_trf_add.tr_time.data)
+        new_tr_f = transaction(account_id = form_trf_add.account_f.data, category_id = 19, tr_type_id = 1, name = f'Transfer - Wpływ',\
+            amount = form_trf_add.tr_amount.data, date = form_trf_add.tr_date.data, time = form_trf_add.tr_time.data)
+        new_tr_to = transaction(account_id = form_trf_add.account_to.data, category_id = 19, tr_type_id = 2, name = f'Transfer - Wychodzący',\
+            amount = amount_to, date = form_trf_add.tr_date.data, time = form_trf_add.tr_time.data)
         db.session.add(new_tr_to)
         db.session.add(new_tr_f)
 
@@ -389,7 +421,6 @@ def history():
 def userpage():
     return render_template("userpage.html")
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -423,10 +454,3 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
-
-
-@app.route('/test-page')
-@login_required
-def test():
-
-    return render_template("test.html")

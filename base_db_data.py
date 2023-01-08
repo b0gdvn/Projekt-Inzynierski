@@ -1,5 +1,5 @@
 from capythal import db
-from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction
+from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, goal
 from random import randint
 from datetime import datetime, time
 
@@ -59,5 +59,8 @@ db.session.add(transaction(account_id=2, category_id=1, tr_type_id=1, name='H&M 
 db.session.add(transaction(account_id=2, category_id=15, tr_type_id=2, name='Wynagrodzenie Miesięczne', amount=4670.29, date=datetime.strptime('2022-11-21', '%Y-%m-%d'), time=datetime.strptime('19:52:00', '%H:%M:%S').time()))
 db.session.add(transaction(account_id=2, category_id=4, tr_type_id=1, name='Opony Zimowe', amount=799.00, date=datetime.strptime('2022-11-21', '%Y-%m-%d'), time=datetime.strptime('14:13:00', '%H:%M:%S').time()))
 db.session.add(transaction(account_id=2, category_id=2, tr_type_id=1, name='KFC', amount=12.50, date=datetime.strptime('2022-11-21', '%Y-%m-%d'), time=datetime.strptime('09:56:00', '%H:%M:%S').time()))
+
+db.session.add(goal(account_id=2, style_id=1, name="Nowy rower", amount_avb=439, amount_req=2400))
+db.session.add(goal(account_id=2, style_id=5, name="Wycieczka do Paryża", amount_avb=1300, amount_req=2000))
 
 db.session.commit()

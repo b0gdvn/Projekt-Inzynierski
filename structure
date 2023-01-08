@@ -1,0 +1,45 @@
+project/
+├── capythal/
+│   ├── static/
+│   │   ├── css/
+│   │   │   ├── style.css
+│   │   │   ├── home.css
+│   │   │   ├── stats.css
+│   │   │   ├── accounts.css
+│   │   │   ├── goals.css
+│   │   │   ├── history.css
+│   │   │   ├── userpage.css
+│   │   │   ├── settings.css
+│   │   │   ├── auth.css
+│   │   │   └── modals/
+│   │   │       ├── account-modal.css
+│   │   │       ├── goal-modal.css
+│   │   │       ├── tr-modal.css
+│   │   │       └── etr-modal.css
+│   │   ├── js/
+│   │   │   ├── navbar.js
+│   │   │   ├── jquery.js
+│   │   │   └── modals/
+│   │   │       ├── tr-modal.js
+│   │   │       └── etr-modal.js
+│   │   └── img/
+│   │       ├── Mastercard.png
+│   │       └── Visa.png
+│   ├── templates/
+│   │   ├── layout.html
+│   │   ├── home.html
+│   │   ├── stats.html
+│   │   ├── accounts.html
+│   │   ├── goals.html
+│   │   ├── history.html
+│   │   ├── login.html
+│   │   ├── register.html
+│   │   ├── userpage.html
+│   │   └── settings.html
+│   ├── __init__.py
+│   ├── forms.py
+│   ├── models.py
+│   ├── routes.py
+│   └── capythal.db
+└── run.py
+

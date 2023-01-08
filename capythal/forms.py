@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, FloatField, IntegerField, DateField, TimeField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from capythal.models import user
-from datetime import datetime, date
+from datetime import datetime
 
 class registrationForm(FlaskForm):
     user_name = StringField('Imię', validators=[DataRequired(), Length(min=1, max=30)])
