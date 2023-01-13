@@ -13,7 +13,6 @@ class user(db.Model, UserMixin):
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
 
-    settings = db.relationship("settings", back_populates="user", uselist=False)
     account = db.relationship("account", backref="user", lazy=True)
 
     def __repr__(self):
@@ -24,7 +23,6 @@ class currency(db.Model):
     name = db.Column(db.String(20), nullable=False)
 
     account = db.relationship("account", backref="currency", lazy=True)
-    settings = db.relationship("settings", backref="currency", lazy=True)
 
     def __repr__(self):
         return f"Currency('{self.name}')"
@@ -94,7 +92,6 @@ class account(db.Model):
     fin_inst = db.Column(db.String(20))
 
     transaction = db.relationship("transaction", backref="account", lazy=True)
-    settings = db.relationship("settings", back_populates="account", uselist=False)
     goal = db.relationship("goal", backref="account", lazy=True)
 
     def __repr__(self):
@@ -112,18 +109,6 @@ class transaction(db.Model):
 
     def __repr__(self):
         return f"Transaction('{self.name}', '{self.tr_type_id}', '{self.amount}', '{self.date}')"
-
-class settings(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
-    currency_id = db.Column(db.Integer, db.ForeignKey('currency.id'), nullable=False)
-
-    user = db.relationship("user", back_populates="settings") # used for one-one relationship
-    account = db.relationship("account", back_populates="settings")
-
-    def __repr__(self):
-        return f"Settings('{self.id}', '{self.user_id}', '{self.account_id}', '{self.currency_id}')"
 
 class goal(db.Model):
     id = db.Column(db.Integer, primary_key=True)

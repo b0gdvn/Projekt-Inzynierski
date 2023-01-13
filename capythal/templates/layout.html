@@ -30,12 +30,6 @@
             <span class="ml-1 fs-4">Glówna Strona</span>
           </a>
         </li>
-        <li class="menu-button {{ 'active' if active_page == 'stats' else '' }}">
-          <a href="{{ url_for('stats') }}" class="menu-button-link">
-            <span class="fa fa-fw fa-bar-chart my-auto"></span>
-            <span class="ml-1 fs-4">Statystyki</span>
-          </a>
-        </li>
         <li class="menu-button {{ 'active' if active_page == 'accounts' else '' }}">
           <a href="{{ url_for('accounts') }}" class="menu-button-link">
             <span class="fa fa-fw fa-credit-card my-auto"></span>
@@ -63,12 +57,6 @@
           <a href="{{ url_for('userpage') }}" class="menu-button-link">
             <span class="fa fa-fw fa-user-circle my-auto"></span>
             <span class="ml-1 fs-4">Profil</span>
-          </a>
-        </li>
-        <li class="menu-button">
-          <a href="" class="menu-button-link">
-            <span class="fa fa-fw fa-cog my-auto"></span>
-            <span class="ml-1 fs-4">Ustawienia</span>
           </a>
         </li>
         <li class="menu-button">

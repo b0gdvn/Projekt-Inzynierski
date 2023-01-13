@@ -1,7 +1,7 @@
 from flask import render_template, flash, url_for, redirect, request
 from capythal import app, db, bcrypt, cache
 from capythal.forms import registrationForm, loginForm, addAccForm, editAccForm, addGoalForm, editGoalForm, addIncTrForm, addExpTrForm, addTrfTrForm, editTrForm
-from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, settings, goal
+from capythal.models import user, currency, card, acc_type, tr_type, style, category, account, transaction, goal
 from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy import update, delete, desc
 from random import randint
@@ -183,11 +183,6 @@ def home():
         
     return render_template("home.html", amount_sum = amount_sum, amount_chg = amount_chg, income_sum = income_sum, income_chg = income_chg, expense_sum = expense_sum, expense_chg = expense_chg,\
         accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
-
-@app.route('/stats')
-@login_required
-def stats():
-    return render_template("stats.html")
     
 @app.route('/accounts', methods=['GET', 'POST'])
 @login_required
