@@ -213,6 +213,10 @@ progress::-moz-progress-value {
   font-weight: 600 !important;
 }
 
+.fw-bold {
+	font-weight: 700 !important;
+}
+
 /*CUSTOM CLASSES*/
 
 /*margins*/

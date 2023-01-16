@@ -183,11 +183,6 @@ def home():
         
     return render_template("home.html", amount_sum = amount_sum, amount_chg = amount_chg, income_sum = income_sum, income_chg = income_chg, expense_sum = expense_sum, expense_chg = expense_chg,\
         accounts = accounts, acc_types = acc_types, acc_list = acc_list, pct = 30)
-
-@app.route('/stats')
-@login_required
-def stats():
-    return render_template("stats.html")
     
 @app.route('/accounts', methods=['GET', 'POST'])
 @login_required
@@ -419,7 +414,9 @@ def history():
 @app.route('/userpage')
 @login_required
 def userpage():
-    return render_template("userpage.html")
+    user_accs = db.session.query(account,acc_type).join(acc_type).filter(account.user_id == current_user.id)
+
+    return render_template("userpage.html", accounts = user_accs)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
